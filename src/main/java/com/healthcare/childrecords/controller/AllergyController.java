@@ -1,0 +1,54 @@
+package com.healthcare.childrecords.controller;
+
+import com.healthcare.childrecords.dto.request.AllergyRequest;
+import com.healthcare.childrecords.dto.response.AllergyResponse;
+import com.healthcare.childrecords.service.AllergyService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/allergies")
+@RequiredArgsConstructor
+public class AllergyController {
+
+    private final AllergyService allergyService;
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public AllergyResponse create(@AuthenticationPrincipal UserDetails userDetails,
+                                  @Valid @RequestBody AllergyRequest request) {
+        return allergyService.create(userDetails.getUsername(), request);
+    }
+
+    @GetMapping("/child/{childId}")
+    public List<AllergyResponse> getForChild(@AuthenticationPrincipal UserDetails userDetails,
+                                             @PathVariable Long childId) {
+        return allergyService.getForChild(userDetails.getUsername(), childId);
+    }
+
+    @GetMapping("/{id}")
+    public AllergyResponse getById(@AuthenticationPrincipal UserDetails userDetails,
+                                   @PathVariable Long id) {
+        return allergyService.getById(userDetails.getUsername(), id);
+    }
+
+    @PutMapping("/{id}")
+    public AllergyResponse update(@AuthenticationPrincipal UserDetails userDetails,
+                                  @PathVariable Long id,
+                                  @Valid @RequestBody AllergyRequest request) {
+        return allergyService.update(userDetails.getUsername(), id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@AuthenticationPrincipal UserDetails userDetails,
+                       @PathVariable Long id) {
+        allergyService.delete(userDetails.getUsername(), id);
+    }
+}
