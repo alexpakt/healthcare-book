@@ -43,6 +43,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/medical-records/**").authenticated()
                 .requestMatchers("/api/vaccinations/**").authenticated()
                 .requestMatchers("/api/allergies/**").authenticated()
+                .requestMatchers("/api/growth-measurements/**").authenticated()
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
