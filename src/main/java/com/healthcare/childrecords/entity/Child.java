@@ -72,4 +72,8 @@ public class Child {
     @OneToMany(mappedBy = "child", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
     private List<GrowthMeasurement> growthMeasurements = new ArrayList<>();
+
+    @OneToOne(mappedBy = "child", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private BirthRecord birthRecord;
+
 }
