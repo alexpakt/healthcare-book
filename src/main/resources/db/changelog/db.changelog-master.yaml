@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/migrations/001-core-auth-schema.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/002-children-and-relationships.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/003-clinical-data.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/004-growth-measurements.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/005-birth-records.yaml
+      relativeToChangelogFile: false
