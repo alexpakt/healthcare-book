@@ -1,0 +1,14 @@
+target/
+.git/
+.gitignore
+.idea/
+*.iml
+*.iws
+*.ipr
+.DS_Store
+.env
+.env.local
+node_modules/
+dist/
+build/
+.vscode/
