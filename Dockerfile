@@ -25,4 +25,4 @@ COPY --from=builder /build/target/child-healthcare-records-*.jar app.jar
 EXPOSE 8080
 
 # Essential for Render: Memory limits (-Xmx384m) fit Spring Boot inside 512MB RAM
-ENTRYPOINT ["java", "-Xmx384m", "-Xms128m", "-Dspring.profiles.active=docker", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Xmx384m", "-Xms128m", "-jar", "app.jar"]
