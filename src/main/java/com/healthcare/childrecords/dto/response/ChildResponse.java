@@ -9,5 +9,7 @@ public record ChildResponse(
         String dateOfBirth,
         Gender gender,
         String bloodType,
-        Long parentId
+        Long parentId,
+        String parentFirstName,
+        String parentLastName
 ) {}

@@ -130,7 +130,9 @@ public class ChildService {
     }
 
     private ChildResponse toResponse(Child c) {
+        Parent parent = c.getParent();
         return new ChildResponse(c.getId(), c.getFirstName(), c.getLastName(),
-                c.getDateOfBirth(), c.getGender(), c.getBloodType(), c.getParent().getId());
+                c.getDateOfBirth(), c.getGender(), c.getBloodType(), parent.getId(),
+                parent.getFirstName(), parent.getLastName());
     }
 }
