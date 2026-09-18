@@ -108,6 +108,14 @@ public class ChildService {
         return toResponse(childRepository.save(child));
     }
 
+    @Transactional
+    public void ensureDoctorAssigned(Child child, Doctor doctor) {
+        if (!child.getDoctors().contains(doctor)) {
+            child.getDoctors().add(doctor);
+            childRepository.save(child);
+        }
+    }
+
     public Child findById(Long id) {
         return childRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Child not found: " + id));

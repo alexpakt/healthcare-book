@@ -31,12 +31,25 @@ public class AppointmentService {
 
         Doctor doctor = doctorService.findById(request.doctorId());
 
+        Role role = userRepository.findByUsername(username).orElseThrow().getRole();
+        AppointmentStatus status;
+        if (role == Role.ROLE_DOCTOR) {
+            Doctor callingDoctor = doctorService.findByUsername(username);
+            if (!callingDoctor.getId().equals(doctor.getId())) {
+                throw new AccessDeniedException("Doctors can only create appointments for themselves");
+            }
+            status = AppointmentStatus.SCHEDULED;
+        } else {
+            status = AppointmentStatus.REQUESTED;
+        }
+
         Appointment appointment = Appointment.builder()
                 .child(child)
                 .doctor(doctor)
                 .appointmentDate(request.appointmentDate())
                 .reason(request.reason())
                 .notes(request.notes())
+                .status(status)
                 .build();
         return toResponse(appointmentRepository.save(appointment));
     }
@@ -61,20 +74,45 @@ public class AppointmentService {
     }
 
     @Transactional
-    public AppointmentResponse updateStatus(String username, Long appointmentId, AppointmentStatus status) {
+    public AppointmentResponse updateStatus(String username, Long appointmentId, AppointmentStatus newStatus) {
         Appointment appointment = findById(appointmentId);
-        verifyAccess(username, appointment);
-        appointment.setStatus(status);
+        AppointmentStatus currentStatus = appointment.getStatus();
+        Role role = userRepository.findByUsername(username).orElseThrow().getRole();
+
+        if (role == Role.ROLE_DOCTOR) {
+            Doctor doctor = doctorService.findByUsername(username);
+            if (!appointment.getDoctor().getId().equals(doctor.getId())) {
+                throw new AccessDeniedException("Doctor is not assigned to this appointment");
+            }
+            boolean valid = (currentStatus == AppointmentStatus.REQUESTED
+                        && (newStatus == AppointmentStatus.SCHEDULED || newStatus == AppointmentStatus.DECLINED))
+                    || (currentStatus == AppointmentStatus.SCHEDULED
+                        && (newStatus == AppointmentStatus.COMPLETED || newStatus == AppointmentStatus.CANCELLED));
+            if (!valid) {
+                throw new AccessDeniedException("Invalid status transition: " + currentStatus + " -> " + newStatus);
+            }
+            if (currentStatus == AppointmentStatus.REQUESTED && newStatus == AppointmentStatus.SCHEDULED) {
+                childService.ensureDoctorAssigned(appointment.getChild(), doctor);
+            }
+        } else {
+            Parent parent = parentService.findByUsername(username);
+            if (!appointment.getChild().getParent().getId().equals(parent.getId())) {
+                throw new AccessDeniedException("Access denied to this appointment");
+            }
+            boolean valid = (currentStatus == AppointmentStatus.REQUESTED || currentStatus == AppointmentStatus.SCHEDULED)
+                    && newStatus == AppointmentStatus.CANCELLED;
+            if (!valid) {
+                throw new AccessDeniedException("Invalid status transition: " + currentStatus + " -> " + newStatus);
+            }
+        }
+
+        appointment.setStatus(newStatus);
         return toResponse(appointmentRepository.save(appointment));
     }
 
     public Appointment findById(Long id) {
         return appointmentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Appointment not found: " + id));
-    }
-
-    private void verifyAccess(String username, Appointment appointment) {
-        childService.verifyAccess(username, appointment.getChild());
     }
 
     private AppointmentResponse toResponse(Appointment a) {

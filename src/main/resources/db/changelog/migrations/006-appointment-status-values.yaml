@@ -1,0 +1,12 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: add-appointment-status-enum-values
+      author: alexandra
+      comment: >
+        alter the AppointmentStatus column to add the new values (REQUESTED, DECLINED)
+      changes:
+        - sql:
+            sql: >
+              ALTER TABLE appointments
+              MODIFY COLUMN status ENUM('REQUESTED','SCHEDULED','DECLINED','COMPLETED','CANCELLED') NOT NULL;
