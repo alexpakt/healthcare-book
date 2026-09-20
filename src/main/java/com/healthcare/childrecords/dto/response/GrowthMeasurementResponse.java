@@ -13,5 +13,8 @@ public record GrowthMeasurementResponse(
         Double heightCm,
         Double weightKg,
         Double headCircumferenceCm,
+        Integer percentileHeight,
+        Integer percentileWeight,
+        Integer percentileHeadCircumference,
         String notes
 ) {}

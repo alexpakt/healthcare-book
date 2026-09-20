@@ -2,6 +2,8 @@ package com.healthcare.childrecords.controller;
 
 import com.healthcare.childrecords.dto.request.GrowthMeasurementRequest;
 import com.healthcare.childrecords.dto.response.GrowthMeasurementResponse;
+import com.healthcare.childrecords.entity.GrowthReference;
+import com.healthcare.childrecords.entity.MeasurementType;
 import com.healthcare.childrecords.service.GrowthMeasurementService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -54,5 +56,11 @@ public class GrowthMeasurementController {
     public void delete(@AuthenticationPrincipal UserDetails userDetails,
                        @PathVariable Long id) {
         growthMeasurementService.delete(userDetails.getUsername(), id);
+    }
+
+    @GetMapping("/references/child/{childId}/type/{measurementType}")
+    public List<GrowthReference> getReferenceCurves(@PathVariable Long childId,
+                                                    @PathVariable String measurementType) {
+        return growthMeasurementService.getReferenceCurves(childId, MeasurementType.valueOf(measurementType));
     }
 }

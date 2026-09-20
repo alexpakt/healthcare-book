@@ -1,0 +1,62 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: create-growth-references-table
+      author: alexandra
+      comment: Create growth_references table with WHO child growth standards
+      changes:
+        - createTable:
+            tableName: growth_references
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: age_in_months
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: measurement_type
+                  type: "ENUM('HEIGHT','WEIGHT','HEAD_CIRCUMFERENCE')"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: gender
+                  type: "ENUM('MALE','FEMALE','OTHER')"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: percentile
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: value
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: source
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+
+        - addUniqueConstraint:
+            tableName: growth_references
+            columnNames: age_in_months,measurement_type,gender,percentile,source
+            constraintName: uk_growth_reference_composite
+
+        - createIndex:
+            tableName: growth_references
+            indexName: idx_growth_ref_age_type_gender
+            columns:
+              - column:
+                  name: age_in_months
+              - column:
+                  name: measurement_type
+              - column:
+                  name: gender

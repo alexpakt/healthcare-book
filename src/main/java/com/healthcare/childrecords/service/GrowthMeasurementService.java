@@ -2,11 +2,10 @@ package com.healthcare.childrecords.service;
 
 import com.healthcare.childrecords.dto.request.GrowthMeasurementRequest;
 import com.healthcare.childrecords.dto.response.GrowthMeasurementResponse;
-import com.healthcare.childrecords.entity.Child;
-import com.healthcare.childrecords.entity.Doctor;
-import com.healthcare.childrecords.entity.GrowthMeasurement;
+import com.healthcare.childrecords.entity.*;
 import com.healthcare.childrecords.exception.ResourceNotFoundException;
 import com.healthcare.childrecords.repository.GrowthMeasurementRepository;
+import com.healthcare.childrecords.repository.GrowthReferenceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +20,7 @@ import java.util.List;
 public class GrowthMeasurementService {
 
     private final GrowthMeasurementRepository growthMeasurementRepository;
+    private final GrowthReferenceRepository growthReferenceRepository;
     private final ChildService childService;
     private final DoctorService doctorService;
 
@@ -100,11 +100,54 @@ public class GrowthMeasurementService {
     private GrowthMeasurementResponse toResponse(GrowthMeasurement m) {
         String childName = m.getChild().getFirstName() + " " + m.getChild().getLastName();
         String doctorName = m.getDoctor().getFirstName() + " " + m.getDoctor().getLastName();
+
+        Integer percentileHeight = m.getHeightCm() != null
+                ? calculatePercentile(m.getChild().getGender(), m.getAgeInMonths(),
+                        MeasurementType.HEIGHT, m.getHeightCm())
+                : null;
+
+        Integer percentileWeight = m.getWeightKg() != null
+                ? calculatePercentile(m.getChild().getGender(), m.getAgeInMonths(),
+                        MeasurementType.WEIGHT, m.getWeightKg())
+                : null;
+
+        Integer percentileHeadCirc = m.getHeadCircumferenceCm() != null
+                ? calculatePercentile(m.getChild().getGender(), m.getAgeInMonths(),
+                        MeasurementType.HEAD_CIRCUMFERENCE, m.getHeadCircumferenceCm())
+                : null;
+
         return new GrowthMeasurementResponse(
                 m.getId(), m.getChild().getId(), childName,
                 m.getDoctor().getId(), doctorName,
                 m.getMeasurementDate(), m.getAgeInMonths(),
                 m.getHeightCm(), m.getWeightKg(), m.getHeadCircumferenceCm(),
+                percentileHeight, percentileWeight, percentileHeadCirc,
                 m.getNotes());
+    }
+
+    private Integer calculatePercentile(Gender gender, Integer ageInMonths,
+                                        MeasurementType measurementType, Double measuredValue) {
+        List<GrowthReference> references = growthReferenceRepository
+                .findByAgeInMonthsAndMeasurementTypeAndGenderOrderByPercentileAsc(
+                        ageInMonths, measurementType, gender);
+
+        if (references.isEmpty()) {
+            return null;
+        }
+
+        Integer result = null;
+        for (GrowthReference ref : references) {
+            if (ref.getValue() <= measuredValue) {
+                result = ref.getPercentile();
+            }
+        }
+
+        return result;
+    }
+
+    public List<GrowthReference> getReferenceCurves(Long childId, MeasurementType measurementType) {
+        Child child = childService.findById(childId);
+        return growthReferenceRepository.findByMeasurementTypeAndGenderOrderByAgeInMonthsAscPercentileAsc(
+                measurementType, child.getGender());
     }
 }
