@@ -118,8 +118,10 @@ public class AppointmentService {
     private AppointmentResponse toResponse(Appointment a) {
         String childName = a.getChild().getFirstName() + " " + a.getChild().getLastName();
         String doctorName = a.getDoctor().getFirstName() + " " + a.getDoctor().getLastName();
+        Parent parent = a.getChild().getParent();
+        String parentName = parent.getFirstName() + " " + parent.getLastName();
         return new AppointmentResponse(a.getId(), a.getChild().getId(), childName,
-                a.getDoctor().getId(), doctorName, a.getAppointmentDate(),
+                a.getDoctor().getId(), doctorName, parentName, a.getAppointmentDate(),
                 a.getReason(), a.getNotes(), a.getStatus());
     }
 }

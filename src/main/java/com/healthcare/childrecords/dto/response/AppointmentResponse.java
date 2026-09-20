@@ -10,6 +10,7 @@ public record AppointmentResponse(
         String childName,
         Long doctorId,
         String doctorName,
+        String parentName,
         LocalDateTime appointmentDate,
         String reason,
         String notes,
