@@ -32,7 +32,7 @@ public class AuthControllerIntegrationTest extends BaseIntegrationTest {
     String username = "testdoctor" + System.currentTimeMillis();
     RegisterDoctorRequest request =
         new RegisterDoctorRequest(
-            username, "TestPass123!", "Test", "Doctor", "doctor@example.com", null, "Pediatrics", "LIC123456");
+            username, "TestPass123!", "Test", "Doctor", "20118707867", "doctor@example.com", null, "Pediatrics", "LIC123456");
 
     mockMvc
         .perform(

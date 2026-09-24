@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Pattern;
 public record ChildRequest(
         @NotBlank String firstName,
         @NotBlank String lastName,
+        @NotBlank @Pattern(regexp = "\\d{11}", message = "AMKA must be 11 digits") String amka,
         @NotBlank @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "Date must be YYYY-MM-DD") String dateOfBirth,
         @NotNull Gender gender,
         String bloodType

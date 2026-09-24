@@ -28,6 +28,10 @@ public class Doctor {
     private String lastName;
 
     @Convert(converter = EncryptionConverter.class)
+    @Column(name = "amka", nullable = false, unique = true, length = 255)
+    private String amka;
+
+    @Convert(converter = EncryptionConverter.class)
     @Column(nullable = false, unique = true, columnDefinition = "TEXT")
     private String email;
 

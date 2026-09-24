@@ -44,3 +44,6 @@ databaseChangeLog:
   - include:
       file: db/changelog/migrations/015-remove-parent-vaccination-id.sql
       relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/016-add-amka-field.sql
+      relativeToChangelogFile: false

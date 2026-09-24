@@ -6,6 +6,7 @@ public record ChildResponse(
         Long id,
         String firstName,
         String lastName,
+        String amka,
         String dateOfBirth,
         Gender gender,
         String bloodType,

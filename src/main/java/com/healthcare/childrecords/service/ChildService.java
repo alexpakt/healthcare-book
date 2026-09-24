@@ -32,6 +32,7 @@ public class ChildService {
         Child child = Child.builder()
                 .firstName(request.firstName())
                 .lastName(request.lastName())
+                .amka(request.amka())
                 .dateOfBirth(request.dateOfBirth())
                 .gender(request.gender())
                 .bloodType(request.bloodType())
@@ -116,6 +117,12 @@ public class ChildService {
         }
     }
 
+    public ChildResponse searchByAmka(String amka) {
+        Child child = childRepository.findByAmka(amka)
+                .orElseThrow(() -> new ResourceNotFoundException("Child not found with AMKA: " + amka));
+        return toResponse(child);
+    }
+
     public Child findById(Long id) {
         return childRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Child not found: " + id));
@@ -139,7 +146,7 @@ public class ChildService {
 
     private ChildResponse toResponse(Child c) {
         Parent parent = c.getParent();
-        return new ChildResponse(c.getId(), c.getFirstName(), c.getLastName(),
+        return new ChildResponse(c.getId(), c.getFirstName(), c.getLastName(), c.getAmka(),
                 c.getDateOfBirth(), c.getGender(), c.getBloodType(), parent.getId(),
                 parent.getFirstName(), parent.getLastName());
     }

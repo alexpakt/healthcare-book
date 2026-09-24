@@ -27,6 +27,10 @@ public class Child {
     @Column(name = "last_name", nullable = false, columnDefinition = "TEXT")
     private String lastName;
 
+    @Convert(converter = EncryptionConverter.class)
+    @Column(name = "amka", nullable = false, unique = true, length = 255)
+    private String amka;
+
     // Stored as ISO date string "YYYY-MM-DD" for AES encryption
     @Convert(converter = EncryptionConverter.class)
     @Column(name = "date_of_birth", nullable = false, columnDefinition = "TEXT")

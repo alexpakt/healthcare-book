@@ -50,6 +50,15 @@ public class DoctorService {
                 .orElseThrow(() -> new ResourceNotFoundException("Doctor profile not found for user: " + username));
     }
 
+    public DoctorResponse searchByAmka(String amka) {
+        return toResponse(doctorRepository.findByAmka(amka)
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor not found with AMKA: " + amka)));
+    }
+
+    public List<DoctorResponse> searchByName(String name) {
+        return doctorRepository.searchByName(name).stream().map(this::toResponse).toList();
+    }
+
     public void verifyDoctorOwnsChild(Doctor doctor, Long childId) {
         boolean assigned = doctor.getChildren().stream().anyMatch(c -> c.getId().equals(childId));
         if (!assigned) {
@@ -58,7 +67,7 @@ public class DoctorService {
     }
 
     private DoctorResponse toResponse(Doctor d) {
-        return new DoctorResponse(d.getId(), d.getFirstName(), d.getLastName(),
+        return new DoctorResponse(d.getId(), d.getFirstName(), d.getLastName(), d.getAmka(),
                 d.getEmail(), d.getPhoneNumber(), d.getSpecialization(), d.getLicenseNumber());
     }
 }

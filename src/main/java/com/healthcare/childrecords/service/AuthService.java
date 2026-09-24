@@ -45,6 +45,7 @@ public class AuthService {
                 .user(user)
                 .firstName(request.firstName())
                 .lastName(request.lastName())
+                .amka(request.amka())
                 .email(request.email())
                 .phoneNumber(request.phoneNumber())
                 .specialization(request.specialization())

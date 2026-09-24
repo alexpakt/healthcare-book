@@ -125,4 +125,15 @@ public class ChildController {
                                       @Parameter(description = "Doctor ID") @PathVariable Long doctorId) {
         return childService.removeDoctor(userDetails.getUsername(), childId, doctorId);
     }
+
+    @GetMapping("/search")
+    @Operation(summary = "Search child by AMKA", description = "Search for a child using their AMKA (Greek Social Security Number)")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Child found",
+            content = @Content(schema = @Schema(implementation = ChildResponse.class))),
+        @ApiResponse(responseCode = "404", description = "Child not found")
+    })
+    public ChildResponse searchByAmka(@Parameter(description = "AMKA (11 digits)") @RequestParam String amka) {
+        return childService.searchByAmka(amka);
+    }
 }
