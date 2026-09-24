@@ -6,6 +6,7 @@ import com.healthcare.childrecords.service.AllergyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class AllergyController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('DOCTOR')")
     public AllergyResponse create(@AuthenticationPrincipal UserDetails userDetails,
                                   @Valid @RequestBody AllergyRequest request) {
         return allergyService.create(userDetails.getUsername(), request);
@@ -39,6 +41,7 @@ public class AllergyController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('DOCTOR')")
     public AllergyResponse update(@AuthenticationPrincipal UserDetails userDetails,
                                   @PathVariable Long id,
                                   @Valid @RequestBody AllergyRequest request) {
@@ -47,6 +50,7 @@ public class AllergyController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('DOCTOR')")
     public void delete(@AuthenticationPrincipal UserDetails userDetails,
                        @PathVariable Long id) {
         allergyService.delete(userDetails.getUsername(), id);
