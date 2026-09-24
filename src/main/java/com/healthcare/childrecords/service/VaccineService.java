@@ -1,0 +1,29 @@
+package com.healthcare.childrecords.service;
+
+import com.healthcare.childrecords.dto.response.VaccineResponse;
+import com.healthcare.childrecords.entity.Vaccine;
+import com.healthcare.childrecords.repository.VaccineRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+public class VaccineService {
+
+    private final VaccineRepository vaccineRepository;
+
+    public List<VaccineResponse> getAllVaccines() {
+        return vaccineRepository.findAll().stream()
+                .map(this::toResponse)
+                .sorted((a, b) -> a.vaccineName().compareTo(b.vaccineName()))
+                .toList();
+    }
+
+    private VaccineResponse toResponse(Vaccine vaccine) {
+        return new VaccineResponse(vaccine.getId(), vaccine.getVaccineName(), vaccine.getVaccineNameGr());
+    }
+}

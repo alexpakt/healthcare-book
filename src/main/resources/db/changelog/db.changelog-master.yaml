@@ -1,28 +1,46 @@
 databaseChangeLog:
   - include:
-      file: db/changelog/migrations/001-core-auth-schema.yaml
+      file: db/changelog/migrations/001-core-auth-schema.sql
       relativeToChangelogFile: false
   - include:
-      file: db/changelog/migrations/002-children-and-relationships.yaml
+      file: db/changelog/migrations/002-children-and-relationships.sql
       relativeToChangelogFile: false
   - include:
-      file: db/changelog/migrations/003-clinical-data.yaml
+      file: db/changelog/migrations/003-clinical-data.sql
       relativeToChangelogFile: false
   - include:
-      file: db/changelog/migrations/004-growth-measurements.yaml
+      file: db/changelog/migrations/004-growth-measurements.sql
       relativeToChangelogFile: false
   - include:
-      file: db/changelog/migrations/005-birth-records.yaml
+      file: db/changelog/migrations/005-birth-records.sql
       relativeToChangelogFile: false
   - include:
-      file: db/changelog/migrations/006-appointment-status-values.yaml
+      file: db/changelog/migrations/006-appointment-status-values.sql
       relativeToChangelogFile: false
   - include:
-      file: db/changelog/migrations/007-growth-references.yaml
+      file: db/changelog/migrations/007-growth-references.sql
       relativeToChangelogFile: false
   - include:
-      file: db/changelog/migrations/008-growth-reference-data.yaml
+      file: db/changelog/migrations/008-growth-reference-data.sql
       relativeToChangelogFile: false
   - include:
-      file: db/changelog/migrations/009-expand-growth-references.yaml
+      file: db/changelog/migrations/009-expand-growth-references.sql
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/010-vaccination-schedules.sql
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/011-normalize-vaccination-schedules.sql
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/012-vaccine-combinations.sql
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/013-add-parent-vaccination-id.sql
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/014-add-dose-number-to-vaccinations.sql
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/015-remove-parent-vaccination-id.sql
       relativeToChangelogFile: false

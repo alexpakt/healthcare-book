@@ -29,6 +29,9 @@ public class Vaccination {
     @Column(name = "vaccine_name", nullable = false)
     private String vaccineName;
 
+    @Column(name = "dose_number")
+    private Integer doseNumber;
+
     @Column(name = "administered_date", nullable = false)
     private LocalDate administeredDate;
 

@@ -7,6 +7,7 @@ public record VaccinationResponse(
         Long childId,
         String childName,
         String vaccineName,
+        Integer doseNumber,
         LocalDate administeredDate,
         LocalDate nextDoseDate,
         String batchNumber,
