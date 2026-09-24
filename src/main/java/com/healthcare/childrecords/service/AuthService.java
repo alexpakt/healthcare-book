@@ -7,6 +7,7 @@ import com.healthcare.childrecords.dto.response.AuthResponse;
 import com.healthcare.childrecords.entity.*;
 import com.healthcare.childrecords.repository.*;
 import com.healthcare.childrecords.security.JwtUtil;
+import com.healthcare.childrecords.util.AmkaHashUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -46,6 +47,7 @@ public class AuthService {
                 .firstName(request.firstName())
                 .lastName(request.lastName())
                 .amka(request.amka())
+                .amkaHash(AmkaHashUtil.hashAmka(request.amka()))
                 .email(request.email())
                 .phoneNumber(request.phoneNumber())
                 .specialization(request.specialization())

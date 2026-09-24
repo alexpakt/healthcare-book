@@ -10,6 +10,7 @@ import com.healthcare.childrecords.exception.AccessDeniedException;
 import com.healthcare.childrecords.exception.ResourceNotFoundException;
 import com.healthcare.childrecords.repository.ChildRepository;
 import com.healthcare.childrecords.repository.UserRepository;
+import com.healthcare.childrecords.util.AmkaHashUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +34,7 @@ public class ChildService {
                 .firstName(request.firstName())
                 .lastName(request.lastName())
                 .amka(request.amka())
+                .amkaHash(AmkaHashUtil.hashAmka(request.amka()))
                 .dateOfBirth(request.dateOfBirth())
                 .gender(request.gender())
                 .bloodType(request.bloodType())
@@ -118,7 +120,8 @@ public class ChildService {
     }
 
     public ChildResponse searchByAmka(String amka) {
-        Child child = childRepository.findByAmka(amka)
+        String amkaHash = AmkaHashUtil.hashAmka(amka);
+        Child child = childRepository.findByAmkaHash(amkaHash)
                 .orElseThrow(() -> new ResourceNotFoundException("Child not found with AMKA: " + amka));
         return toResponse(child);
     }

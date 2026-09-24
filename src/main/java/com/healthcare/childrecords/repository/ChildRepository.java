@@ -13,5 +13,5 @@ public interface ChildRepository extends JpaRepository<Child, Long> {
     @Query("SELECT c FROM Child c JOIN c.doctors d WHERE d.id = :doctorId")
     List<Child> findByDoctorId(@Param("doctorId") Long doctorId);
 
-    java.util.Optional<Child> findByAmka(String amka);
+    java.util.Optional<Child> findByAmkaHash(String amkaHash);
 }

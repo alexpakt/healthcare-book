@@ -12,7 +12,7 @@ import java.util.List;
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     Optional<Doctor> findByUserId(Long userId);
 
-    Optional<Doctor> findByAmka(String amka);
+    Optional<Doctor> findByAmkaHash(String amkaHash);
 
     @Query("SELECT d FROM Doctor d WHERE d.firstName ILIKE %:name% OR d.lastName ILIKE %:name%")
     List<Doctor> searchByName(@Param("name") String name);

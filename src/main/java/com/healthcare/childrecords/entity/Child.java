@@ -31,7 +31,9 @@ public class Child {
     @Column(name = "amka", nullable = false, unique = true, length = 255)
     private String amka;
 
-    // Stored as ISO date string "YYYY-MM-DD" for AES encryption
+    @Column(name = "amka_hash", nullable = false, unique = true, length = 64)
+    private String amkaHash;
+
     @Convert(converter = EncryptionConverter.class)
     @Column(name = "date_of_birth", nullable = false, columnDefinition = "TEXT")
     private String dateOfBirth;

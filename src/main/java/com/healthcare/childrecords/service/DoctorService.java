@@ -6,6 +6,7 @@ import com.healthcare.childrecords.exception.AccessDeniedException;
 import com.healthcare.childrecords.exception.ResourceNotFoundException;
 import com.healthcare.childrecords.repository.DoctorRepository;
 import com.healthcare.childrecords.repository.UserRepository;
+import com.healthcare.childrecords.util.AmkaHashUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +52,8 @@ public class DoctorService {
     }
 
     public DoctorResponse searchByAmka(String amka) {
-        return toResponse(doctorRepository.findByAmka(amka)
+        String amkaHash = AmkaHashUtil.hashAmka(amka);
+        return toResponse(doctorRepository.findByAmkaHash(amkaHash)
                 .orElseThrow(() -> new ResourceNotFoundException("Doctor not found with AMKA: " + amka)));
     }
 
