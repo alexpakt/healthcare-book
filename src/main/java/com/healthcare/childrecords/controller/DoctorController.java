@@ -46,14 +46,15 @@ public class DoctorController {
     }
 
     @PatchMapping("/me")
-    @Operation(summary = "Update current doctor profile", description = "Update authenticated doctor's phone number and specialization")
+    @Operation(summary = "Update current doctor profile", description = "Update authenticated doctor's phone number, specialization, and address")
     @SecurityRequirement(name = "bearer")
     public DoctorResponse updateMyProfile(@AuthenticationPrincipal UserDetails userDetails,
                                           @RequestBody Map<String, String> updates) {
         return doctorService.updateMyProfile(
                 userDetails.getUsername(),
                 updates.get("phoneNumber"),
-                updates.get("specialization"));
+                updates.get("specialization"),
+                updates.get("address"));
     }
 
     @GetMapping("/search/amka")

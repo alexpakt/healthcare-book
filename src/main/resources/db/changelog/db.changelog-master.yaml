@@ -53,3 +53,6 @@ databaseChangeLog:
   - include:
       file: db/changelog/migrations/018-add-amka-hash.sql
       relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/019-add-doctor-address.sql
+      relativeToChangelogFile: false

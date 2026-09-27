@@ -1,0 +1,16 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: add-doctor-address-column
+      author: alexandra
+      changes:
+        - addColumn:
+            tableName: doctors
+            columns:
+              - column:
+                  name: address
+                  type: VARCHAR(500)
+      rollback:
+        - dropColumn:
+            tableName: doctors
+            columnName: address

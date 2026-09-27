@@ -52,6 +52,7 @@ public class AuthService {
                 .phoneNumber(request.phoneNumber())
                 .specialization(request.specialization())
                 .licenseNumber(request.licenseNumber())
+                .address(request.address())
                 .build();
         doctor = doctorRepository.save(doctor);
 

@@ -13,5 +13,6 @@ public record RegisterDoctorRequest(
         @NotBlank @Email String email,
         String phoneNumber,
         @NotBlank String specialization,
-        @NotBlank String licenseNumber
+        @NotBlank String licenseNumber,
+        String address
 ) {}

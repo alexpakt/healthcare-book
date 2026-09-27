@@ -31,10 +31,11 @@ public class DoctorService {
         return doctorRepository.findAll().stream().map(this::toResponse).toList();
     }
 
-    public DoctorResponse updateMyProfile(String username, String phoneNumber, String specialization) {
+    public DoctorResponse updateMyProfile(String username, String phoneNumber, String specialization, String address) {
         Doctor doctor = findByUsername(username);
         if (phoneNumber != null) doctor.setPhoneNumber(phoneNumber);
         if (specialization != null) doctor.setSpecialization(specialization);
+        if (address != null) doctor.setAddress(address);
         return toResponse(doctorRepository.save(doctor));
     }
 
@@ -70,6 +71,6 @@ public class DoctorService {
 
     private DoctorResponse toResponse(Doctor d) {
         return new DoctorResponse(d.getId(), d.getFirstName(), d.getLastName(), d.getAmka(),
-                d.getEmail(), d.getPhoneNumber(), d.getSpecialization(), d.getLicenseNumber());
+                d.getEmail(), d.getPhoneNumber(), d.getSpecialization(), d.getLicenseNumber(), d.getAddress());
     }
 }

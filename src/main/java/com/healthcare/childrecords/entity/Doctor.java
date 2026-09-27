@@ -49,6 +49,9 @@ public class Doctor {
     @Column(name = "license_number", nullable = false, unique = true, columnDefinition = "TEXT")
     private String licenseNumber;
 
+    @Column(name = "address", length = 500)
+    private String address;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

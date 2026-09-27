@@ -8,5 +8,6 @@ public record DoctorResponse(
         String email,
         String phoneNumber,
         String specialization,
-        String licenseNumber
+        String licenseNumber,
+        String address
 ) {}
