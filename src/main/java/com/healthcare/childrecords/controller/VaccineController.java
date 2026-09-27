@@ -2,6 +2,7 @@ package com.healthcare.childrecords.controller;
 
 import com.healthcare.childrecords.dto.response.VaccineResponse;
 import com.healthcare.childrecords.service.VaccineService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/vaccines")
 @RequiredArgsConstructor
+@Tag(name = "Vaccines", description = "Vaccine management endpoint")
 public class VaccineController {
 
     private final VaccineService vaccineService;

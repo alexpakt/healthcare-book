@@ -3,6 +3,7 @@ package com.healthcare.childrecords.controller;
 import com.healthcare.childrecords.dto.request.VaccinationScheduleRequest;
 import com.healthcare.childrecords.dto.response.VaccinationScheduleResponse;
 import com.healthcare.childrecords.service.VaccinationScheduleService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/vaccination-schedules")
 @RequiredArgsConstructor
+@Tag(name = "Vaccination Schedules", description = "Child vaccination schedule management endpoint")
 public class VaccinationScheduleController {
 
     private final VaccinationScheduleService vaccinationScheduleService;

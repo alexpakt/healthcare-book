@@ -5,6 +5,7 @@ import com.healthcare.childrecords.dto.response.GrowthMeasurementResponse;
 import com.healthcare.childrecords.entity.GrowthReference;
 import com.healthcare.childrecords.entity.MeasurementType;
 import com.healthcare.childrecords.service.GrowthMeasurementService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/growth-measurements")
 @RequiredArgsConstructor
+@Tag(name = "Growth Measurements", description = "Child growth measurement management endpoint")
 public class GrowthMeasurementController {
 
     private final GrowthMeasurementService growthMeasurementService;

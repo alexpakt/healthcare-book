@@ -4,6 +4,7 @@ import com.healthcare.childrecords.dto.request.AppointmentRequest;
 import com.healthcare.childrecords.dto.response.AppointmentResponse;
 import com.healthcare.childrecords.entity.AppointmentStatus;
 import com.healthcare.childrecords.service.AppointmentService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/appointments")
 @RequiredArgsConstructor
+@Tag(name = "Appointments", description = "Child appointments endpoints")
 public class AppointmentController {
 
     private final AppointmentService appointmentService;

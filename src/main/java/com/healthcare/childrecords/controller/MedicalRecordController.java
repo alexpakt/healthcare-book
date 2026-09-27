@@ -3,6 +3,7 @@ package com.healthcare.childrecords.controller;
 import com.healthcare.childrecords.dto.request.MedicalRecordRequest;
 import com.healthcare.childrecords.dto.response.MedicalRecordResponse;
 import com.healthcare.childrecords.service.MedicalRecordService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/medical-records")
 @RequiredArgsConstructor
+@Tag(name = "Medical Records", description = "Child medical record management endpoint")
 public class MedicalRecordController {
 
     private final MedicalRecordService medicalRecordService;

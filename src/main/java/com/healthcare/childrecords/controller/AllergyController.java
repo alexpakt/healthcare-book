@@ -3,6 +3,7 @@ package com.healthcare.childrecords.controller;
 import com.healthcare.childrecords.dto.request.AllergyRequest;
 import com.healthcare.childrecords.dto.response.AllergyResponse;
 import com.healthcare.childrecords.service.AllergyService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/allergies")
 @RequiredArgsConstructor
+@Tag(name = "Allergies", description = "Child allergies endpoints")
 public class AllergyController {
 
     private final AllergyService allergyService;
