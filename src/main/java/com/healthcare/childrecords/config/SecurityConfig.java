@@ -2,7 +2,6 @@ package com.healthcare.childrecords.config;
 
 import com.healthcare.childrecords.security.JwtAuthFilter;
 import com.healthcare.childrecords.security.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -26,14 +25,11 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
-
-    @Autowired
-    private JwtAuthFilter jwtAuthFilter;
-
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthFilter filter, AuthenticationProvider authProvider, CorsConfigurationSource corsConfigurationSource) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   JwtAuthFilter filter,
+                                                   AuthenticationProvider authProvider,
+                                                   CorsConfigurationSource corsConfigurationSource) throws Exception {
         http
             .cors(cors -> cors.configurationSource(corsConfigurationSource))
             .csrf(AbstractHttpConfigurer::disable)
