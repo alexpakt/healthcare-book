@@ -1,0 +1,229 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: create-appointments-table
+      author: alexandra
+      changes:
+        - createTable:
+            tableName: appointments
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: appointment_date
+                  type: DATETIME
+                  constraints:
+                    nullable: false
+              - column:
+                  name: reason
+                  type: TEXT
+              - column:
+                  name: notes
+                  type: TEXT
+              - column:
+                  name: status
+                  type: "ENUM('REQUESTED','SCHEDULED','DECLINED','COMPLETED','CANCELLED')"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: child_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: doctor_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: fk_appointments_child
+            baseTableName: appointments
+            baseColumnNames: child_id
+            referencedTableName: children
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            constraintName: fk_appointments_doctor
+            baseTableName: appointments
+            baseColumnNames: doctor_id
+            referencedTableName: doctors
+            referencedColumnNames: id
+      rollback:
+        - dropTable:
+            tableName: appointments
+
+  - changeSet:
+      id: create-medical-records-table
+      author: alexandra
+      changes:
+        - createTable:
+            tableName: medical_records
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: record_date
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: diagnosis
+                  type: TEXT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: notes
+                  type: TEXT
+              - column:
+                  name: prescription
+                  type: TEXT
+              - column:
+                  name: child_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: doctor_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: appointment_id
+                  type: BIGINT
+                  constraints:
+                    unique: true
+        - addForeignKeyConstraint:
+            constraintName: fk_medical_records_child
+            baseTableName: medical_records
+            baseColumnNames: child_id
+            referencedTableName: children
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            constraintName: fk_medical_records_doctor
+            baseTableName: medical_records
+            baseColumnNames: doctor_id
+            referencedTableName: doctors
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            constraintName: fk_medical_records_appointment
+            baseTableName: medical_records
+            baseColumnNames: appointment_id
+            referencedTableName: appointments
+            referencedColumnNames: id
+      rollback:
+        - dropTable:
+            tableName: medical_records
+
+  - changeSet:
+      id: create-vaccinations-table
+      author: alexandra
+      changes:
+        - createTable:
+            tableName: vaccinations
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: vaccine_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: administered_date
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: next_dose_date
+                  type: DATE
+              - column:
+                  name: batch_number
+                  type: TEXT
+              - column:
+                  name: notes
+                  type: TEXT
+              - column:
+                  name: child_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: administered_by_doctor_id
+                  type: BIGINT
+        - addForeignKeyConstraint:
+            constraintName: fk_vaccinations_child
+            baseTableName: vaccinations
+            baseColumnNames: child_id
+            referencedTableName: children
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            constraintName: fk_vaccinations_doctor
+            baseTableName: vaccinations
+            baseColumnNames: administered_by_doctor_id
+            referencedTableName: doctors
+            referencedColumnNames: id
+      rollback:
+        - dropTable:
+            tableName: vaccinations
+
+  - changeSet:
+      id: create-allergies-table
+      author: alexandra
+      changes:
+        - createTable:
+            tableName: allergies
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: allergen
+                  type: TEXT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: severity
+                  type: "ENUM('MILD','MODERATE','SEVERE')"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: reaction
+                  type: TEXT
+              - column:
+                  name: diagnosed_date
+                  type: DATE
+              - column:
+                  name: notes
+                  type: TEXT
+              - column:
+                  name: child_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: fk_allergies_child
+            baseTableName: allergies
+            baseColumnNames: child_id
+            referencedTableName: children
+            referencedColumnNames: id
+      rollback:
+        - dropTable:
+            tableName: allergies

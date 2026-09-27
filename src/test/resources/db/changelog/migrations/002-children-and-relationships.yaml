@@ -1,0 +1,98 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: create-children-table
+      author: alexandra
+      changes:
+        - createTable:
+            tableName: children
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: first_name
+                  type: TEXT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: TEXT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date_of_birth
+                  type: TEXT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: gender
+                  type: "ENUM('MALE','FEMALE','OTHER')"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: blood_type
+                  type: TEXT
+              - column:
+                  name: parent_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: fk_children_parent
+            baseTableName: children
+            baseColumnNames: parent_id
+            referencedTableName: parents
+            referencedColumnNames: id
+        - createIndex:
+            tableName: children
+            indexName: idx_children_parent_id
+            columns:
+              - column:
+                  name: parent_id
+      rollback:
+        - dropTable:
+            tableName: children
+
+  - changeSet:
+      id: create-child-doctor-join-table
+      author: alexandra
+      changes:
+        - createTable:
+            tableName: child_doctor
+            columns:
+              - column:
+                  name: child_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: doctor_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: fk_child_doctor_child
+            baseTableName: child_doctor
+            baseColumnNames: child_id
+            referencedTableName: children
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            constraintName: fk_child_doctor_doctor
+            baseTableName: child_doctor
+            baseColumnNames: doctor_id
+            referencedTableName: doctors
+            referencedColumnNames: id
+        - createIndex:
+            tableName: child_doctor
+            indexName: idx_child_doctor_doctor_id
+            columns:
+              - column:
+                  name: doctor_id
+      rollback:
+        - dropTable:
+            tableName: child_doctor

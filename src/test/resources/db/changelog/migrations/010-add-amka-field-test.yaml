@@ -1,0 +1,35 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: add-amka-columns-to-children
+      author: alexandra
+      changes:
+        - addColumn:
+            tableName: children
+            columns:
+              - column:
+                  name: amka
+                  type: VARCHAR(255)
+              - column:
+                  name: amka_hash
+                  type: VARCHAR(255)
+        - createIndex:
+            indexName: idx_children_amka_hash
+            tableName: children
+            columns:
+              - column:
+                  name: amka_hash
+
+  - changeSet:
+      id: add-amka-columns-to-doctors
+      author: alexandra
+      changes:
+        - addColumn:
+            tableName: doctors
+            columns:
+              - column:
+                  name: amka
+                  type: VARCHAR(255)
+              - column:
+                  name: amka_hash
+                  type: VARCHAR(255)
