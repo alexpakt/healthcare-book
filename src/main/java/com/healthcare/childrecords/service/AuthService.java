@@ -1,5 +1,6 @@
 package com.healthcare.childrecords.service;
 
+import com.healthcare.childrecords.dto.request.ChangePasswordRequest;
 import com.healthcare.childrecords.dto.request.LoginRequest;
 import com.healthcare.childrecords.dto.request.RegisterDoctorRequest;
 import com.healthcare.childrecords.dto.request.RegisterParentRequest;
@@ -102,5 +103,18 @@ public class AuthService {
         };
 
         return new AuthResponse(jwtUtil.generateToken(userDetails), user.getRole().name(), profileId);
+    }
+
+    @Transactional
+    public void changePassword(String username, ChangePasswordRequest request) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        if (!passwordEncoder.matches(request.currentPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("Current password is incorrect");
+        }
+
+        user.setPassword(passwordEncoder.encode(request.newPassword()));
+        userRepository.save(user);
     }
 }

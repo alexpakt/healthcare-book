@@ -1,5 +1,6 @@
 package com.healthcare.childrecords.controller;
 
+import com.healthcare.childrecords.dto.request.ChangePasswordRequest;
 import com.healthcare.childrecords.dto.request.LoginRequest;
 import com.healthcare.childrecords.dto.request.RegisterDoctorRequest;
 import com.healthcare.childrecords.dto.request.RegisterParentRequest;
@@ -14,6 +15,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -60,5 +63,18 @@ public class AuthController {
     })
     public AuthResponse login(@Valid @RequestBody LoginRequest request) {
         return authService.login(request);
+    }
+
+    @PostMapping("/change-password")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Change user password", description = "Change password for authenticated user")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Password changed successfully"),
+        @ApiResponse(responseCode = "400", description = "Invalid input or current password incorrect"),
+        @ApiResponse(responseCode = "401", description = "User not authenticated")
+    })
+    public void changePassword(@AuthenticationPrincipal UserDetails userDetails,
+                               @Valid @RequestBody ChangePasswordRequest request) {
+        authService.changePassword(userDetails.getUsername(), request);
     }
 }

@@ -40,7 +40,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/actuator/health").permitAll()
                 .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs.yaml").permitAll()
-                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/auth/register/**", "/api/auth/login").permitAll()
+                .requestMatchers("/api/auth/**").authenticated()
                 .requestMatchers(HttpMethod.GET, "/api/doctors/**").hasAnyRole("DOCTOR", "PARENT")
                 .requestMatchers("/api/doctors/**").hasRole("DOCTOR")
                 .requestMatchers("/api/parents/**").hasRole("PARENT")
