@@ -3,6 +3,7 @@ databaseChangeLog:
   - changeSet:
       id: add-doctor-address-column
       author: alexandra
+      comment: Add address column to doctors table
       changes:
         - addColumn:
             tableName: doctors
@@ -10,7 +11,3 @@ databaseChangeLog:
               - column:
                   name: address
                   type: VARCHAR(500)
-      rollback:
-        - dropColumn:
-            tableName: doctors
-            columnName: address

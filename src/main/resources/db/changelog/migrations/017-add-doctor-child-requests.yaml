@@ -1,0 +1,85 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: create-doctor-child-requests-table
+      author: alexandra
+      comment: Create table for doctor-child connection requests
+      changes:
+        - createTable:
+            tableName: doctor_child_requests
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: doctor_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: child_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(50)
+                  defaultValue: PENDING
+                  constraints:
+                    nullable: false
+              - column:
+                  name: requested_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: resolved_at
+                  type: TIMESTAMP
+              - column:
+                  name: notes
+                  type: VARCHAR(255)
+        - addForeignKeyConstraint:
+            baseTableName: doctor_child_requests
+            baseColumnNames: doctor_id
+            referencedTableName: doctors
+            referencedColumnNames: id
+            constraintName: fk_doctor_child_requests_doctor
+        - addForeignKeyConstraint:
+            baseTableName: doctor_child_requests
+            baseColumnNames: child_id
+            referencedTableName: children
+            referencedColumnNames: id
+            constraintName: fk_doctor_child_requests_child
+        - addUniqueConstraint:
+            tableName: doctor_child_requests
+            columnNames: doctor_id,child_id,status
+            constraintName: unique_doctor_child_request
+
+  - changeSet:
+      id: create-doctor-child-requests-indexes
+      author: alexandra
+      comment: Create indexes for doctor_child_requests
+      changes:
+        - createIndex:
+            tableName: doctor_child_requests
+            indexName: idx_doctor_child_requests_doctor_id
+            columns:
+              - column:
+                  name: doctor_id
+        - createIndex:
+            tableName: doctor_child_requests
+            indexName: idx_doctor_child_requests_child_id
+            columns:
+              - column:
+                  name: child_id
+        - createIndex:
+            tableName: doctor_child_requests
+            indexName: idx_doctor_child_requests_status
+            columns:
+              - column:
+                  name: status

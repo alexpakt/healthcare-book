@@ -1,0 +1,49 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: add-amka-hash-to-children
+      author: alexandra
+      comment: Add amka_hash column for searchable AMKA lookup
+      changes:
+        - addColumn:
+            tableName: children
+            columns:
+              - column:
+                  name: amka_hash
+                  type: VARCHAR(64)
+
+  - changeSet:
+      id: add-amka-hash-to-doctors
+      author: alexandra
+      comment: Add amka_hash column for searchable AMKA lookup
+      changes:
+        - addColumn:
+            tableName: doctors
+            columns:
+              - column:
+                  name: amka_hash
+                  type: VARCHAR(64)
+
+  - changeSet:
+      id: create-index-children-amka-hash
+      author: alexandra
+      comment: Create index on amka_hash for faster searches
+      changes:
+        - createIndex:
+            tableName: children
+            indexName: idx_children_amka_hash
+            columns:
+              - column:
+                  name: amka_hash
+
+  - changeSet:
+      id: create-index-doctors-amka-hash
+      author: alexandra
+      comment: Create index on amka_hash for faster searches
+      changes:
+        - createIndex:
+            tableName: doctors
+            indexName: idx_doctors_amka_hash
+            columns:
+              - column:
+                  name: amka_hash

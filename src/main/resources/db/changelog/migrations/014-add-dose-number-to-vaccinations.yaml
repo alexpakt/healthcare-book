@@ -1,0 +1,21 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: add-dose-number-column
+      author: alexandra
+      comment: Add dose_number to track which dose of a vaccine was administered
+      changes:
+        - addColumn:
+            tableName: vaccinations
+            columns:
+              - column:
+                  name: dose_number
+                  type: INT
+        - createIndex:
+            tableName: vaccinations
+            indexName: idx_vaccination_vaccine_dose
+            columns:
+              - column:
+                  name: vaccine_name
+              - column:
+                  name: dose_number

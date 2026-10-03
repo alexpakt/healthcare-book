@@ -27,7 +27,7 @@ public class Allergy {
     private String allergen;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "VARCHAR(20)")
     private AllergySeverity severity;
 
     @Convert(converter = EncryptionConverter.class)

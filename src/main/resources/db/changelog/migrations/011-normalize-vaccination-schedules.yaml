@@ -1,0 +1,134 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: create-vaccines-table
+      author: alexandra
+      comment: Create vaccines table to normalize vaccine master data
+      changes:
+        - createTable:
+            tableName: vaccines
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: vaccine_name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: vaccine_name_gr
+                  type: VARCHAR(255)
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: populate-vaccines-from-schedules
+      author: alexandra
+      comment: Extract unique vaccines from vaccination_schedules into vaccines table
+      changes:
+        - sql:
+            sql: INSERT INTO vaccines (vaccine_name, vaccine_name_gr) SELECT DISTINCT vaccine_name, vaccine_name_gr FROM vaccination_schedules ORDER BY vaccine_name;
+
+  - changeSet:
+      id: add-vaccine-id-to-schedules
+      author: alexandra
+      comment: Add vaccine_id column to vaccination_schedules
+      changes:
+        - addColumn:
+            tableName: vaccination_schedules
+            columns:
+              - column:
+                  name: vaccine_id
+                  type: BIGINT
+
+  - changeSet:
+      id: populate-vaccine-id-in-schedules
+      author: alexandra
+      comment: Populate vaccine_id from the vaccines table
+      changes:
+        - sql:
+            sql: UPDATE vaccination_schedules vs SET vaccine_id = (SELECT v.id FROM vaccines v WHERE v.vaccine_name = vs.vaccine_name);
+
+  - changeSet:
+      id: add-vaccine-fk-constraint
+      author: alexandra
+      comment: Add foreign key constraint for vaccine_id
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: vaccination_schedules
+            baseColumnNames: vaccine_id
+            referencedTableName: vaccines
+            referencedColumnNames: id
+            constraintName: fk_vaccination_schedules_vaccine
+
+  - changeSet:
+      id: drop-old-indexes-before-column-drop
+      author: alexandra
+      comment: Drop old indexes that reference vaccine_name before dropping the column
+      changes:
+        - dropIndex:
+            tableName: vaccination_schedules
+            indexName: idx_vaccination_schedule_vaccine_age
+        - dropIndex:
+            tableName: vaccination_schedules
+            indexName: idx_vaccination_schedule_vaccine
+
+  - changeSet:
+      id: drop-vaccine-name-from-schedules
+      author: alexandra
+      comment: Drop original vaccine_name from vaccination_schedules
+      changes:
+        - dropColumn:
+            tableName: vaccination_schedules
+            columnName: vaccine_name
+
+  - changeSet:
+      id: drop-vaccine-name-gr-from-schedules
+      author: alexandra
+      comment: Drop vaccine_name_gr from vaccination_schedules
+      changes:
+        - dropColumn:
+            tableName: vaccination_schedules
+            columnName: vaccine_name_gr
+
+  - changeSet:
+      id: create-normalized-indexes
+      author: alexandra
+      comment: Create new indexes for optimized queries on normalized schema
+      changes:
+        - createIndex:
+            tableName: vaccination_schedules
+            indexName: idx_vaccination_schedule_vaccine_id
+            columns:
+              - column:
+                  name: vaccine_id
+        - createIndex:
+            tableName: vaccination_schedules
+            indexName: idx_vaccination_schedule_age
+            columns:
+              - column:
+                  name: recommended_age_months
+        - createIndex:
+            tableName: vaccination_schedules
+            indexName: idx_vaccination_schedule_vaccine_id_dose
+            columns:
+              - column:
+                  name: vaccine_id
+              - column:
+                  name: dose_number

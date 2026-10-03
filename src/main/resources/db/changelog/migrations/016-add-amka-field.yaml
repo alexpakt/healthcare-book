@@ -1,0 +1,51 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: add-amka-to-children
+      author: alexandra
+      comment: Add AMKA as mandatory unique field to children table
+      changes:
+        - addColumn:
+            tableName: children
+            columns:
+              - column:
+                  name: amka
+                  type: VARCHAR(255)
+
+  - changeSet:
+      id: add-amka-to-doctors
+      author: alexandra
+      comment: Add AMKA as mandatory unique field to doctors table
+      changes:
+        - addColumn:
+            tableName: doctors
+            columns:
+              - column:
+                  name: amka
+                  type: VARCHAR(255)
+
+  - changeSet:
+      id: create-index-children-amka
+      author: alexandra
+      comment: Create index on children amka
+      changes:
+        - createIndex:
+            tableName: children
+            indexName: idx_children_amka
+            columns:
+              - column:
+                  name: amka
+            unique: true
+
+  - changeSet:
+      id: create-index-doctors-amka
+      author: alexandra
+      comment: Create index on doctors amka
+      changes:
+        - createIndex:
+            tableName: doctors
+            indexName: idx_doctors_amka
+            columns:
+              - column:
+                  name: amka
+            unique: true

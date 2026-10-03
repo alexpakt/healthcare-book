@@ -25,7 +25,7 @@ public class DoctorChildRequest {
     private Child child;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "VARCHAR(50)")
     private RequestStatus status;
 
     @Column(name = "requested_at", nullable = false)

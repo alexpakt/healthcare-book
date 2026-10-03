@@ -27,7 +27,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: role
-                  type: "ENUM('ROLE_DOCTOR','ROLE_PARENT')"
+                  type: VARCHAR(50)
                   constraints:
                     nullable: false
               - column:
@@ -35,6 +35,8 @@ databaseChangeLog:
                   type: BIT(1)
                   constraints:
                     nullable: false
+        - sql:
+            sql: ALTER TABLE users ADD CONSTRAINT check_user_role CHECK (role IN ('ROLE_DOCTOR','ROLE_PARENT'))
       rollback:
         - dropTable:
             tableName: users

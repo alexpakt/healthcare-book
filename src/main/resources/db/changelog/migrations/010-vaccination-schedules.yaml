@@ -1,0 +1,84 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: create-vaccination-schedules-table
+      author: alexandra
+      comment: Create vaccination_schedules table for Greece national vaccination program
+      changes:
+        - createTable:
+            tableName: vaccination_schedules
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: vaccine_name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: vaccine_name_gr
+                  type: VARCHAR(255)
+              - column:
+                  name: recommended_age_months
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: dose_number
+                  type: INT
+              - column:
+                  name: notes
+                  type: TEXT
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: create-vaccination-schedule-indexes
+      author: alexandra
+      comment: Create indexes for vaccination_schedules
+      changes:
+        - createIndex:
+            tableName: vaccination_schedules
+            indexName: idx_vaccination_schedule_vaccine_age
+            columns:
+              - column:
+                  name: vaccine_name
+              - column:
+                  name: recommended_age_months
+        - createIndex:
+            tableName: vaccination_schedules
+            indexName: idx_vaccination_schedule_vaccine
+            columns:
+              - column:
+                  name: vaccine_name
+
+  - changeSet:
+      id: insert-greece-vaccination-schedule-2026
+      author: alexandra
+      comment: Seed Greece national vaccination program schedule for 2026
+      changes:
+        - sql:
+            sql: INSERT INTO vaccination_schedules (vaccine_name, vaccine_name_gr, recommended_age_months, dose_number, notes) VALUES ('HepB (Hepatitis B)', 'Ηπατίτιδας Β', 2, 1, 'Hexavalent - Dose 1 at 2 months'); INSERT INTO vaccination_schedules (vaccine_name, vaccine_name_gr, recommended_age_months, dose_number, notes) VALUES ('HepB (Hepatitis B)', 'Ηπατίτιδας Β', 4, 2, 'Hexavalent - Dose 2 at 4 months'); INSERT INTO vaccination_schedules (vaccine_name, vaccine_name_gr, recommended_age_months, dose_number, notes) VALUES ('HepB (Hepatitis B)', 'Ηπατίτιδας Β', 6, 3, 'Hexavalent - Dose 3 at 6 months (total 3-4 doses)'); INSERT INTO vaccination_schedules (vaccine_name, vaccine_name_gr, recommended_age_months, dose_number, notes) VALUES ('HepB (Hepatitis B)', 'Ηπατίτιδας Β', 132, 4, 'Catch-up dose at 11-12 years');
+        - sql:
+            sql: INSERT INTO vaccination_schedules (vaccine_name, vaccine_name_gr, recommended_age_months, dose_number, notes) VALUES ('DTaP (Diphtheria, Tetanus, Pertussis)', 'Διφθερίτιδας, Τετάνου, Κοκκύτη ακυτταρικό', 2, 1, 'Pentavalent/Hexavalent - Dose 1 at 2 months'); INSERT INTO vaccination_schedules (vaccine_name, vaccine_name_gr, recommended_age_months, dose_number, notes) VALUES ('DTaP (Diphtheria, Tetanus, Pertussis)', 'Διφθερίτιδας, Τετάνου, Κοκκύτη ακυτταρικό', 4, 2, 'Pentavalent/Hexavalent - Dose 2 at 4 months'); INSERT INTO vaccination_schedules (vaccine_name, vaccine_name_gr, recommended_age_months, dose_number, notes) VALUES ('DTaP (Diphtheria, Tetanus, Pertussis)', 'Διφθερίτιδας, Τετάνου, Κοκκύτη ακυτταρικό', 6, 3, 'Pentavalent/Hexavalent - Dose 3 at 6 months'); INSERT INTO vaccination_schedules (vaccine_name, vaccine_name_gr, recommended_age_months, dose_number, notes) VALUES ('DTaP (Diphtheria, Tetanus, Pertussis)', 'Διφθερίτιδας, Τετάνου, Κοκκύτη ακυτταρικό', 12, 4, 'Booster at 12 months');
+        - sql:
+            sql: INSERT INTO vaccination_schedules (vaccine_name, vaccine_name_gr, recommended_age_months, dose_number, notes) VALUES ('IPV (Inactivated Polio Vaccine)', 'Πολιομυελίτιδας αδρανοποιημένο', 2, 1, 'Pentavalent/Hexavalent - Dose 1 at 2 months'); INSERT INTO vaccination_schedules (vaccine_name, vaccine_name_gr, recommended_age_months, dose_number, notes) VALUES ('IPV (Inactivated Polio Vaccine)', 'Πολιομυελίτιδας αδρανοποιημένο', 4, 2, 'Pentavalent/Hexavalent - Dose 2 at 4 months'); INSERT INTO vaccination_schedules (vaccine_name, vaccine_name_gr, recommended_age_months, dose_number, notes) VALUES ('IPV (Inactivated Polio Vaccine)', 'Πολιομυελίτιδας αδρανοποιημένο', 6, 3, 'Pentavalent/Hexavalent - Dose 3 at 6 months'); INSERT INTO vaccination_schedules (vaccine_name, vaccine_name_gr, recommended_age_months, dose_number, notes) VALUES ('IPV (Inactivated Polio Vaccine)', 'Πολιομυελίτιδας αδρανοποιημένο', 12, 4, 'Booster at 12 months'); INSERT INTO vaccination_schedules (vaccine_name, vaccine_name_gr, recommended_age_months, dose_number, notes) VALUES ('IPV (Inactivated Polio Vaccine)', 'Πολιομυελίτιδας αδρανοποιημένο', 60, 5, 'Booster at 4-6 years'); INSERT INTO vaccination_schedules (vaccine_name, vaccine_name_gr, recommended_age_months, dose_number, notes) VALUES ('IPV (Inactivated Polio Vaccine)', 'Πολιομυελίτιδας αδρανοποιημένο', 132, 6, 'IPV or Tdap-IPV at 11-12 years');
+        - sql:
+            sql: INSERT INTO vaccination_schedules (vaccine_name, vaccine_name_gr, recommended_age_months, dose_number, notes) VALUES ('MMR (Measles, Mumps, Rubella)', 'Ιλαράς, Παρωτίτιδας, Ερυθράς', 12, 1, 'Dose 1 at 12 months'); INSERT INTO vaccination_schedules (vaccine_name, vaccine_name_gr, recommended_age_months, dose_number, notes) VALUES ('MMR (Measles, Mumps, Rubella)', 'Ιλαράς, Παρωτίτιδας, Ερυθράς', 60, 2, 'Booster at 4-6 years'); INSERT INTO vaccination_schedules (vaccine_name, vaccine_name_gr, recommended_age_months, dose_number, notes) VALUES ('MMR (Measles, Mumps, Rubella)', 'Ιλαράς, Παρωτίτιδας, Ερυθράς', 132, 3, 'Catch-up at 11-12 years');
+        - sql:
+            sql: INSERT INTO vaccination_schedules (vaccine_name, vaccine_name_gr, recommended_age_months, dose_number, notes) VALUES ('Varicella', 'Ανεμευλογιάς', 12, 1, 'Dose 1 at 12 months'); INSERT INTO vaccination_schedules (vaccine_name, vaccine_name_gr, recommended_age_months, dose_number, notes) VALUES ('Varicella', 'Ανεμευλογιάς', 60, 2, 'Booster at 4-6 years'); INSERT INTO vaccination_schedules (vaccine_name, vaccine_name_gr, recommended_age_months, dose_number, notes) VALUES ('Varicella', 'Ανεμευλογιάς', 132, 3, 'Catch-up at 11-12 years');

@@ -1,0 +1,9 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: placeholder-for-removed-enum-migration
+      author: alexandra
+      comment: This migration was consolidated into 003-clinical-data.yaml
+      changes:
+        - validCheckSum:
+            expectedCheckSum: ANY

@@ -32,18 +32,18 @@ public class GrowthReference {
     @Column(nullable = false)
     private Integer ageInMonths;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "VARCHAR(30)")
     @Enumerated(EnumType.STRING)
     private MeasurementType measurementType;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "VARCHAR(20)")
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
     @Column(nullable = false)
     private Integer percentile;
 
-    @Column(nullable = false)
+    @Column(name = "measurement_value", nullable = false)
     private Double value;
 
     @Column(nullable = false, length = 50)

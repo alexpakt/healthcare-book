@@ -21,12 +21,12 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: measurement_type
-                  type: "ENUM('HEIGHT','WEIGHT','HEAD_CIRCUMFERENCE')"
+                  type: VARCHAR(30)
                   constraints:
                     nullable: false
               - column:
                   name: gender
-                  type: "ENUM('MALE','FEMALE','OTHER')"
+                  type: VARCHAR(20)
                   constraints:
                     nullable: false
               - column:
@@ -35,7 +35,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: value
+                  name: measurement_value
                   type: DOUBLE
                   constraints:
                     nullable: false
@@ -60,3 +60,7 @@ databaseChangeLog:
                   name: measurement_type
               - column:
                   name: gender
+        - sql:
+            sql: ALTER TABLE growth_references ADD CONSTRAINT check_measurement_type CHECK (measurement_type IN ('HEIGHT','WEIGHT','HEAD_CIRCUMFERENCE'))
+        - sql:
+            sql: ALTER TABLE growth_references ADD CONSTRAINT check_growth_ref_gender CHECK (gender IN ('MALE','FEMALE','OTHER'))

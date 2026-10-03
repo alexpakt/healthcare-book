@@ -1,0 +1,26 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: add-parent-vaccination-id-column
+      author: alexandra
+      comment: Add parent_vaccination_id to track combination vaccine components
+      changes:
+        - addColumn:
+            tableName: vaccinations
+            columns:
+              - column:
+                  name: parent_vaccination_id
+                  type: BIGINT
+        - addForeignKeyConstraint:
+            baseTableName: vaccinations
+            baseColumnNames: parent_vaccination_id
+            referencedTableName: vaccinations
+            referencedColumnNames: id
+            constraintName: fk_vaccination_parent
+            onDelete: CASCADE
+        - createIndex:
+            tableName: vaccinations
+            indexName: idx_vaccination_parent_id
+            columns:
+              - column:
+                  name: parent_vaccination_id

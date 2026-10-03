@@ -27,7 +27,7 @@ databaseChangeLog:
                   type: TEXT
               - column:
                   name: status
-                  type: "ENUM('REQUESTED','SCHEDULED','DECLINED','COMPLETED','CANCELLED')"
+                  type: VARCHAR(50)
                   constraints:
                     nullable: false
               - column:
@@ -52,6 +52,8 @@ databaseChangeLog:
             baseColumnNames: doctor_id
             referencedTableName: doctors
             referencedColumnNames: id
+        - sql:
+            sql: ALTER TABLE appointments ADD CONSTRAINT check_appointment_status CHECK (status IN ('REQUESTED','SCHEDULED','DECLINED','COMPLETED','CANCELLED'))
       rollback:
         - dropTable:
             tableName: appointments
@@ -201,7 +203,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: severity
-                  type: "ENUM('MILD','MODERATE','SEVERE')"
+                  type: VARCHAR(20)
                   constraints:
                     nullable: false
               - column:
@@ -224,6 +226,8 @@ databaseChangeLog:
             baseColumnNames: child_id
             referencedTableName: children
             referencedColumnNames: id
+        - sql:
+            sql: ALTER TABLE allergies ADD CONSTRAINT check_allergy_severity CHECK (severity IN ('MILD','MODERATE','SEVERE'))
       rollback:
         - dropTable:
             tableName: allergies

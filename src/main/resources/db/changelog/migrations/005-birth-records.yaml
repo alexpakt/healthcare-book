@@ -28,7 +28,7 @@ databaseChangeLog:
                   type: INT
               - column:
                   name: delivery_type
-                  type: "ENUM('VAGINAL','CESAREAN','VAGINAL_ASSISTED')"
+                  type: VARCHAR(30)
               - column:
                   name: apgar_score_1_min
                   type: INT
@@ -59,6 +59,8 @@ databaseChangeLog:
             baseColumnNames: child_id
             referencedTableName: children
             referencedColumnNames: id
+        - sql:
+            sql: ALTER TABLE birth_records ADD CONSTRAINT check_delivery_type CHECK (delivery_type IN ('VAGINAL','CESAREAN','VAGINAL_ASSISTED'))
       rollback:
         - dropTable:
             tableName: birth_records

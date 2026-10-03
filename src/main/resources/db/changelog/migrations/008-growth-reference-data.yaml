@@ -14,7 +14,7 @@ databaseChangeLog:
               - column: { name: measurement_type, value: HEIGHT }
               - column: { name: gender, value: MALE }
               - column: { name: percentile, value: 3 }
-              - column: { name: value, value: 71.0 }
+              - column: { name: measurement_value, value: 71.0 }
               - column: { name: source, value: WHO_2006 }
         - insert:
             tableName: growth_references
@@ -23,7 +23,7 @@ databaseChangeLog:
               - column: { name: measurement_type, value: HEIGHT }
               - column: { name: gender, value: MALE }
               - column: { name: percentile, value: 10 }
-              - column: { name: value, value: 73.3 }
+              - column: { name: measurement_value, value: 73.3 }
               - column: { name: source, value: WHO_2006 }
         - insert:
             tableName: growth_references
@@ -32,7 +32,7 @@ databaseChangeLog:
               - column: { name: measurement_type, value: HEIGHT }
               - column: { name: gender, value: MALE }
               - column: { name: percentile, value: 25 }
-              - column: { name: value, value: 75.9 }
+              - column: { name: measurement_value, value: 75.9 }
               - column: { name: source, value: WHO_2006 }
         - insert:
             tableName: growth_references
@@ -41,7 +41,7 @@ databaseChangeLog:
               - column: { name: measurement_type, value: HEIGHT }
               - column: { name: gender, value: MALE }
               - column: { name: percentile, value: 50 }
-              - column: { name: value, value: 79.7 }
+              - column: { name: measurement_value, value: 79.7 }
               - column: { name: source, value: WHO_2006 }
         - insert:
             tableName: growth_references
@@ -50,7 +50,7 @@ databaseChangeLog:
               - column: { name: measurement_type, value: HEIGHT }
               - column: { name: gender, value: MALE }
               - column: { name: percentile, value: 75 }
-              - column: { name: value, value: 83.4 }
+              - column: { name: measurement_value, value: 83.4 }
               - column: { name: source, value: WHO_2006 }
         - insert:
             tableName: growth_references
@@ -59,7 +59,7 @@ databaseChangeLog:
               - column: { name: measurement_type, value: HEIGHT }
               - column: { name: gender, value: MALE }
               - column: { name: percentile, value: 90 }
-              - column: { name: value, value: 86.0 }
+              - column: { name: measurement_value, value: 86.0 }
               - column: { name: source, value: WHO_2006 }
         - insert:
             tableName: growth_references
@@ -68,7 +68,7 @@ databaseChangeLog:
               - column: { name: measurement_type, value: HEIGHT }
               - column: { name: gender, value: MALE }
               - column: { name: percentile, value: 97 }
-              - column: { name: value, value: 88.8 }
+              - column: { name: measurement_value, value: 88.8 }
               - column: { name: source, value: WHO_2006 }
 
         # Height for age - MALES (Age 24 months)
@@ -79,7 +79,7 @@ databaseChangeLog:
               - column: { name: measurement_type, value: HEIGHT }
               - column: { name: gender, value: MALE }
               - column: { name: percentile, value: 3 }
-              - column: { name: value, value: 86.8 }
+              - column: { name: measurement_value, value: 86.8 }
               - column: { name: source, value: WHO_2006 }
         - insert:
             tableName: growth_references
@@ -88,7 +88,7 @@ databaseChangeLog:
               - column: { name: measurement_type, value: HEIGHT }
               - column: { name: gender, value: MALE }
               - column: { name: percentile, value: 10 }
-              - column: { name: value, value: 88.2 }
+              - column: { name: measurement_value, value: 88.2 }
               - column: { name: source, value: WHO_2006 }
         - insert:
             tableName: growth_references
@@ -97,7 +97,7 @@ databaseChangeLog:
               - column: { name: measurement_type, value: HEIGHT }
               - column: { name: gender, value: MALE }
               - column: { name: percentile, value: 25 }
-              - column: { name: value, value: 91.0 }
+              - column: { name: measurement_value, value: 91.0 }
               - column: { name: source, value: WHO_2006 }
         - insert:
             tableName: growth_references
@@ -106,7 +106,7 @@ databaseChangeLog:
               - column: { name: measurement_type, value: HEIGHT }
               - column: { name: gender, value: MALE }
               - column: { name: percentile, value: 50 }
-              - column: { name: value, value: 95.5 }
+              - column: { name: measurement_value, value: 95.5 }
               - column: { name: source, value: WHO_2006 }
         - insert:
             tableName: growth_references
@@ -115,7 +115,7 @@ databaseChangeLog:
               - column: { name: measurement_type, value: HEIGHT }
               - column: { name: gender, value: MALE }
               - column: { name: percentile, value: 75 }
-              - column: { name: value, value: 99.8 }
+              - column: { name: measurement_value, value: 99.8 }
               - column: { name: source, value: WHO_2006 }
         - insert:
             tableName: growth_references
@@ -124,7 +124,7 @@ databaseChangeLog:
               - column: { name: measurement_type, value: HEIGHT }
               - column: { name: gender, value: MALE }
               - column: { name: percentile, value: 90 }
-              - column: { name: value, value: 102.6 }
+              - column: { name: measurement_value, value: 102.6 }
               - column: { name: source, value: WHO_2006 }
         - insert:
             tableName: growth_references
@@ -133,5 +133,5 @@ databaseChangeLog:
               - column: { name: measurement_type, value: HEIGHT }
               - column: { name: gender, value: MALE }
               - column: { name: percentile, value: 97 }
-              - column: { name: value, value: 104.6 }
+              - column: { name: measurement_value, value: 104.6 }
               - column: { name: source, value: WHO_2006 }

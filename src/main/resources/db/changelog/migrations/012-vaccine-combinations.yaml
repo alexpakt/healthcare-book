@@ -1,0 +1,77 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: create-vaccine-combinations-table
+      author: alexandra
+      comment: Create vaccine combinations mapping table for tracking combination vaccines
+      changes:
+        - createTable:
+            tableName: vaccine_combinations
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: combination_vaccine_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: component_vaccine_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: vaccine_combinations
+            baseColumnNames: combination_vaccine_id
+            referencedTableName: vaccines
+            referencedColumnNames: id
+            constraintName: fk_vaccine_combo_combination
+        - addForeignKeyConstraint:
+            baseTableName: vaccine_combinations
+            baseColumnNames: component_vaccine_id
+            referencedTableName: vaccines
+            referencedColumnNames: id
+            constraintName: fk_vaccine_combo_component
+        - addUniqueConstraint:
+            tableName: vaccine_combinations
+            columnNames: combination_vaccine_id,component_vaccine_id
+            constraintName: uk_combination_component
+
+  - changeSet:
+      id: create-vaccine-combination-indexes
+      author: alexandra
+      comment: Create indexes for vaccine combinations
+      changes:
+        - createIndex:
+            tableName: vaccine_combinations
+            indexName: idx_combination_vaccine_id
+            columns:
+              - column:
+                  name: combination_vaccine_id
+        - createIndex:
+            tableName: vaccine_combinations
+            indexName: idx_component_vaccine_id
+            columns:
+              - column:
+                  name: component_vaccine_id
+
+  - changeSet:
+      id: add-pentavalent-hexavalent-vaccines
+      author: alexandra
+      comment: Add Pentavalent and Hexavalent vaccine options
+      changes:
+        - sql:
+            sql: INSERT INTO vaccines (vaccine_name, vaccine_name_gr) SELECT 'Pentavalent', 'Πενταδύναμο (DTaP-Hib-IPV)' WHERE NOT EXISTS (SELECT 1 FROM vaccines WHERE vaccine_name = 'Pentavalent');
+        - sql:
+            sql: INSERT INTO vaccines (vaccine_name, vaccine_name_gr) SELECT 'Hexavalent', 'Εξαδύναμο (DTaP-Hib-IPV-HepB)' WHERE NOT EXISTS (SELECT 1 FROM vaccines WHERE vaccine_name = 'Hexavalent');

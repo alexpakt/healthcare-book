@@ -38,7 +38,7 @@ public class Appointment {
     private String notes;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "VARCHAR(50)")
     @Builder.Default
     private AppointmentStatus status = AppointmentStatus.SCHEDULED;
 

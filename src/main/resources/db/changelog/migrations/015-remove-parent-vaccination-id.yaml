@@ -1,0 +1,16 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: remove-parent-vaccination-id-column
+      author: alexandra
+      comment: Remove parent_vaccination_id column as we no longer use parent records for combinations
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: vaccinations
+            constraintName: fk_vaccination_parent
+        - dropIndex:
+            tableName: vaccinations
+            indexName: idx_vaccination_parent_id
+        - dropColumn:
+            tableName: vaccinations
+            columnName: parent_vaccination_id

@@ -43,7 +43,7 @@ public class Child {
     private String bloodType;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "VARCHAR(20)")
     private Gender gender;
 
     @ManyToOne(fetch = FetchType.LAZY)

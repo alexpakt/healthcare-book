@@ -34,7 +34,7 @@ public class BirthRecord {
     private Integer gestationalAgeWeeks;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "delivery_type")
+    @Column(name = "delivery_type", columnDefinition = "VARCHAR(30)")
     private DeliveryType deliveryType;
 
     @Column(name = "apgar_score_1_min")

@@ -31,7 +31,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: gender
-                  type: "ENUM('MALE','FEMALE','OTHER')"
+                  type: VARCHAR(20)
                   constraints:
                     nullable: false
               - column:
@@ -54,6 +54,8 @@ databaseChangeLog:
             columns:
               - column:
                   name: parent_id
+        - sql:
+            sql: ALTER TABLE children ADD CONSTRAINT check_child_gender CHECK (gender IN ('MALE','FEMALE','OTHER'))
       rollback:
         - dropTable:
             tableName: children
