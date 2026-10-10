@@ -1,0 +1,2482 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: insert-who-length-height-boys-ages_0_2
+      author: alexandra
+      comment: WHO child growth standards length/height-for-age percentiles for boys (0-2 years (0-24 months))
+      changes:
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 0 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 45.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 0 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 46.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 0 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 46.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 0 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 47.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 0 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 48.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 0 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 49.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 0 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 51.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 0 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 51.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 0 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 53.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 0 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 53.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 0 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 54.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 1 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 50.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 1 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 51.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 1 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 51.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 1 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 52.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 1 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 53.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 1 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 54.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 1 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 56.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 1 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 56.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 1 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 57.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 1 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 58.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 1 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 59.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 2 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 53.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 2 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 54.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 2 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 55.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 2 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 56.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 2 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 57.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 2 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 58.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 2 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 59.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 2 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 60.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 2 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 61.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 2 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 62.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 2 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 63.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 3 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 56.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 3 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 57.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 3 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 58.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 3 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 59.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 3 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 60.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 3 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 61.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 3 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 62.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 3 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 63.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 3 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 64.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 3 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 65.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 3 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 66.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 4 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 59.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 4 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 60.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 4 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 60.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 4 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 61.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 4 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 62.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 4 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 63.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 4 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 65.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 4 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 66.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 4 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 67.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 4 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 67.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 4 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 68.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 5 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 61.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 5 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 61.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 5 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 62.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 5 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 63.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 5 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 64.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 5 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 65.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 5 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 67.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 5 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 68.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 5 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 69.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 5 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 69.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 5 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 70.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 6 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 62.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 6 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 63.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 6 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 64.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 6 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 65.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 6 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 66.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 6 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 67.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 6 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 69.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 6 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 69.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 6 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 71.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 6 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 71.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 6 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 72.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 7 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 64.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 7 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 65.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 7 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 65.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 7 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 66.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 7 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 67.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 7 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 69.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 7 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 70.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 7 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 71.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 7 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 72.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 7 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 73.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 7 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 74.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 8 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 65.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 8 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 66.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 8 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 67.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 8 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 68.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 8 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 69.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 8 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 70.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 8 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 72.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 8 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 72.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 8 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 74.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 8 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 74.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 8 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 75.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 9 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 66.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 9 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 67.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 9 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 68.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 9 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 69.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 9 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 70.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 9 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 72.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 9 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 73.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 9 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 74.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 9 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 75.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 9 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 76.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 9 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 77.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 10 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 68.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 10 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 69.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 10 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 69.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 10 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 70.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 10 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 71.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 10 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 73.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 10 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 74.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 10 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 75.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 10 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 77.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 10 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 77.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 10 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 78.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 11 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 69.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 11 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 70.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 11 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 70.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 11 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 72.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 11 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 73.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 11 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 74.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 11 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 76.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 11 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 77.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 11 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 78.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 11 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 78.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 11 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 80.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 12 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 70.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 12 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 71.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 12 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 71.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 12 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 73.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 12 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 74.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 12 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 75.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 12 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 77.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 12 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 78.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 12 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 79.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 12 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 80.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 12 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 81.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 13 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 71.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 13 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 72.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 13 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 72.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 13 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 74.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 13 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 75.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 13 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 76.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 13 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 78.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 13 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 79.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 13 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 80.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 13 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 81.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 13 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 82.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 14 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 72.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 14 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 73.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 14 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 74.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 14 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 75.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 14 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 76.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 14 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 78.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 14 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 79.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 14 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 80.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 14 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 82.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 14 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 82.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 14 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 83.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 15 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 73.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 15 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 74.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 15 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 75.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 15 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 76.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 15 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 77.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 15 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 79.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 15 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 80.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 15 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 81.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 15 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 83.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 15 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 83.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 15 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 85.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 16 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 74.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 16 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 75.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 16 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 76.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 16 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 77.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 16 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 78.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 16 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 80.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 16 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 82.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 16 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 82.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 16 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 84.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 16 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 85.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 16 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 86.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 17 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 75.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 17 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 76.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 17 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 76.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 17 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 78.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 17 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 79.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 17 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 81.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 17 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 83.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 17 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 84.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 17 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 85.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 17 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 86.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 17 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 87.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 18 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 76.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 18 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 77.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 18 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 77.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 18 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 79.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 18 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 80.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 18 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 82.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 18 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 84.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 18 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 85.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 18 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 86.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 18 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 87.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 18 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 88.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 19 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 76.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 19 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 78.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 19 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 78.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 19 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 80.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 19 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 81.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 19 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 83.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 19 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 85.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 19 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 86.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 19 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 87.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 19 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 88.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 19 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 89.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 20 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 77.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 20 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 78.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 20 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 79.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 20 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 81.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 20 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 82.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 20 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 84.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 20 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 86.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 20 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 87.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 20 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 88.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 20 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 89.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 20 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 90.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 21 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 78.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 21 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 79.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 21 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 80.4 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 21 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 82.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 21 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 83.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 21 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 85.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 21 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 87.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 21 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 88.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 21 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 89.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 21 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 90.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 21 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 91.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 22 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 79.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 22 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 80.5 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 22 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 81.2 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 22 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 83.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 22 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 84.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 22 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 86.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 22 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 88.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 22 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 89.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 22 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 90.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 22 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 91.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 22 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 92.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 23 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 80.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 23 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 81.3 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 23 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 82.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 23 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 83.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 23 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 84.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 23 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 86.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 23 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 89.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 23 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 90.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 23 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 91.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 23 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 92.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 23 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 93.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 24 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 1 }
+              - column: { name: measurement_value, value: 80.7 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 24 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 3 }
+              - column: { name: measurement_value, value: 82.1 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 24 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 5 }
+              - column: { name: measurement_value, value: 82.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 24 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 15 }
+              - column: { name: measurement_value, value: 84.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 24 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 25 }
+              - column: { name: measurement_value, value: 85.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 24 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 50 }
+              - column: { name: measurement_value, value: 87.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 24 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 75 }
+              - column: { name: measurement_value, value: 89.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 24 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 85 }
+              - column: { name: measurement_value, value: 91.0 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 24 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 95 }
+              - column: { name: measurement_value, value: 92.8 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 24 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 97 }
+              - column: { name: measurement_value, value: 93.6 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }
+        - insert:
+            tableName: growth_references
+            columns:
+              - column: { name: age_in_months, value: 24 }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: gender, value: MALE }
+              - column: { name: percentile, value: 99 }
+              - column: { name: measurement_value, value: 94.9 }
+              - column: { name: source, value: WHO_HEIGHT_FOR_AGE }

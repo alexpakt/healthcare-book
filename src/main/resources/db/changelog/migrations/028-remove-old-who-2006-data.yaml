@@ -1,0 +1,10 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: remove-old-who-2006-reference-data
+      author: alexandra
+      comment: Remove old WHO_2006 reference data (53 rows), superseded by comprehensive WHO 2006 child growth standards (migrations 020-027)
+      changes:
+        - delete:
+            tableName: growth_references
+            where: source = 'WHO_2006'

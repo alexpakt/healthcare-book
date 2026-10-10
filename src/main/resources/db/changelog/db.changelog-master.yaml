@@ -56,3 +56,30 @@ databaseChangeLog:
   - include:
       file: db/changelog/migrations/019-add-doctor-address.yaml
       relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/020-growth-reference-weight-data.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/021-growth-reference-weight-girls-data.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/022-growth-reference-height-girls-0-24.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/023-growth-reference-height-girls-24-60.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/024-growth-reference-height-boys-0-24.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/025-growth-reference-height-boys-24-60.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/026-growth-reference-head-circumference-boys.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/027-growth-reference-head-circumference-girls.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/028-remove-old-who-2006-data.yaml
+      relativeToChangelogFile: false
