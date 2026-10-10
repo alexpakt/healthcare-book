@@ -55,7 +55,7 @@ public class DoctorService {
     public DoctorResponse searchByAmka(String amka) {
         String amkaHash = AmkaHashUtil.hashAmka(amka);
         return toResponse(doctorRepository.findByAmkaHash(amkaHash)
-                .orElseThrow(() -> new ResourceNotFoundException("Doctor not found with AMKA: " + amka)));
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor with AMKA: " + amka + " not found.")));
     }
 
     public List<DoctorResponse> searchByName(String name) {

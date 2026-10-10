@@ -32,7 +32,7 @@ public class DoctorChildRequestService {
         // Check if request already exists
         requestRepository.findByDoctorIdAndChildId(doctor.getId(), child.getId())
                 .ifPresent(existing -> {
-                    throw new IllegalArgumentException("Σύνδεση με αυτό το παιδί έχει ήδη ζητηθεί");
+                    throw new IllegalArgumentException("A connection request for this child has already been made");
                 });
 
         DoctorChildRequest doctorChildRequest = DoctorChildRequest.builder()
@@ -69,7 +69,7 @@ public class DoctorChildRequestService {
         // Verify that the parent owns the child
         Child child = doctorChildRequest.getChild();
         if (!child.getParent().getUser().getUsername().equals(parentUsername)) {
-            throw new AccessDeniedException("Δεν έχετε πρόσβαση σε αυτήν την αίτηση");
+            throw new AccessDeniedException("You do not have access to this request");
         }
 
         // Add doctor to child's doctors list
@@ -94,7 +94,7 @@ public class DoctorChildRequestService {
         // Verify that the parent owns the child
         Child child = doctorChildRequest.getChild();
         if (!child.getParent().getUser().getUsername().equals(parentUsername)) {
-            throw new AccessDeniedException("Δεν έχετε πρόσβαση σε αυτήν την αίτηση");
+            throw new AccessDeniedException("You do not have access to this request");
         }
 
         doctorChildRequest.setStatus(DoctorChildRequest.RequestStatus.REJECTED);

@@ -22,6 +22,7 @@ public class GrowthMeasurementService {
     private final GrowthMeasurementRepository growthMeasurementRepository;
     private final GrowthReferenceRepository growthReferenceRepository;
     private final ChildService childService;
+    private final ChildAccessGuard childAccessGuard;
     private final DoctorService doctorService;
 
     @Transactional
@@ -31,7 +32,7 @@ public class GrowthMeasurementService {
         }
 
         Child child = childService.findById(request.childId());
-        childService.verifyAccess(username, child);
+        childAccessGuard.verifyAccess(username, child);
         Doctor doctor = doctorService.findByUsername(username);
 
         GrowthMeasurement measurement = GrowthMeasurement.builder()
@@ -50,14 +51,14 @@ public class GrowthMeasurementService {
 
     public List<GrowthMeasurementResponse> getForChild(String username, Long childId) {
         Child child = childService.findById(childId);
-        childService.verifyAccess(username, child);
+        childAccessGuard.verifyAccess(username, child);
         return growthMeasurementRepository.findByChildIdOrderByMeasurementDateAsc(childId)
                 .stream().map(this::toResponse).toList();
     }
 
     public GrowthMeasurementResponse getById(String username, Long id) {
         GrowthMeasurement measurement = findById(id);
-        childService.verifyAccess(username, measurement.getChild());
+        childAccessGuard.verifyAccess(username, measurement.getChild());
         return toResponse(measurement);
     }
 
@@ -68,7 +69,7 @@ public class GrowthMeasurementService {
         }
 
         GrowthMeasurement measurement = findById(id);
-        childService.verifyAccess(username, measurement.getChild());
+        childAccessGuard.verifyAccess(username, measurement.getChild());
 
         measurement.setMeasurementDate(request.measurementDate());
         measurement.setAgeInMonths(calculateAgeInMonths(measurement.getChild().getDateOfBirth(), request.measurementDate()));
@@ -83,7 +84,7 @@ public class GrowthMeasurementService {
     @Transactional
     public void delete(String username, Long id) {
         GrowthMeasurement measurement = findById(id);
-        childService.verifyAccess(username, measurement.getChild());
+        childAccessGuard.verifyAccess(username, measurement.getChild());
         growthMeasurementRepository.delete(measurement);
     }
 

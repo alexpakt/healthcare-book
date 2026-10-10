@@ -20,6 +20,7 @@ public class AppointmentService {
 
     private final AppointmentRepository appointmentRepository;
     private final ChildService childService;
+    private final ChildAccessGuard childAccessGuard;
     private final DoctorService doctorService;
     private final ParentService parentService;
     private final UserRepository userRepository;
@@ -27,7 +28,7 @@ public class AppointmentService {
     @Transactional
     public AppointmentResponse create(String username, AppointmentRequest request) {
         Child child = childService.findById(request.childId());
-        childService.verifyAccess(username, child);
+        childAccessGuard.verifyAccess(username, child);
 
         Doctor doctor = doctorService.findById(request.doctorId());
 
@@ -56,7 +57,7 @@ public class AppointmentService {
 
     public List<AppointmentResponse> getForChild(String username, Long childId) {
         Child child = childService.findById(childId);
-        childService.verifyAccess(username, child);
+        childAccessGuard.verifyAccess(username, child);
         return appointmentRepository.findByChildId(childId).stream().map(this::toResponse).toList();
     }
 

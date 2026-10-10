@@ -17,11 +17,12 @@ public class BirthRecordService {
 
     private final BirthRecordRepository birthRecordRepository;
     private final ChildService childService;
+    private final ChildAccessGuard childAccessGuard;
 
     @Transactional
     public BirthRecordResponse create(String username, BirthRecordRequest request) {
         Child child = childService.findById(request.childId());
-        childService.verifyAccess(username, child);
+        childAccessGuard.verifyAccess(username, child);
 
         if (birthRecordRepository.existsByChildId(child.getId())) {
             throw new IllegalArgumentException("Birth record already exists for this child. Use PUT to update it.");
@@ -47,7 +48,7 @@ public class BirthRecordService {
 
     public BirthRecordResponse getByChildId(String username, Long childId) {
         Child child = childService.findById(childId);
-        childService.verifyAccess(username, child);
+        childAccessGuard.verifyAccess(username, child);
 
         return birthRecordRepository.findByChildId(childId)
                 .map(this::toResponse)
@@ -57,7 +58,7 @@ public class BirthRecordService {
     @Transactional
     public BirthRecordResponse update(String username, Long childId, BirthRecordRequest request) {
         Child child = childService.findById(childId);
-        childService.verifyAccess(username, child);
+        childAccessGuard.verifyAccess(username, child);
 
         BirthRecord record = birthRecordRepository.findByChildId(childId)
                 .orElseThrow(() -> new ResourceNotFoundException("Birth record not found for child: " + childId));

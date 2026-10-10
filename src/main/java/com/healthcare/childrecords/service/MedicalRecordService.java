@@ -19,6 +19,7 @@ public class MedicalRecordService {
 
     private final MedicalRecordRepository medicalRecordRepository;
     private final ChildService childService;
+    private final ChildAccessGuard childAccessGuard;
     private final DoctorService doctorService;
     private final AppointmentService appointmentService;
     private final UserRepository userRepository;
@@ -26,7 +27,7 @@ public class MedicalRecordService {
     @Transactional
     public MedicalRecordResponse create(String username, MedicalRecordRequest request) {
         Child child = childService.findById(request.childId());
-        childService.verifyAccess(username, child);
+        childAccessGuard.verifyAccess(username, child);
 
         Doctor doctor = doctorService.findByUsername(username);
 
@@ -49,20 +50,20 @@ public class MedicalRecordService {
 
     public List<MedicalRecordResponse> getForChild(String username, Long childId) {
         Child child = childService.findById(childId);
-        childService.verifyAccess(username, child);
+        childAccessGuard.verifyAccess(username, child);
         return medicalRecordRepository.findByChildId(childId).stream().map(this::toResponse).toList();
     }
 
     public MedicalRecordResponse getById(String username, Long id) {
         MedicalRecord record = findById(id);
-        childService.verifyAccess(username, record.getChild());
+        childAccessGuard.verifyAccess(username, record.getChild());
         return toResponse(record);
     }
 
     @Transactional
     public MedicalRecordResponse update(String username, Long id, MedicalRecordRequest request) {
         MedicalRecord record = findById(id);
-        childService.verifyAccess(username, record.getChild());
+        childAccessGuard.verifyAccess(username, record.getChild());
 
         // Only the creating doctor can update
         Doctor doctor = doctorService.findByUsername(username);

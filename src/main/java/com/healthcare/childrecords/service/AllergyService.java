@@ -19,11 +19,12 @@ public class AllergyService {
 
     private final AllergyRepository allergyRepository;
     private final ChildService childService;
+    private final ChildAccessGuard childAccessGuard;
 
     @Transactional
     public AllergyResponse create(String username, AllergyRequest request) {
         Child child = childService.findById(request.childId());
-        childService.verifyAccess(username, child);
+        childAccessGuard.verifyAccess(username, child);
 
         Allergy allergy = Allergy.builder()
                 .child(child)
@@ -38,20 +39,20 @@ public class AllergyService {
 
     public List<AllergyResponse> getForChild(String username, Long childId) {
         Child child = childService.findById(childId);
-        childService.verifyAccess(username, child);
+        childAccessGuard.verifyAccess(username, child);
         return allergyRepository.findByChildId(childId).stream().map(this::toResponse).toList();
     }
 
     public AllergyResponse getById(String username, Long id) {
         Allergy allergy = findById(id);
-        childService.verifyAccess(username, allergy.getChild());
+        childAccessGuard.verifyAccess(username, allergy.getChild());
         return toResponse(allergy);
     }
 
     @Transactional
     public AllergyResponse update(String username, Long id, AllergyRequest request) {
         Allergy allergy = findById(id);
-        childService.verifyAccess(username, allergy.getChild());
+        childAccessGuard.verifyAccess(username, allergy.getChild());
         allergy.setAllergen(request.allergen());
         allergy.setSeverity(request.severity());
         allergy.setReaction(request.reaction());
@@ -63,7 +64,7 @@ public class AllergyService {
     @Transactional
     public void delete(String username, Long id) {
         Allergy allergy = findById(id);
-        childService.verifyAccess(username, allergy.getChild());
+        childAccessGuard.verifyAccess(username, allergy.getChild());
         allergyRepository.delete(allergy);
     }
 
