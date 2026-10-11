@@ -71,6 +71,8 @@ public class AppointmentControllerIntegrationTest extends BaseIntegrationTest {
 
     Long childId = objectMapper.readTree(childResponse).get("id").asLong();
 
+    connectDoctor(parentToken, childId, doctorId);
+
     // Create appointment
     LocalDateTime futureDate = LocalDateTime.now().plusDays(7);
     AppointmentRequest appointmentRequest = new AppointmentRequest(
@@ -151,6 +153,8 @@ public class AppointmentControllerIntegrationTest extends BaseIntegrationTest {
 
     Long childId = objectMapper.readTree(childResponse).get("id").asLong();
 
+    connectDoctor(parentToken, childId, doctorId);
+
     // Try to create appointment with past date
     LocalDateTime pastDate = LocalDateTime.now().minusDays(1);
     String invalidJson = """
@@ -226,6 +230,8 @@ public class AppointmentControllerIntegrationTest extends BaseIntegrationTest {
         .getContentAsString();
 
     Long childId = objectMapper.readTree(childResponse).get("id").asLong();
+
+    connectDoctor(parentToken, childId, doctorId);
 
     // Create appointment
     LocalDateTime futureDate = LocalDateTime.now().plusDays(7);
@@ -311,6 +317,8 @@ public class AppointmentControllerIntegrationTest extends BaseIntegrationTest {
 
     Long childId = objectMapper.readTree(childResponse).get("id").asLong();
 
+    connectDoctor(parentToken, childId, doctorId);
+
     // Create appointment
     LocalDateTime futureDate = LocalDateTime.now().plusDays(10);
     AppointmentRequest appointmentRequest = new AppointmentRequest(
@@ -395,6 +403,8 @@ public class AppointmentControllerIntegrationTest extends BaseIntegrationTest {
 
     Long childId = objectMapper.readTree(childResponse).get("id").asLong();
 
+    connectDoctor(parentToken, childId, doctorId);
+
     // Assign doctor to child
     String doctorToken = loginAndGetToken(doctorUsername, "TestPass123!");
     mockMvc
@@ -449,5 +459,74 @@ public class AppointmentControllerIntegrationTest extends BaseIntegrationTest {
                 .content(statusUpdateToCompleted))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$.status").value("COMPLETED"));
+  }
+
+  private void connectDoctor(String parentToken, Long childId, Long doctorId) throws Exception {
+    mockMvc
+        .perform(
+            post("/api/children/{childId}/doctors/{doctorId}", childId, doctorId)
+                .header("Authorization", getAuthorizationHeader(parentToken)))
+        .andExpect(status().isOk());
+  }
+
+  @Test
+  public void testCreateAppointment_UnconnectedDoctorForbidden() throws Exception {
+    String parentUsername = "parent" + System.currentTimeMillis();
+    RegisterParentRequest parentRequest =
+        new RegisterParentRequest(parentUsername, "TestPass123!", "Test", "Parent", "parent@example.com", null, null);
+
+    mockMvc
+        .perform(
+            post("/api/auth/register/parent")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(parentRequest)))
+        .andExpect(status().isCreated());
+
+    String parentToken = loginAndGetToken(parentUsername, "TestPass123!");
+
+    String doctorUsername = "doctor" + System.currentTimeMillis();
+    RegisterDoctorRequest doctorRequest =
+        new RegisterDoctorRequest(
+            doctorUsername, "TestPass123!", "Test", "Doctor", "20118707867", "doctor@example.com", null, "Pediatrics", "LIC123456", null);
+
+    String doctorRegisterResponse = mockMvc
+        .perform(
+            post("/api/auth/register/doctor")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(doctorRequest)))
+        .andExpect(status().isCreated())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+
+    Long doctorId = objectMapper.readTree(doctorRegisterResponse).get("profileId").asLong();
+
+    ChildRequest childRequest = new ChildRequest("Child", "Four", "44444444444", "2020-01-15", Gender.MALE, "A+");
+
+    String childResponse = mockMvc
+        .perform(
+            post("/api/children")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(parentToken))
+                .content(objectMapper.writeValueAsString(childRequest)))
+        .andExpect(status().isCreated())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+
+    Long childId = objectMapper.readTree(childResponse).get("id").asLong();
+
+    // Doctor is not connected to the child, so the parent must not be able to request an appointment with them
+    AppointmentRequest appointmentRequest =
+        new AppointmentRequest(childId, doctorId, LocalDateTime.now().plusDays(7), "Checkup", null);
+
+    mockMvc
+        .perform(
+            post("/api/appointments")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(parentToken))
+                .content(objectMapper.writeValueAsString(appointmentRequest)))
+        .andExpect(status().isForbidden())
+        .andExpect(jsonPath("$.message").value("Doctor is not connected to this child"));
   }
 }

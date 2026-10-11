@@ -489,4 +489,69 @@ public class ChildControllerIntegrationTest extends BaseIntegrationTest {
                 .header("Authorization", getAuthorizationHeader(parentToken)))
         .andExpect(status().isOk());
   }
+
+  @Test
+  public void testGetChildDoctors_ReturnsOnlyConnectedDoctors() throws Exception {
+    String parentUsername = "parent" + System.currentTimeMillis();
+    mockMvc
+        .perform(
+            post("/api/auth/register/parent")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(
+                    new RegisterParentRequest(parentUsername, "TestPass123!", "Test", "Parent", "parent@example.com", null, null))))
+        .andExpect(status().isCreated());
+    String parentToken = loginAndGetToken(parentUsername, "TestPass123!");
+
+    // Connected doctor
+    String connectedDoctorResponse = mockMvc
+        .perform(
+            post("/api/auth/register/doctor")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(
+                    new RegisterDoctorRequest("doctorA" + System.currentTimeMillis(), "TestPass123!", "Connected", "Doctor",
+                        "20118707867", "doctorA@example.com", null, "Pediatrics", "LIC123456", null))))
+        .andExpect(status().isCreated())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+    long connectedDoctorId = objectMapper.readTree(connectedDoctorResponse).get("profileId").asLong();
+
+    // Doctor who is not connected to the child
+    mockMvc
+        .perform(
+            post("/api/auth/register/doctor")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(
+                    new RegisterDoctorRequest("doctorB" + System.currentTimeMillis(), "TestPass123!", "Other", "Doctor",
+                        "20118707868", "doctorB@example.com", null, "Dermatology", "LIC654321", null))))
+        .andExpect(status().isCreated());
+
+    String childResponse = mockMvc
+        .perform(
+            post("/api/children")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(parentToken))
+                .content(objectMapper.writeValueAsString(
+                    new ChildRequest("Child", "Doctors", "55555555555", "2020-01-15", Gender.FEMALE, "O-"))))
+        .andExpect(status().isCreated())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+    long childId = objectMapper.readTree(childResponse).get("id").asLong();
+
+    mockMvc
+        .perform(
+            post("/api/children/" + childId + "/doctors/" + connectedDoctorId)
+                .header("Authorization", getAuthorizationHeader(parentToken)))
+        .andExpect(status().isOk());
+
+    mockMvc
+        .perform(
+            get("/api/children/" + childId + "/doctors")
+                .header("Authorization", getAuthorizationHeader(parentToken)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", hasSize(1)))
+        .andExpect(jsonPath("$[0].id").value(connectedDoctorId))
+        .andExpect(jsonPath("$[0].specialization").value("Pediatrics"));
+  }
 }

@@ -2,6 +2,7 @@ package com.healthcare.childrecords.service;
 
 import com.healthcare.childrecords.dto.request.ChildRequest;
 import com.healthcare.childrecords.dto.response.ChildResponse;
+import com.healthcare.childrecords.dto.response.DoctorResponse;
 import com.healthcare.childrecords.entity.Child;
 import com.healthcare.childrecords.entity.Doctor;
 import com.healthcare.childrecords.entity.Parent;
@@ -58,6 +59,12 @@ public class ChildService {
         Child child = findById(childId);
         childAccessGuard.verifyAccess(username, child);
         return toResponse(child);
+    }
+
+    public List<DoctorResponse> getDoctors(String username, Long childId) {
+        Child child = findById(childId);
+        childAccessGuard.verifyAccess(username, child);
+        return child.getDoctors().stream().map(doctorService::toResponse).toList();
     }
 
     @Transactional

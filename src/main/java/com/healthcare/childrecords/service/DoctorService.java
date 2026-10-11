@@ -69,7 +69,7 @@ public class DoctorService {
         }
     }
 
-    private DoctorResponse toResponse(Doctor d) {
+    public DoctorResponse toResponse(Doctor d) {
         return new DoctorResponse(d.getId(), d.getFirstName(), d.getLastName(), d.getAmka(),
                 d.getEmail(), d.getPhoneNumber(), d.getSpecialization(), d.getLicenseNumber(), d.getAddress());
     }

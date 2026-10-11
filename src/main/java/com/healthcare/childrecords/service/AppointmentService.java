@@ -41,6 +41,9 @@ public class AppointmentService {
             }
             status = AppointmentStatus.SCHEDULED;
         } else {
+            if (child.getDoctors().stream().noneMatch(d -> d.getId().equals(doctor.getId()))) {
+                throw new AccessDeniedException("Doctor is not connected to this child");
+            }
             status = AppointmentStatus.REQUESTED;
         }
 

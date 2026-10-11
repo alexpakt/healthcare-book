@@ -2,6 +2,7 @@ package com.healthcare.childrecords.controller;
 
 import com.healthcare.childrecords.dto.request.ChildRequest;
 import com.healthcare.childrecords.dto.response.ChildResponse;
+import com.healthcare.childrecords.dto.response.DoctorResponse;
 import com.healthcare.childrecords.service.ChildService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -107,6 +108,20 @@ public class ChildController {
     public void delete(@AuthenticationPrincipal UserDetails userDetails,
                        @Parameter(description = "Child ID") @PathVariable Long id) {
         childService.delete(userDetails.getUsername(), id);
+    }
+
+    @GetMapping("/{id}/doctors")
+    @Operation(summary = "List doctors connected to a child", description = "Retrieve the doctors assigned to a child record")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Connected doctors retrieved",
+            content = @Content(schema = @Schema(implementation = DoctorResponse.class))),
+        @ApiResponse(responseCode = "401", description = "Unauthorized"),
+        @ApiResponse(responseCode = "403", description = "Access denied"),
+        @ApiResponse(responseCode = "404", description = "Child not found")
+    })
+    public List<DoctorResponse> getDoctors(@AuthenticationPrincipal UserDetails userDetails,
+                                           @Parameter(description = "Child ID") @PathVariable Long id) {
+        return childService.getDoctors(userDetails.getUsername(), id);
     }
 
     @PostMapping("/{childId}/doctors/{doctorId}")
