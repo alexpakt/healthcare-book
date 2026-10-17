@@ -1,0 +1,126 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: create-growth-alert-rules-table
+      author: alexandra
+      comment: Create growth_alert_rules table for personalized growth trajectory alerts
+      changes:
+        - createTable:
+            tableName: growth_alert_rules
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+              - column:
+                  name: rule_type
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: measurement_type
+                  type: VARCHAR(30)
+              - column:
+                  name: min_age_months
+                  type: INT
+              - column:
+                  name: max_age_months
+                  type: INT
+              - column:
+                  name: threshold_value
+                  type: DOUBLE
+              - column:
+                  name: percentile_lines
+                  type: VARCHAR(100)
+              - column:
+                  name: enabled
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+
+  # PERCENTILE_CROSSING, enabled.
+  # threshold_value = 2: shift of two or more major lines between consecutive measurements.
+  # percentile_lines = 3,15,50,85,97: the WHO lines stored for height, weight and head
+  #   circumference (-2 SD, -1 SD, median, +1 SD, +2 SD). Stored data has no p10 or p90.
+  #   PENDING CONFIRMATION of the line set.
+  # min_age_months = 0: no infant suppression. PENDING CLINICIAN REVIEW.
+  - changeSet:
+      id: seed-growth-alert-rules-percentile-crossing
+      author: alexandra
+      comment: Seed PERCENTILE_CROSSING rules (enabled). Line set and min age pending clinician review
+      changes:
+        - insert:
+            tableName: growth_alert_rules
+            columns:
+              - column: { name: rule_type, value: PERCENTILE_CROSSING }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: min_age_months, valueNumeric: 0 }
+              - column: { name: threshold_value, valueNumeric: 2 }
+              - column: { name: percentile_lines, value: "3,15,50,85,97" }
+              - column: { name: enabled, valueBoolean: true }
+        - insert:
+            tableName: growth_alert_rules
+            columns:
+              - column: { name: rule_type, value: PERCENTILE_CROSSING }
+              - column: { name: measurement_type, value: WEIGHT }
+              - column: { name: min_age_months, valueNumeric: 0 }
+              - column: { name: threshold_value, valueNumeric: 2 }
+              - column: { name: percentile_lines, value: "3,15,50,85,97" }
+              - column: { name: enabled, valueBoolean: true }
+        - insert:
+            tableName: growth_alert_rules
+            columns:
+              - column: { name: rule_type, value: PERCENTILE_CROSSING }
+              - column: { name: measurement_type, value: HEAD_CIRCUMFERENCE }
+              - column: { name: min_age_months, valueNumeric: 0 }
+              - column: { name: threshold_value, valueNumeric: 2 }
+              - column: { name: percentile_lines, value: "3,15,50,85,97" }
+              - column: { name: enabled, valueBoolean: true }
+
+  # VELOCITY, disabled. No thresholds until a clinician defines the expected range and tolerance.
+  # The engine does not evaluate VELOCITY rules yet.
+  - changeSet:
+      id: seed-growth-alert-rules-velocity-disabled
+      author: alexandra
+      comment: Seed VELOCITY rules disabled, thresholds pending clinician review
+      changes:
+        - insert:
+            tableName: growth_alert_rules
+            columns:
+              - column: { name: rule_type, value: VELOCITY }
+              - column: { name: measurement_type, value: HEIGHT }
+              - column: { name: enabled, valueBoolean: false }
+        - insert:
+            tableName: growth_alert_rules
+            columns:
+              - column: { name: rule_type, value: VELOCITY }
+              - column: { name: measurement_type, value: WEIGHT }
+              - column: { name: enabled, valueBoolean: false }
+
+  # MISSING_MEASUREMENT, disabled. Window pending clinician review. Not evaluated yet.
+  - changeSet:
+      id: seed-growth-alert-rules-missing-measurement-disabled
+      author: alexandra
+      comment: Seed MISSING_MEASUREMENT rule disabled, window pending clinician review
+      changes:
+        - insert:
+            tableName: growth_alert_rules
+            columns:
+              - column: { name: rule_type, value: MISSING_MEASUREMENT }
+              - column: { name: enabled, valueBoolean: false }

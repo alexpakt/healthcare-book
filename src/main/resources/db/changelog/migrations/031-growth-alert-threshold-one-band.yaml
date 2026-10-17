@@ -1,0 +1,13 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: set-growth-alert-crossing-threshold-one-band
+      author: alexandra
+      comment: Lower PERCENTILE_CROSSING threshold from 2 to 1 band. Any move across one configured line now alerts. Pending clinician review
+      changes:
+        - update:
+            tableName: growth_alert_rules
+            columns:
+              - column: { name: threshold_value, valueNumeric: 1 }
+              - column: { name: updated_at, valueComputed: CURRENT_TIMESTAMP }
+            where: rule_type = 'PERCENTILE_CROSSING'

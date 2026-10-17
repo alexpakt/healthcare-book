@@ -1,10 +1,14 @@
 package com.healthcare.childrecords.controller;
 
+import com.healthcare.childrecords.dto.request.GrowthAlertAcknowledgeRequest;
 import com.healthcare.childrecords.dto.request.GrowthMeasurementRequest;
+import com.healthcare.childrecords.dto.response.GrowthAlertResponse;
 import com.healthcare.childrecords.dto.response.GrowthMeasurementResponse;
 import com.healthcare.childrecords.entity.GrowthReference;
 import com.healthcare.childrecords.entity.MeasurementType;
 import com.healthcare.childrecords.service.GrowthMeasurementService;
+import com.healthcare.childrecords.service.GrowthTrajectoryService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +27,7 @@ import java.util.List;
 public class GrowthMeasurementController {
 
     private final GrowthMeasurementService growthMeasurementService;
+    private final GrowthTrajectoryService growthTrajectoryService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -58,6 +63,25 @@ public class GrowthMeasurementController {
     public void delete(@AuthenticationPrincipal UserDetails userDetails,
                        @PathVariable Long id) {
         growthMeasurementService.delete(userDetails.getUsername(), id);
+    }
+
+    @GetMapping("/child/{childId}/alerts")
+    @PreAuthorize("hasRole('DOCTOR')")
+    @Operation(summary = "List growth alerts for clinical review (doctors only). Alerts are monitoring aids, not diagnoses.")
+    public List<GrowthAlertResponse> getAlerts(@AuthenticationPrincipal UserDetails userDetails,
+                                               @PathVariable Long childId) {
+        return growthTrajectoryService.getAlerts(userDetails.getUsername(), childId);
+    }
+
+    @PostMapping("/child/{childId}/alerts/{alertKey}/acknowledge")
+    @PreAuthorize("hasRole('DOCTOR')")
+    @Operation(summary = "Acknowledge a growth alert after clinical review.")
+    public GrowthAlertResponse acknowledgeAlert(@AuthenticationPrincipal UserDetails userDetails,
+                                                @PathVariable Long childId,
+                                                @PathVariable String alertKey,
+                                                @Valid @RequestBody(required = false) GrowthAlertAcknowledgeRequest request) {
+        String note = request == null ? null : request.note();
+        return growthTrajectoryService.acknowledge(userDetails.getUsername(), childId, alertKey, note);
     }
 
     @GetMapping("/references/child/{childId}/type/{measurementType}")

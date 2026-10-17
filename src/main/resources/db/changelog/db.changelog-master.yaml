@@ -83,3 +83,12 @@ databaseChangeLog:
   - include:
       file: db/changelog/migrations/028-remove-old-who-2006-data.yaml
       relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/029-growth-alert-rules.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/030-growth-alert-acknowledgements.yaml
+      relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/031-growth-alert-threshold-one-band.yaml
+      relativeToChangelogFile: false
