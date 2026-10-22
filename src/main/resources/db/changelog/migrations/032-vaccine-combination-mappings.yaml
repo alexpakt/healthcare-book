@@ -1,0 +1,33 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: add-hib-vaccine
+      author: alexandra
+      comment: Add Hib vaccine master row, needed as a component of Pentavalent and Hexavalent
+      changes:
+        - sql:
+            sql: INSERT INTO vaccines (vaccine_name, vaccine_name_gr) SELECT 'Hib', 'Αιμοφίλου ινφλουέντας τύπου b' WHERE NOT EXISTS (SELECT 1 FROM vaccines WHERE vaccine_name = 'Hib');
+
+  - changeSet:
+      id: add-hib-schedule
+      author: alexandra
+      comment: Add Hib schedule rows
+      changes:
+        - sql:
+            sql: INSERT INTO vaccination_schedules (vaccine_id, recommended_age_months, dose_number, notes) SELECT id, 2, 1, 'Haemophilus influenzae type b - Dose 1 at 2 months' FROM vaccines WHERE vaccine_name = 'Hib'; INSERT INTO vaccination_schedules (vaccine_id, recommended_age_months, dose_number, notes) SELECT id, 4, 2, 'Dose 2 at 4 months' FROM vaccines WHERE vaccine_name = 'Hib'; INSERT INTO vaccination_schedules (vaccine_id, recommended_age_months, dose_number, notes) SELECT id, 6, 3, 'Dose 3 at 6 months' FROM vaccines WHERE vaccine_name = 'Hib'; INSERT INTO vaccination_schedules (vaccine_id, recommended_age_months, dose_number, notes) SELECT id, 12, 4, 'Booster at 12 months' FROM vaccines WHERE vaccine_name = 'Hib';
+
+  - changeSet:
+      id: map-pentavalent-components
+      author: alexandra
+      comment: Pentavalent (DTaP-Hib-IPV) is recorded as its component vaccines
+      changes:
+        - sql:
+            sql: INSERT INTO vaccine_combinations (combination_vaccine_id, component_vaccine_id) SELECT c.id, k.id FROM vaccines c JOIN vaccines k ON k.vaccine_name IN ('DTaP (Diphtheria, Tetanus, Pertussis)', 'Hib', 'IPV (Inactivated Polio Vaccine)') WHERE c.vaccine_name = 'Pentavalent';
+
+  - changeSet:
+      id: map-hexavalent-components
+      author: alexandra
+      comment: Hexavalent (DTaP-Hib-IPV-HepB) is recorded as its component vaccines
+      changes:
+        - sql:
+            sql: INSERT INTO vaccine_combinations (combination_vaccine_id, component_vaccine_id) SELECT c.id, k.id FROM vaccines c JOIN vaccines k ON k.vaccine_name IN ('DTaP (Diphtheria, Tetanus, Pertussis)', 'Hib', 'IPV (Inactivated Polio Vaccine)', 'HepB (Hepatitis B)') WHERE c.vaccine_name = 'Hexavalent';

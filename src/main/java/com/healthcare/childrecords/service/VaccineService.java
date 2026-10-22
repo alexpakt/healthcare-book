@@ -2,6 +2,7 @@ package com.healthcare.childrecords.service;
 
 import com.healthcare.childrecords.dto.response.VaccineResponse;
 import com.healthcare.childrecords.entity.Vaccine;
+import com.healthcare.childrecords.repository.VaccineCombinationRepository;
 import com.healthcare.childrecords.repository.VaccineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.List;
 public class VaccineService {
 
     private final VaccineRepository vaccineRepository;
+    private final VaccineCombinationRepository vaccineCombinationRepository;
 
     public List<VaccineResponse> getAllVaccines() {
         return vaccineRepository.findAll().stream()
@@ -24,6 +26,9 @@ public class VaccineService {
     }
 
     private VaccineResponse toResponse(Vaccine vaccine) {
-        return new VaccineResponse(vaccine.getId(), vaccine.getVaccineName(), vaccine.getVaccineNameGr());
+        List<String> components = vaccineCombinationRepository.findComponentsByVaccineId(vaccine.getId()).stream()
+                .map(Vaccine::getVaccineName)
+                .toList();
+        return new VaccineResponse(vaccine.getId(), vaccine.getVaccineName(), vaccine.getVaccineNameGr(), components);
     }
 }

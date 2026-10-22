@@ -11,5 +11,5 @@ public interface VaccinationRepository extends JpaRepository<Vaccination, Long> 
     List<Vaccination> findByChildId(Long childId);
 
     @Query("SELECT v FROM Vaccination v WHERE v.child.id = :childId ORDER BY v.administeredDate DESC")
-    List<Vaccination> findByChildIdExcludingComponents(@Param("childId") Long childId);
+    List<Vaccination> findHistoryByChildId(@Param("childId") Long childId);
 }

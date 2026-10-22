@@ -1,0 +1,9 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: fix-hib-greek-name
+      author: alexandra
+      comment: Fix typo of Hib (ινφλουέντας -> ινφλουένζας)
+      changes:
+        - sql:
+            sql: UPDATE vaccines SET vaccine_name_gr = 'Αιμοφίλου ινφλουένζας τύπου b' WHERE vaccine_name = 'Hib';

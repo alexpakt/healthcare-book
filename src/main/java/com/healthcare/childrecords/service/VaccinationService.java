@@ -5,6 +5,7 @@ import com.healthcare.childrecords.dto.response.VaccinationResponse;
 import com.healthcare.childrecords.entity.Child;
 import com.healthcare.childrecords.entity.Doctor;
 import com.healthcare.childrecords.entity.Vaccination;
+import com.healthcare.childrecords.entity.VaccinationSchedule;
 import com.healthcare.childrecords.exception.ResourceNotFoundException;
 import com.healthcare.childrecords.repository.VaccinationRepository;
 import com.healthcare.childrecords.repository.VaccineRepository;
@@ -14,7 +15,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -59,13 +66,46 @@ public class VaccinationService {
                 .vaccineName(request.vaccineName())
                 .doseNumber(doseNumber)
                 .administeredDate(request.administeredDate())
-                .nextDoseDate(request.nextDoseDate())
+                .nextDoseDate(computeNextDoseDate(child, request.vaccineName(), doseNumber, request.administeredDate()))
                 .batchNumber(request.batchNumber())
                 .notes(request.notes())
                 .build();
 
         Vaccination savedVaccination = vaccinationRepository.save(vaccination);
         return toResponse(savedVaccination);
+    }
+
+    /**
+     * The date of the next scheduled dose of this vaccine, counted from the day this dose was given:
+     * the lowest scheduled dose above {@code doseNumber} that the child has not received yet, at the
+     * schedule's gap after this dose.
+     */
+    private LocalDate computeNextDoseDate(Child child, String vaccineName, Integer doseNumber, LocalDate administeredDate) {
+        if (doseNumber == null) {
+            return null;
+        }
+        List<VaccinationSchedule> schedules = vaccinationScheduleRepository.findByVaccineName(vaccineName);
+        Optional<VaccinationSchedule> thisDose = schedules.stream()
+                .filter(s -> doseNumber.equals(s.getDoseNumber()))
+                .findFirst();
+        if (thisDose.isEmpty()) {
+            return null;
+        }
+
+        Set<Integer> recordedDoses = vaccinationRepository.findByChildId(child.getId()).stream()
+                .filter(v -> v.getVaccineName().equals(vaccineName))
+                .map(Vaccination::getDoseNumber)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+        recordedDoses.add(doseNumber);
+
+        return schedules.stream()
+                .filter(s -> s.getDoseNumber() != null && s.getDoseNumber() > doseNumber)
+                .filter(s -> !recordedDoses.contains(s.getDoseNumber()))
+                .min(Comparator.comparing(VaccinationSchedule::getDoseNumber))
+                .map(next -> administeredDate.plusMonths(
+                        next.getRecommendedAgeMonths() - thisDose.get().getRecommendedAgeMonths()))
+                .orElse(null);
     }
 
     private Integer getNextMissingDoseNumber(String vaccineName, Long childId) {
@@ -82,9 +122,7 @@ public class VaccinationService {
 
         // Find the first missing dose
         for (var schedule : scheduledDoses.stream()
-                .sorted((a, b) -> Integer.compare(
-                        a.getDoseNumber() != null ? a.getDoseNumber() : 0,
-                        b.getDoseNumber() != null ? b.getDoseNumber() : 0))
+                .sorted(Comparator.comparingInt(a -> a.getDoseNumber() != null ? a.getDoseNumber() : 0))
                 .toList()) {
 
             boolean doseRecorded = recordedVaccinations.stream()
@@ -122,7 +160,7 @@ public class VaccinationService {
                     .vaccineName(component.getVaccineName())
                     .doseNumber(componentDoseNumber)
                     .administeredDate(request.administeredDate())
-                    .nextDoseDate(request.nextDoseDate())
+                    .nextDoseDate(computeNextDoseDate(child, component.getVaccineName(), componentDoseNumber, request.administeredDate()))
                     .batchNumber(request.batchNumber())
                     .notes(request.notes())
                     .build();
@@ -135,7 +173,7 @@ public class VaccinationService {
     public List<VaccinationResponse> getForChild(String username, Long childId) {
         Child child = childService.findById(childId);
         childAccessGuard.verifyAccess(username, child);
-        return vaccinationRepository.findByChildIdExcludingComponents(childId).stream().map(this::toResponse).toList();
+        return vaccinationRepository.findHistoryByChildId(childId).stream().map(this::toResponse).toList();
     }
 
     public VaccinationResponse getById(String username, Long id) {
@@ -150,7 +188,8 @@ public class VaccinationService {
         childAccessGuard.verifyAccess(username, vaccination.getChild());
         vaccination.setVaccineName(request.vaccineName());
         vaccination.setAdministeredDate(request.administeredDate());
-        vaccination.setNextDoseDate(request.nextDoseDate());
+        vaccination.setNextDoseDate(computeNextDoseDate(vaccination.getChild(), vaccination.getVaccineName(),
+                vaccination.getDoseNumber(), vaccination.getAdministeredDate()));
         vaccination.setBatchNumber(request.batchNumber());
         vaccination.setNotes(request.notes());
         return toResponse(vaccinationRepository.save(vaccination));

@@ -84,7 +84,6 @@ public class VaccinationControllerIntegrationTest extends BaseIntegrationTest {
         doctorId,
         "Rotavirus",
         LocalDate.now().minusDays(30),
-        LocalDate.now().plusMonths(2),
         "BATCH123",
         "First dose"
     );
@@ -148,7 +147,6 @@ public class VaccinationControllerIntegrationTest extends BaseIntegrationTest {
         null,
         "Polio",
         LocalDate.now(),
-        null,
         null,
         null
     );
@@ -231,7 +229,6 @@ public class VaccinationControllerIntegrationTest extends BaseIntegrationTest {
         doctorId,
         "Measles",
         LocalDate.now().minusDays(60),
-        null,
         "BATCH456",
         "MMR vaccine"
     );
@@ -323,7 +320,6 @@ public class VaccinationControllerIntegrationTest extends BaseIntegrationTest {
         doctorId,
         "Diphtheria",
         LocalDate.now().minusDays(90),
-        null,
         "BATCH789",
         "DPT vaccine"
     );
@@ -423,7 +419,6 @@ public class VaccinationControllerIntegrationTest extends BaseIntegrationTest {
         doctorId,
         "Tetanus",
         LocalDate.now().minusDays(120),
-        LocalDate.now().plusYears(10),
         "BATCH111",
         "Initial dose"
     );
@@ -447,7 +442,6 @@ public class VaccinationControllerIntegrationTest extends BaseIntegrationTest {
         doctorId,
         "Tetanus",
         LocalDate.now().minusDays(120),
-        LocalDate.now().plusYears(11),
         "BATCH111",
         "Booster dose scheduled"
     );
@@ -531,7 +525,6 @@ public class VaccinationControllerIntegrationTest extends BaseIntegrationTest {
         doctorId,
         "Hepatitis B",
         LocalDate.now().minusDays(150),
-        null,
         "BATCH222",
         "Newborn vaccination"
     );
@@ -555,7 +548,6 @@ public class VaccinationControllerIntegrationTest extends BaseIntegrationTest {
         doctorId,
         "Hepatitis B",
         LocalDate.now().minusDays(150),
-        null,
         "BATCH222",
         "Updated by parent"
     );

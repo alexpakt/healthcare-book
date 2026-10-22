@@ -10,7 +10,6 @@ public record VaccinationRequest(
         Long administeredByDoctorId,
         @NotBlank String vaccineName,
         @NotNull LocalDate administeredDate,
-        LocalDate nextDoseDate,
         String batchNumber,
         String notes
 ) {}
