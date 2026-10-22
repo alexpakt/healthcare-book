@@ -4,6 +4,7 @@ import com.healthcare.childrecords.dto.request.VaccinationScheduleRequest;
 import com.healthcare.childrecords.dto.response.VaccinationScheduleResponse;
 import com.healthcare.childrecords.entity.Vaccine;
 import com.healthcare.childrecords.entity.VaccinationSchedule;
+import com.healthcare.childrecords.exception.ResourceNotFoundException;
 import com.healthcare.childrecords.repository.VaccineRepository;
 import com.healthcare.childrecords.repository.VaccinationScheduleRepository;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +45,7 @@ public class VaccinationScheduleService {
     public VaccinationScheduleResponse getScheduleById(Long id) {
         return vaccinationScheduleRepository.findById(id)
                 .map(this::toResponse)
-                .orElseThrow(() -> new RuntimeException("Vaccination schedule not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Vaccination schedule not found: " + id));
     }
 
     @Transactional
@@ -71,7 +72,7 @@ public class VaccinationScheduleService {
     @Transactional
     public VaccinationScheduleResponse updateSchedule(Long id, VaccinationScheduleRequest request) {
         VaccinationSchedule schedule = vaccinationScheduleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Vaccination schedule not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Vaccination schedule not found: " + id));
 
         Vaccine vaccine = vaccineRepository.findByVaccineName(request.vaccineName())
                 .orElseGet(() -> {
