@@ -29,10 +29,11 @@ public class ChildControllerIntegrationTest extends BaseIntegrationTest {
     String token = loginAndGetToken(username, "TestPass123!");
 
     // Create child
+    String amka = uniqueAmka();
     ChildRequest childRequest = new ChildRequest(
         "John",
         "Doe",
-        "12345678901",
+        amka,
         "2020-01-15",
         Gender.MALE,
         "O+"
@@ -47,7 +48,7 @@ public class ChildControllerIntegrationTest extends BaseIntegrationTest {
         .andExpect(status().isCreated())
         .andExpect(jsonPath("$.firstName").value("John"))
         .andExpect(jsonPath("$.lastName").value("Doe"))
-        .andExpect(jsonPath("$.amka").value("12345678901"))
+        .andExpect(jsonPath("$.amka").value(amka))
         .andExpect(jsonPath("$.gender").value("MALE"));
   }
 
@@ -107,7 +108,7 @@ public class ChildControllerIntegrationTest extends BaseIntegrationTest {
     ChildRequest childRequest = new ChildRequest(
         "Jane",
         "Doe",
-        "98765432101",
+        uniqueAmka(),
         "2021-06-20",
         Gender.FEMALE,
         "AB-"
@@ -151,7 +152,7 @@ public class ChildControllerIntegrationTest extends BaseIntegrationTest {
     ChildRequest childRequest = new ChildRequest(
         "Jack",
         "Smith",
-        "11111111111",
+        uniqueAmka(),
         "2019-03-10",
         Gender.MALE,
         "B+"
@@ -199,7 +200,7 @@ public class ChildControllerIntegrationTest extends BaseIntegrationTest {
     ChildRequest childRequest = new ChildRequest(
         "Charlie",
         "Brown",
-        "22222222222",
+        uniqueAmka(),
         "2020-05-15",
         Gender.MALE,
         "O+"
@@ -260,7 +261,7 @@ public class ChildControllerIntegrationTest extends BaseIntegrationTest {
     ChildRequest childRequest = new ChildRequest(
         "Alice",
         "Wonder",
-        "33333333333",
+        uniqueAmka(),
         "2021-09-01",
         Gender.FEMALE,
         "AB+"
@@ -283,7 +284,7 @@ public class ChildControllerIntegrationTest extends BaseIntegrationTest {
     ChildRequest updateRequest = new ChildRequest(
         "Alicia",
         "Wonderland",
-        "33333333333",
+        uniqueAmka(),
         "2021-09-01",
         Gender.FEMALE,
         "A+"
@@ -321,7 +322,7 @@ public class ChildControllerIntegrationTest extends BaseIntegrationTest {
     ChildRequest childRequest = new ChildRequest(
         "Bob",
         "Builder",
-        "44444444444",
+        uniqueAmka(),
         "2022-01-01",
         Gender.MALE,
         "O-"
@@ -374,7 +375,7 @@ public class ChildControllerIntegrationTest extends BaseIntegrationTest {
     String doctorUsername = "doctor" + System.currentTimeMillis();
     RegisterDoctorRequest doctorRequest =
         new RegisterDoctorRequest(
-            doctorUsername, "TestPass123!", "Test", "Doctor", "20118707867", "doctor@example.com", null, "Pediatrics", "LIC123456", null);
+            doctorUsername, "TestPass123!", "Test", "Doctor", uniqueAmka(), "doctor@example.com", null, "Pediatrics", "LIC123456", null);
 
     String doctorRegisterResponse = mockMvc
         .perform(
@@ -392,7 +393,7 @@ public class ChildControllerIntegrationTest extends BaseIntegrationTest {
     ChildRequest childRequest = new ChildRequest(
         "David",
         "Smith",
-        "55555555555",
+        uniqueAmka(),
         "2020-07-20",
         Gender.MALE,
         "B-"
@@ -438,7 +439,7 @@ public class ChildControllerIntegrationTest extends BaseIntegrationTest {
     String doctorUsername = "doctor" + System.currentTimeMillis();
     RegisterDoctorRequest doctorRequest =
         new RegisterDoctorRequest(
-            doctorUsername, "TestPass123!", "Test", "Doctor", "20118707867", "doctor@example.com", null, "Pediatrics", "LIC123456", null);
+            doctorUsername, "TestPass123!", "Test", "Doctor", uniqueAmka(), "doctor@example.com", null, "Pediatrics", "LIC123456", null);
 
     String doctorRegisterResponse = mockMvc
         .perform(
@@ -456,7 +457,7 @@ public class ChildControllerIntegrationTest extends BaseIntegrationTest {
     ChildRequest childRequest = new ChildRequest(
         "Eve",
         "Jones",
-        "66666666666",
+        uniqueAmka(),
         "2021-11-11",
         Gender.FEMALE,
         "AB-"
@@ -509,7 +510,7 @@ public class ChildControllerIntegrationTest extends BaseIntegrationTest {
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(
                     new RegisterDoctorRequest("doctorA" + System.currentTimeMillis(), "TestPass123!", "Connected", "Doctor",
-                        "20118707867", "doctorA@example.com", null, "Pediatrics", "LIC123456", null))))
+                        uniqueAmka(), "doctorA@example.com", null, "Pediatrics", "LIC123456", null))))
         .andExpect(status().isCreated())
         .andReturn()
         .getResponse()
@@ -523,7 +524,7 @@ public class ChildControllerIntegrationTest extends BaseIntegrationTest {
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(
                     new RegisterDoctorRequest("doctorB" + System.currentTimeMillis(), "TestPass123!", "Other", "Doctor",
-                        "20118707868", "doctorB@example.com", null, "Dermatology", "LIC654321", null))))
+                        uniqueAmka(), "doctorB@example.com", null, "Dermatology", "LIC654321", null))))
         .andExpect(status().isCreated());
 
     String childResponse = mockMvc
@@ -532,7 +533,7 @@ public class ChildControllerIntegrationTest extends BaseIntegrationTest {
                 .contentType("application/json")
                 .header("Authorization", getAuthorizationHeader(parentToken))
                 .content(objectMapper.writeValueAsString(
-                    new ChildRequest("Child", "Doctors", "55555555555", "2020-01-15", Gender.FEMALE, "O-"))))
+                    new ChildRequest("Child", "Doctors", uniqueAmka(), "2020-01-15", Gender.FEMALE, "O-"))))
         .andExpect(status().isCreated())
         .andReturn()
         .getResponse()
@@ -553,5 +554,38 @@ public class ChildControllerIntegrationTest extends BaseIntegrationTest {
         .andExpect(jsonPath("$", hasSize(1)))
         .andExpect(jsonPath("$[0].id").value(connectedDoctorId))
         .andExpect(jsonPath("$[0].specialization").value("Pediatrics"));
+  }
+
+  @Test
+  public void testCreateChild_DuplicateAmka_ReturnsBadRequest() throws Exception {
+    String username = "parentdup" + System.currentTimeMillis();
+    RegisterParentRequest parentRequest =
+        new RegisterParentRequest(username, "TestPass123!", "Test", "Parent", "dup@example.com", null, null);
+    mockMvc
+        .perform(
+            post("/api/auth/register/parent")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(parentRequest)))
+        .andExpect(status().isCreated());
+    String token = loginAndGetToken(username, "TestPass123!");
+
+    String amka = String.format("%011d", Math.abs(System.nanoTime()) % 100000000000L);
+    ChildRequest childRequest = new ChildRequest("Anna", "Doe", amka, "2021-03-10", Gender.FEMALE, null);
+
+    mockMvc
+        .perform(
+            post("/api/children")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(token))
+                .content(objectMapper.writeValueAsString(childRequest)))
+        .andExpect(status().isCreated());
+
+    mockMvc
+        .perform(
+            post("/api/children")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(token))
+                .content(objectMapper.writeValueAsString(childRequest)))
+        .andExpect(status().isBadRequest());
   }
 }

@@ -31,11 +31,15 @@ public class ChildService {
     @Transactional
     public ChildResponse create(String username, ChildRequest request) {
         Parent parent = parentService.findByUsername(username);
+        String amkaHash = AmkaHashUtil.hashAmka(request.amka());
+        if (childRepository.existsByAmkaHash(amkaHash)) {
+            throw new IllegalArgumentException("A child with this AMKA already exists");
+        }
         Child child = Child.builder()
                 .firstName(request.firstName())
                 .lastName(request.lastName())
                 .amka(request.amka())
-                .amkaHash(AmkaHashUtil.hashAmka(request.amka()))
+                .amkaHash(amkaHash)
                 .dateOfBirth(request.dateOfBirth())
                 .gender(request.gender())
                 .bloodType(request.bloodType())

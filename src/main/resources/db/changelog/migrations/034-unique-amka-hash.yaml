@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: unique-children-amka-hash
+      author: alexandra
+      comment: Enforce one child record per AMKA hash
+      changes:
+        - dropIndex:
+            tableName: children
+            indexName: idx_children_amka_hash
+        - createIndex:
+            tableName: children
+            indexName: idx_children_amka_hash
+            unique: true
+            columns:
+              - column:
+                  name: amka_hash
+  - changeSet:
+      id: unique-doctors-amka-hash
+      author: alexandra
+      comment: Enforce one doctor record per AMKA hash
+      changes:
+        - dropIndex:
+            tableName: doctors
+            indexName: idx_doctors_amka_hash
+        - createIndex:
+            tableName: doctors
+            indexName: idx_doctors_amka_hash
+            unique: true
+            columns:
+              - column:
+                  name: amka_hash

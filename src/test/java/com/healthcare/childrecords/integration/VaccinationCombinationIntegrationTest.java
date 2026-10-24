@@ -43,7 +43,7 @@ public class VaccinationCombinationIntegrationTest extends BaseIntegrationTest {
             post("/api/auth/register/doctor")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(
-                    new RegisterDoctorRequest(doctorUsername, "TestPass123!", "Test", "Doctor", "20118707867", "doctor" + suffix + "@example.com", null, "Pediatrics", "LIC" + suffix, null))))
+                    new RegisterDoctorRequest(doctorUsername, "TestPass123!", "Test", "Doctor", uniqueAmka(), "doctor" + suffix + "@example.com", null, "Pediatrics", "LIC" + suffix, null))))
         .andExpect(status().isCreated())
         .andReturn()
         .getResponse()
@@ -51,7 +51,7 @@ public class VaccinationCombinationIntegrationTest extends BaseIntegrationTest {
     Long doctorId = objectMapper.readTree(doctorResponse).get("profileId").asLong();
     String doctorToken = loginAndGetToken(doctorUsername, "TestPass123!");
 
-    ChildRequest childRequest = new ChildRequest("Vaccinate", "Me", "33333333333", "2026-01-15", Gender.MALE, "O+");
+    ChildRequest childRequest = new ChildRequest("Vaccinate", "Me", uniqueAmka(), "2026-01-15", Gender.MALE, "O+");
     String childResponse = mockMvc
         .perform(
             post("/api/children")

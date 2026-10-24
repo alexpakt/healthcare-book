@@ -18,6 +18,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 public abstract class BaseIntegrationTest {
 
+  private static final java.util.concurrent.atomic.AtomicLong AMKA_SEQUENCE =
+      new java.util.concurrent.atomic.AtomicLong(System.currentTimeMillis() % 1_000_000_000L);
+
+  protected static String uniqueAmka() {
+    return String.format("%011d", AMKA_SEQUENCE.incrementAndGet());
+  }
+
   @Autowired protected MockMvc mockMvc;
 
   @Autowired protected ObjectMapper objectMapper;

@@ -34,7 +34,7 @@ public class GrowthMeasurementControllerIntegrationTest extends BaseIntegrationT
     String doctorUsername = "doctor" + System.currentTimeMillis();
     RegisterDoctorRequest doctorRequest =
         new RegisterDoctorRequest(
-            doctorUsername, "TestPass123!", "Test", "Doctor", "20118707867", "doctor@example.com", null, "Pediatrics", "LIC123456", null);
+            doctorUsername, "TestPass123!", "Test", "Doctor", uniqueAmka(), "doctor@example.com", null, "Pediatrics", "LIC123456", null);
 
     String doctorRegisterResponse = mockMvc
         .perform(
@@ -53,7 +53,7 @@ public class GrowthMeasurementControllerIntegrationTest extends BaseIntegrationT
     ChildRequest childRequest = new ChildRequest(
         "Growing",
         "Child",
-        "11111111111",
+        uniqueAmka(),
         "2020-01-15",
         Gender.MALE,
         "O+"
@@ -120,7 +120,7 @@ public class GrowthMeasurementControllerIntegrationTest extends BaseIntegrationT
     ChildRequest childRequest = new ChildRequest(
         "Child",
         "One",
-        "22222222222",
+        uniqueAmka(),
         "2020-01-15",
         Gender.FEMALE,
         "AB+"
@@ -177,7 +177,7 @@ public class GrowthMeasurementControllerIntegrationTest extends BaseIntegrationT
     String doctorUsername = "doctor" + System.currentTimeMillis();
     RegisterDoctorRequest doctorRequest =
         new RegisterDoctorRequest(
-            doctorUsername, "TestPass123!", "Test", "Doctor", "20118707867", "doctor@example.com", null, "Pediatrics", "LIC123456", null);
+            doctorUsername, "TestPass123!", "Test", "Doctor", uniqueAmka(), "doctor@example.com", null, "Pediatrics", "LIC123456", null);
 
     String doctorRegisterResponse = mockMvc
         .perform(
@@ -196,7 +196,7 @@ public class GrowthMeasurementControllerIntegrationTest extends BaseIntegrationT
     ChildRequest childRequest = new ChildRequest(
         "Tracking",
         "Growth",
-        "33333333333",
+        uniqueAmka(),
         "2020-01-15",
         Gender.MALE,
         "B-"
@@ -285,7 +285,7 @@ public class GrowthMeasurementControllerIntegrationTest extends BaseIntegrationT
     String doctorUsername = "doctor" + System.currentTimeMillis();
     RegisterDoctorRequest doctorRequest =
         new RegisterDoctorRequest(
-            doctorUsername, "TestPass123!", "Test", "Doctor", "20118707867", "doctor@example.com", null, "Pediatrics", "LIC123456", null);
+            doctorUsername, "TestPass123!", "Test", "Doctor", uniqueAmka(), "doctor@example.com", null, "Pediatrics", "LIC123456", null);
 
     String doctorRegisterResponse = mockMvc
         .perform(
@@ -304,7 +304,7 @@ public class GrowthMeasurementControllerIntegrationTest extends BaseIntegrationT
     ChildRequest childRequest = new ChildRequest(
         "Measure",
         "Me",
-        "44444444444",
+        uniqueAmka(),
         "2020-01-15",
         Gender.FEMALE,
         "O-"
@@ -382,7 +382,7 @@ public class GrowthMeasurementControllerIntegrationTest extends BaseIntegrationT
     String doctorUsername = "doctor" + System.currentTimeMillis();
     RegisterDoctorRequest doctorRequest =
         new RegisterDoctorRequest(
-            doctorUsername, "TestPass123!", "Test", "Doctor", "20118707867", "doctor@example.com", null, "Pediatrics", "LIC123456", null);
+            doctorUsername, "TestPass123!", "Test", "Doctor", uniqueAmka(), "doctor@example.com", null, "Pediatrics", "LIC123456", null);
 
     String doctorRegisterResponse = mockMvc
         .perform(
@@ -401,7 +401,7 @@ public class GrowthMeasurementControllerIntegrationTest extends BaseIntegrationT
     ChildRequest childRequest = new ChildRequest(
         "Update",
         "Growth",
-        "55555555555",
+        uniqueAmka(),
         "2020-01-15",
         Gender.MALE,
         "AB-"
@@ -489,7 +489,7 @@ public class GrowthMeasurementControllerIntegrationTest extends BaseIntegrationT
     String doctorUsername = "doctor" + System.currentTimeMillis();
     RegisterDoctorRequest doctorRequest =
         new RegisterDoctorRequest(
-            doctorUsername, "TestPass123!", "Test", "Doctor", "20118707867", "doctor@example.com", null, "Pediatrics", "LIC123456", null);
+            doctorUsername, "TestPass123!", "Test", "Doctor", uniqueAmka(), "doctor@example.com", null, "Pediatrics", "LIC123456", null);
 
     String doctorRegisterResponse = mockMvc
         .perform(
@@ -508,7 +508,7 @@ public class GrowthMeasurementControllerIntegrationTest extends BaseIntegrationT
     ChildRequest childRequest = new ChildRequest(
         "Delete",
         "Growth",
-        "66666666666",
+        uniqueAmka(),
         "2020-01-15",
         Gender.FEMALE,
         "A+"
@@ -590,7 +590,7 @@ public class GrowthMeasurementControllerIntegrationTest extends BaseIntegrationT
     String doctorUsername = "doctor" + System.currentTimeMillis();
     RegisterDoctorRequest doctorRequest =
         new RegisterDoctorRequest(
-            doctorUsername, "TestPass123!", "Test", "Doctor", "20118707867", "doctor@example.com", null, "Pediatrics", "LIC123456", null);
+            doctorUsername, "TestPass123!", "Test", "Doctor", uniqueAmka(), "doctor@example.com", null, "Pediatrics", "LIC123456", null);
 
     String doctorRegisterResponse = mockMvc
         .perform(
@@ -609,7 +609,7 @@ public class GrowthMeasurementControllerIntegrationTest extends BaseIntegrationT
     ChildRequest childRequest = new ChildRequest(
         "Child",
         "Two",
-        "77777777777",
+        uniqueAmka(),
         "2020-01-15",
         Gender.MALE,
         "B+"

@@ -14,4 +14,6 @@ public interface ChildRepository extends JpaRepository<Child, Long> {
     List<Child> findByDoctorId(@Param("doctorId") Long doctorId);
 
     java.util.Optional<Child> findByAmkaHash(String amkaHash);
+
+    boolean existsByAmkaHash(String amkaHash);
 }

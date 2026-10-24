@@ -38,7 +38,7 @@ public class GrowthAlertControllerIntegrationTest extends BaseIntegrationTest {
             post("/api/auth/register/doctor")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(
-                    new RegisterDoctorRequest(doctorUsername, PASSWORD, "Alert", "Doctor", "20118707867", "doc" + suffix + "@example.com", null, "Pediatrics", "LIC" + suffix, null))))
+                    new RegisterDoctorRequest(doctorUsername, PASSWORD, "Alert", "Doctor", uniqueAmka(), "doc" + suffix + "@example.com", null, "Pediatrics", "LIC" + suffix, null))))
         .andExpect(status().isCreated())
         .andReturn()
         .getResponse()
@@ -52,7 +52,7 @@ public class GrowthAlertControllerIntegrationTest extends BaseIntegrationTest {
             post("/api/auth/register/doctor")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(
-                    new RegisterDoctorRequest(otherDoctorUsername, PASSWORD, "Other", "Doctor", "20118707868", "other" + suffix + "@example.com", null, "Pediatrics", "LIX" + suffix, null))))
+                    new RegisterDoctorRequest(otherDoctorUsername, PASSWORD, "Other", "Doctor", uniqueAmka(), "other" + suffix + "@example.com", null, "Pediatrics", "LIX" + suffix, null))))
         .andExpect(status().isCreated());
     String otherDoctorToken = loginAndGetToken(otherDoctorUsername, PASSWORD);
 
@@ -62,7 +62,7 @@ public class GrowthAlertControllerIntegrationTest extends BaseIntegrationTest {
                 .contentType("application/json")
                 .header("Authorization", getAuthorizationHeader(parentToken))
                 .content(objectMapper.writeValueAsString(
-                    new ChildRequest("Alert", "Child", "33333333333", "2020-01-15", Gender.MALE, "O+"))))
+                    new ChildRequest("Alert", "Child", uniqueAmka(), "2020-01-15", Gender.MALE, "O+"))))
         .andExpect(status().isCreated())
         .andReturn()
         .getResponse()

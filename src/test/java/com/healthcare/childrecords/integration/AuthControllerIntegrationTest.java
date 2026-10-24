@@ -33,7 +33,7 @@ public class AuthControllerIntegrationTest extends BaseIntegrationTest {
     String username = "testdoctor" + System.currentTimeMillis();
     RegisterDoctorRequest request =
         new RegisterDoctorRequest(
-            username, "TestPass123!", "Test", "Doctor", "20118707867", "doctor@example.com", null, "Pediatrics", "LIC123456", null);
+            username, "TestPass123!", "Test", "Doctor", uniqueAmka(), "doctor@example.com", null, "Pediatrics", "LIC123456", null);
 
     mockMvc
         .perform(
@@ -279,6 +279,31 @@ public class AuthControllerIntegrationTest extends BaseIntegrationTest {
                 .contentType("application/json")
                 .header("Authorization", getAuthorizationHeader(token))
                 .content(invalidJson))
+        .andExpect(status().isBadRequest());
+  }
+
+  @Test
+  public void testRegisterDoctor_DuplicateAmka_ReturnsBadRequest() throws Exception {
+    String amka = String.format("%011d", Math.abs(System.nanoTime()) % 100000000000L);
+    RegisterDoctorRequest first = new RegisterDoctorRequest(
+        "docone" + System.currentTimeMillis(), "TestPass123!", "Ελένη", "Κωνσταντίνου", amka,
+        "doc1@example.com", null, "Παιδίατρος", "LIC-1", null);
+    RegisterDoctorRequest second = new RegisterDoctorRequest(
+        "doctwo" + System.currentTimeMillis(), "TestPass123!", "Γιώργος", "Παππάς", amka,
+        "doc2@example.com", null, "Παιδίατρος", "LIC-2", null);
+
+    mockMvc
+        .perform(
+            post("/api/auth/register/doctor")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(first)))
+        .andExpect(status().isCreated());
+
+    mockMvc
+        .perform(
+            post("/api/auth/register/doctor")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(second)))
         .andExpect(status().isBadRequest());
   }
 }

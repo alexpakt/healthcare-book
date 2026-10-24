@@ -35,6 +35,10 @@ public class AuthService {
         if (userRepository.existsByUsername(request.username())) {
             throw new IllegalArgumentException("Username already taken");
         }
+        String amkaHash = AmkaHashUtil.hashAmka(request.amka());
+        if (doctorRepository.existsByAmkaHash(amkaHash)) {
+            throw new IllegalArgumentException("A doctor with this AMKA already exists");
+        }
 
         User user = User.builder()
                 .username(request.username())
@@ -48,7 +52,7 @@ public class AuthService {
                 .firstName(request.firstName())
                 .lastName(request.lastName())
                 .amka(request.amka())
-                .amkaHash(AmkaHashUtil.hashAmka(request.amka()))
+                .amkaHash(amkaHash)
                 .email(request.email())
                 .phoneNumber(request.phoneNumber())
                 .specialization(request.specialization())
