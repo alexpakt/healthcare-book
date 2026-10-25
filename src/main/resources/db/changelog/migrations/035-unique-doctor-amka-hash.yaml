@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-unique-doctors-amka-hash-index-if-missing
+      author: alexandra
+      comment: >
+        Create the unique index on doctors.amka_hash where it is missing. Production did not have
+        idx_doctors_amka_hash, so the drop/create changeset in 034 cannot run there. Dev already has
+        the unique index, so this changeset is skipped there.
+      preConditions:
+        - onFail: MARK_RAN
+        - not:
+            - indexExists:
+                tableName: doctors
+                indexName: idx_doctors_amka_hash
+      changes:
+        - createIndex:
+            tableName: doctors
+            indexName: idx_doctors_amka_hash
+            unique: true
+            columns:
+              - column:
+                  name: amka_hash

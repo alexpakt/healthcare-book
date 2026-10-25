@@ -101,3 +101,6 @@ databaseChangeLog:
   - include:
       file: db/changelog/migrations/034-unique-amka-hash.yaml
       relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/035-unique-doctor-amka-hash.yaml
+      relativeToChangelogFile: false
