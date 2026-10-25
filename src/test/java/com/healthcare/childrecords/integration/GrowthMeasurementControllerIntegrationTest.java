@@ -664,4 +664,80 @@ public class GrowthMeasurementControllerIntegrationTest extends BaseIntegrationT
                 .header("Authorization", getAuthorizationHeader(parentToken)))
         .andExpect(status().isForbidden());
   }
+
+  /** Registers a doctor, creates a child born on 2020-01-15 for the parent, assigns the doctor, and returns the child ID. */
+  private long setUpAssignedChild(String parentToken, String doctorUsername) throws Exception {
+    String doctorRegisterResponse = mockMvc
+        .perform(
+            post("/api/auth/register/doctor")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(new RegisterDoctorRequest(
+                    doctorUsername, "TestPass123!", "Test", "Doctor", uniqueAmka(), "doctor@example.com", null,
+                    "Pediatrics", "LIC" + doctorUsername, null))))
+        .andExpect(status().isCreated())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+    long doctorId = objectMapper.readTree(doctorRegisterResponse).get("profileId").asLong();
+
+    String childResponse = mockMvc
+        .perform(
+            post("/api/children")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(parentToken))
+                .content(objectMapper.writeValueAsString(new ChildRequest(
+                    "Dated", "Child", uniqueAmka(), "2020-01-15", Gender.FEMALE, "A+"))))
+        .andExpect(status().isCreated())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+    long childId = objectMapper.readTree(childResponse).get("id").asLong();
+
+    mockMvc
+        .perform(
+            post("/api/children/" + childId + "/doctors/" + doctorId)
+                .header("Authorization", getAuthorizationHeader(parentToken)))
+        .andExpect(status().isOk());
+
+    return childId;
+  }
+
+  @Test
+  public void testCreateGrowthMeasurement_DateBeforeBirth_ReturnsBadRequest() throws Exception {
+    String parentUsername = "parentdob" + System.currentTimeMillis();
+    mockMvc
+        .perform(
+            post("/api/auth/register/parent")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(new RegisterParentRequest(
+                    parentUsername, "TestPass123!", "Test", "Parent", "parentdob@example.com", null, null))))
+        .andExpect(status().isCreated());
+    String parentToken = loginAndGetToken(parentUsername, "TestPass123!");
+
+    String doctorUsername = "doctordob" + System.currentTimeMillis();
+    long childId = setUpAssignedChild(parentToken, doctorUsername);
+    String doctorToken = loginAndGetToken(doctorUsername, "TestPass123!");
+
+    // One day before the date of birth (2020-01-15) must be rejected.
+    GrowthMeasurementRequest beforeBirth =
+        new GrowthMeasurementRequest(childId, LocalDate.of(2020, 1, 14), 50.0, null, null, null);
+    mockMvc
+        .perform(
+            post("/api/growth-measurements")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(doctorToken))
+                .content(objectMapper.writeValueAsString(beforeBirth)))
+        .andExpect(status().isBadRequest());
+
+    // The date of birth itself is allowed.
+    GrowthMeasurementRequest onBirthday =
+        new GrowthMeasurementRequest(childId, LocalDate.of(2020, 1, 15), 50.0, null, null, null);
+    mockMvc
+        .perform(
+            post("/api/growth-measurements")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(doctorToken))
+                .content(objectMapper.writeValueAsString(onBirthday)))
+        .andExpect(status().isCreated());
+  }
 }

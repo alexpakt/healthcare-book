@@ -33,6 +33,9 @@ public class GrowthMeasurementService {
 
         Child child = childService.findById(request.childId());
         childAccessGuard.verifyAccess(username, child);
+        if (request.measurementDate().isBefore(LocalDate.parse(child.getDateOfBirth()))) {
+            throw new IllegalArgumentException("Measurement date cannot be before the child's date of birth");
+        }
         Doctor doctor = doctorService.findByUsername(username);
 
         GrowthMeasurement measurement = GrowthMeasurement.builder()
