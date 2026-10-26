@@ -3,7 +3,6 @@ package com.healthcare.childrecords.service;
 import com.healthcare.childrecords.dto.request.UpdateParentProfileRequest;
 import com.healthcare.childrecords.dto.response.ParentResponse;
 import com.healthcare.childrecords.entity.Parent;
-import com.healthcare.childrecords.exception.AccessDeniedException;
 import com.healthcare.childrecords.exception.ResourceNotFoundException;
 import com.healthcare.childrecords.repository.ParentRepository;
 import com.healthcare.childrecords.repository.UserRepository;
@@ -42,13 +41,6 @@ public class ParentService {
     public Parent findById(Long id) {
         return parentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Parent not found: " + id));
-    }
-
-    public void verifyParentOwnsChild(Parent parent, Long childId) {
-        boolean owns = parent.getChildren().stream().anyMatch(c -> c.getId().equals(childId));
-        if (!owns) {
-            throw new AccessDeniedException("Parent does not have access to this child");
-        }
     }
 
     private ParentResponse toResponse(Parent p) {

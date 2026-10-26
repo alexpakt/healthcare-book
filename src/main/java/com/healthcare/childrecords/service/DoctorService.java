@@ -3,7 +3,6 @@ package com.healthcare.childrecords.service;
 import com.healthcare.childrecords.dto.request.UpdateDoctorProfileRequest;
 import com.healthcare.childrecords.dto.response.DoctorResponse;
 import com.healthcare.childrecords.entity.Doctor;
-import com.healthcare.childrecords.exception.AccessDeniedException;
 import com.healthcare.childrecords.exception.ResourceNotFoundException;
 import com.healthcare.childrecords.repository.DoctorRepository;
 import com.healthcare.childrecords.repository.UserRepository;
@@ -65,13 +64,6 @@ public class DoctorService {
 
     public List<DoctorResponse> searchByName(String name) {
         return doctorRepository.searchByName(name).stream().map(this::toResponse).toList();
-    }
-
-    public void verifyDoctorOwnsChild(Doctor doctor, Long childId) {
-        boolean assigned = doctor.getChildren().stream().anyMatch(c -> c.getId().equals(childId));
-        if (!assigned) {
-            throw new AccessDeniedException("Doctor is not assigned to this child");
-        }
     }
 
     public DoctorResponse toResponse(Doctor d) {
