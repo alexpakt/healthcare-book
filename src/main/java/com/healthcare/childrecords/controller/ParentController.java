@@ -1,14 +1,14 @@
 package com.healthcare.childrecords.controller;
 
+import com.healthcare.childrecords.dto.request.UpdateParentProfileRequest;
 import com.healthcare.childrecords.dto.response.ParentResponse;
 import com.healthcare.childrecords.service.ParentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/parents")
@@ -25,10 +25,7 @@ public class ParentController {
 
     @PatchMapping("/me")
     public ParentResponse updateMyProfile(@AuthenticationPrincipal UserDetails userDetails,
-                                          @RequestBody Map<String, String> updates) {
-        return parentService.updateMyProfile(
-                userDetails.getUsername(),
-                updates.get("phoneNumber"),
-                updates.get("address"));
+                                          @Valid @RequestBody UpdateParentProfileRequest request) {
+        return parentService.updateMyProfile(userDetails.getUsername(), request);
     }
 }

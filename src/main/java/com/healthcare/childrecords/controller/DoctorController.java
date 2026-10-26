@@ -1,5 +1,6 @@
 package com.healthcare.childrecords.controller;
 
+import com.healthcare.childrecords.dto.request.UpdateDoctorProfileRequest;
 import com.healthcare.childrecords.dto.response.DoctorResponse;
 import com.healthcare.childrecords.service.DoctorService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,13 +11,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/doctors")
@@ -46,15 +47,11 @@ public class DoctorController {
     }
 
     @PatchMapping("/me")
-    @Operation(summary = "Update current doctor profile", description = "Update authenticated doctor's phone number, specialization, and address")
+    @Operation(summary = "Update current doctor profile", description = "Update the authenticated doctor's profile. Fields that are omitted are left unchanged")
     @SecurityRequirement(name = "bearer")
     public DoctorResponse updateMyProfile(@AuthenticationPrincipal UserDetails userDetails,
-                                          @RequestBody Map<String, String> updates) {
-        return doctorService.updateMyProfile(
-                userDetails.getUsername(),
-                updates.get("phoneNumber"),
-                updates.get("specialization"),
-                updates.get("address"));
+                                          @Valid @RequestBody UpdateDoctorProfileRequest request) {
+        return doctorService.updateMyProfile(userDetails.getUsername(), request);
     }
 
     @GetMapping("/search/amka")

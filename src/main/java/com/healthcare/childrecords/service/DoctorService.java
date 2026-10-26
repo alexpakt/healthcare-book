@@ -1,5 +1,6 @@
 package com.healthcare.childrecords.service;
 
+import com.healthcare.childrecords.dto.request.UpdateDoctorProfileRequest;
 import com.healthcare.childrecords.dto.response.DoctorResponse;
 import com.healthcare.childrecords.entity.Doctor;
 import com.healthcare.childrecords.exception.AccessDeniedException;
@@ -31,11 +32,15 @@ public class DoctorService {
         return doctorRepository.findAll().stream().map(this::toResponse).toList();
     }
 
-    public DoctorResponse updateMyProfile(String username, String phoneNumber, String specialization, String address) {
+    public DoctorResponse updateMyProfile(String username, UpdateDoctorProfileRequest request) {
         Doctor doctor = findByUsername(username);
-        if (phoneNumber != null) doctor.setPhoneNumber(phoneNumber);
-        if (specialization != null) doctor.setSpecialization(specialization);
-        if (address != null) doctor.setAddress(address);
+        if (request.firstName() != null) doctor.setFirstName(request.firstName());
+        if (request.lastName() != null) doctor.setLastName(request.lastName());
+        if (request.email() != null) doctor.setEmail(request.email());
+        if (request.phoneNumber() != null) doctor.setPhoneNumber(request.phoneNumber());
+        if (request.specialization() != null) doctor.setSpecialization(request.specialization());
+        if (request.licenseNumber() != null) doctor.setLicenseNumber(request.licenseNumber());
+        if (request.address() != null) doctor.setAddress(request.address());
         return toResponse(doctorRepository.save(doctor));
     }
 

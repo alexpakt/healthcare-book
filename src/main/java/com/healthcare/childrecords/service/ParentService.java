@@ -1,5 +1,6 @@
 package com.healthcare.childrecords.service;
 
+import com.healthcare.childrecords.dto.request.UpdateParentProfileRequest;
 import com.healthcare.childrecords.dto.response.ParentResponse;
 import com.healthcare.childrecords.entity.Parent;
 import com.healthcare.childrecords.exception.AccessDeniedException;
@@ -20,10 +21,13 @@ public class ParentService {
         return toResponse(findByUsername(username));
     }
 
-    public ParentResponse updateMyProfile(String username, String phoneNumber, String address) {
+    public ParentResponse updateMyProfile(String username, UpdateParentProfileRequest request) {
         Parent parent = findByUsername(username);
-        if (phoneNumber != null) parent.setPhoneNumber(phoneNumber);
-        if (address != null) parent.setAddress(address);
+        if (request.firstName() != null) parent.setFirstName(request.firstName());
+        if (request.lastName() != null) parent.setLastName(request.lastName());
+        if (request.email() != null) parent.setEmail(request.email());
+        if (request.phoneNumber() != null) parent.setPhoneNumber(request.phoneNumber());
+        if (request.address() != null) parent.setAddress(request.address());
         return toResponse(parentRepository.save(parent));
     }
 
