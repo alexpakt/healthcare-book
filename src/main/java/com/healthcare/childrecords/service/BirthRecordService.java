@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -46,13 +48,11 @@ public class BirthRecordService {
         return toResponse(birthRecordRepository.save(record));
     }
 
-    public BirthRecordResponse getByChildId(String username, Long childId) {
+    public Optional<BirthRecordResponse> getByChildId(String username, Long childId) {
         Child child = childService.findById(childId);
         childAccessGuard.verifyAccess(username, child);
 
-        return birthRecordRepository.findByChildId(childId)
-                .map(this::toResponse)
-                .orElseThrow(() -> new ResourceNotFoundException("Birth record not found for child: " + childId));
+        return birthRecordRepository.findByChildId(childId).map(this::toResponse);
     }
 
     @Transactional

@@ -206,7 +206,7 @@ A doctor can request a connection to a child. The parent then approves or reject
 | Method | Path | Access | Description |
 |---|---|---|---|
 | POST | `/api/birth-records` | Doctor | Create a birth record |
-| GET | `/api/birth-records/child/{childId}` | Parent, Doctor | Birth record for a child |
+| GET | `/api/birth-records/child/{childId}` | Parent, Doctor | Birth record for a child (`204` if none yet) |
 | PUT | `/api/birth-records/child/{childId}` | Doctor | Update a child's birth record |
 
 ### Growth Measurements — `/api/growth-measurements`

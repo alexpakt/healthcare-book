@@ -268,7 +268,7 @@ public class BirthRecordControllerIntegrationTest extends BaseIntegrationTest {
   }
 
   @Test
-  public void testGetBirthRecord_NotFound() throws Exception {
+  public void testGetBirthRecord_NoRecordReturnsNoContent() throws Exception {
     // Register parent
     String parentUsername = "parent" + System.currentTimeMillis();
     RegisterParentRequest parentRequest =
@@ -306,12 +306,12 @@ public class BirthRecordControllerIntegrationTest extends BaseIntegrationTest {
 
     long childId = objectMapper.readTree(childResponse).get("id").asLong();
 
-    // Try to get non-existent birth record
+    // A child without a birth record is an expected state, not an error
     mockMvc
         .perform(
             get("/api/birth-records/child/" + childId)
                 .header("Authorization", getAuthorizationHeader(parentToken)))
-        .andExpect(status().isNotFound());
+        .andExpect(status().isNoContent());
   }
 
   @Test

@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,9 +30,11 @@ public class BirthRecordController {
     }
 
     @GetMapping("/child/{childId}")
-    public BirthRecordResponse getByChildId(@AuthenticationPrincipal UserDetails userDetails,
-                                            @PathVariable Long childId) {
-        return birthRecordService.getByChildId(userDetails.getUsername(), childId);
+    public ResponseEntity<BirthRecordResponse> getByChildId(@AuthenticationPrincipal UserDetails userDetails,
+                                                            @PathVariable Long childId) {
+        return birthRecordService.getByChildId(userDetails.getUsername(), childId)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.noContent().build());
     }
 
     @PutMapping("/child/{childId}")
