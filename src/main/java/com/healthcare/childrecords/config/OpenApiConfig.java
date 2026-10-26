@@ -39,6 +39,6 @@ public class OpenApiConfig {
                         .type(SecurityScheme.Type.HTTP)
                         .scheme("bearer")
                         .bearerFormat("JWT")
-                        .description("JWT Bearer token from /api/auth/login endpoint")));
+                        .description("JWT Bearer token (the browser UI uses the HttpOnly access_token cookie)")));
   }
 }

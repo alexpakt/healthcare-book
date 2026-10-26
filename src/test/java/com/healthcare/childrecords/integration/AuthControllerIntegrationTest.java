@@ -4,9 +4,11 @@ import com.healthcare.childrecords.dto.request.ChangePasswordRequest;
 import com.healthcare.childrecords.dto.request.LoginRequest;
 import com.healthcare.childrecords.dto.request.RegisterDoctorRequest;
 import com.healthcare.childrecords.dto.request.RegisterParentRequest;
+import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.notNullValue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -24,7 +26,8 @@ public class AuthControllerIntegrationTest extends BaseIntegrationTest {
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(request)))
         .andExpect(status().isCreated())
-        .andExpect(jsonPath("$.token").value(notNullValue()))
+        .andExpect(jsonPath("$.token").doesNotExist())
+        .andExpect(cookie().httpOnly("access_token", true))
         .andExpect(jsonPath("$.role").value("ROLE_PARENT"));
   }
 
@@ -41,7 +44,8 @@ public class AuthControllerIntegrationTest extends BaseIntegrationTest {
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(request)))
         .andExpect(status().isCreated())
-        .andExpect(jsonPath("$.token").value(notNullValue()))
+        .andExpect(jsonPath("$.token").doesNotExist())
+        .andExpect(cookie().httpOnly("access_token", true))
         .andExpect(jsonPath("$.role").value("ROLE_DOCTOR"));
   }
 
@@ -105,7 +109,8 @@ public class AuthControllerIntegrationTest extends BaseIntegrationTest {
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(loginRequest)))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.token").value(notNullValue()))
+        .andExpect(jsonPath("$.token").doesNotExist())
+        .andExpect(cookie().httpOnly("access_token", true))
         .andExpect(jsonPath("$.role").value("ROLE_PARENT"));
   }
 
@@ -180,7 +185,8 @@ public class AuthControllerIntegrationTest extends BaseIntegrationTest {
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(newPasswordLogin)))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.token").value(notNullValue()));
+        .andExpect(jsonPath("$.token").doesNotExist())
+        .andExpect(cookie().httpOnly("access_token", true));
   }
 
   @Test
@@ -251,7 +257,7 @@ public class AuthControllerIntegrationTest extends BaseIntegrationTest {
             post("/api/auth/change-password")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(changeRequest)))
-        .andExpect(status().isForbidden());
+        .andExpect(status().isUnauthorized());
   }
 
   @Test
@@ -305,5 +311,111 @@ public class AuthControllerIntegrationTest extends BaseIntegrationTest {
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(second)))
         .andExpect(status().isBadRequest());
+  }
+
+  private String registerParentAndGetUsername() throws Exception {
+    String username = "cookieuser" + System.nanoTime();
+    RegisterParentRequest request =
+        new RegisterParentRequest(username, "TestPass123!", "Cookie", "User", "cookie@example.com", null, null);
+    mockMvc
+        .perform(
+            post("/api/auth/register/parent")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(request)))
+        .andExpect(status().isCreated());
+    return username;
+  }
+
+  private Cookie loginAndGetCookie(String username) throws Exception {
+    return mockMvc
+        .perform(
+            post("/api/auth/login")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(new LoginRequest(username, "TestPass123!"))))
+        .andExpect(status().isOk())
+        .andExpect(cookie().httpOnly("access_token", true))
+        .andExpect(cookie().path("access_token", "/"))
+        .andExpect(cookie().attribute("access_token", "SameSite", "Lax"))
+        .andReturn()
+        .getResponse()
+        .getCookie("access_token");
+  }
+
+  @Test
+  public void testRegister_SetsHttpOnlyCookie() throws Exception {
+    String username = "regcookie" + System.nanoTime();
+    RegisterParentRequest request =
+        new RegisterParentRequest(username, "TestPass123!", "Test", "Parent", "t@example.com", null, null);
+
+    mockMvc
+        .perform(
+            post("/api/auth/register/parent")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(request)))
+        .andExpect(status().isCreated())
+        .andExpect(cookie().httpOnly("access_token", true));
+  }
+
+  @Test
+  public void testMe_WithCookie_ReturnsCurrentUser() throws Exception {
+    String username = registerParentAndGetUsername();
+    Cookie cookie = loginAndGetCookie(username);
+
+    mockMvc
+        .perform(get("/api/auth/me").cookie(cookie))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.username").value(username))
+        .andExpect(jsonPath("$.role").value("ROLE_PARENT"))
+        .andExpect(jsonPath("$.profileId").value(notNullValue()));
+  }
+
+  @Test
+  public void testMe_WithoutCredentials_ReturnsUnauthorized() throws Exception {
+    mockMvc.perform(get("/api/auth/me")).andExpect(status().isUnauthorized());
+  }
+
+  @Test
+  public void testLogout_ClearsCookie() throws Exception {
+    mockMvc
+        .perform(post("/api/auth/logout"))
+        .andExpect(status().isNoContent())
+        .andExpect(cookie().maxAge("access_token", 0));
+  }
+
+  @Test
+  public void testCookieAuth_StateChangingRequestFromUnknownOrigin_IsForbidden() throws Exception {
+    Cookie cookie = loginAndGetCookie(registerParentAndGetUsername());
+    String body = objectMapper.writeValueAsString(new ChangePasswordRequest("TestPass123!", "NewPass123!"));
+
+    mockMvc
+        .perform(
+            post("/api/auth/change-password")
+                .cookie(cookie)
+                .header("Origin", "https://evil.example")
+                .contentType("application/json")
+                .content(body))
+        .andExpect(status().isForbidden());
+
+    mockMvc
+        .perform(
+            post("/api/auth/change-password")
+                .cookie(cookie)
+                .contentType("application/json")
+                .content(body))
+        .andExpect(status().isForbidden());
+  }
+
+  @Test
+  public void testCookieAuth_StateChangingRequestFromAllowedOrigin_Succeeds() throws Exception {
+    Cookie cookie = loginAndGetCookie(registerParentAndGetUsername());
+
+    mockMvc
+        .perform(
+            post("/api/auth/change-password")
+                .cookie(cookie)
+                .header("Origin", "http://localhost:5173")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(new ChangePasswordRequest("TestPass123!", "NewPass123!"))))
+        .andExpect(status().isOk());
   }
 }

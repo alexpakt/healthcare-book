@@ -2,7 +2,6 @@ package com.healthcare.childrecords.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.healthcare.childrecords.dto.request.LoginRequest;
-import com.healthcare.childrecords.dto.response.AuthResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,9 +40,7 @@ public abstract class BaseIntegrationTest {
             .andExpect(status().isOk())
             .andReturn();
 
-    AuthResponse authResponse =
-        objectMapper.readValue(result.getResponse().getContentAsString(), AuthResponse.class);
-    return authResponse.token();
+    return result.getResponse().getCookie("access_token").getValue();
   }
 
   protected String getAuthorizationHeader(String token) {

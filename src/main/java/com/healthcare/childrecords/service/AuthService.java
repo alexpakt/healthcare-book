@@ -4,7 +4,8 @@ import com.healthcare.childrecords.dto.request.ChangePasswordRequest;
 import com.healthcare.childrecords.dto.request.LoginRequest;
 import com.healthcare.childrecords.dto.request.RegisterDoctorRequest;
 import com.healthcare.childrecords.dto.request.RegisterParentRequest;
-import com.healthcare.childrecords.dto.response.AuthResponse;
+import com.healthcare.childrecords.dto.response.AuthResult;
+import com.healthcare.childrecords.dto.response.CurrentUserResponse;
 import com.healthcare.childrecords.entity.*;
 import com.healthcare.childrecords.repository.*;
 import com.healthcare.childrecords.security.JwtUtil;
@@ -31,7 +32,7 @@ public class AuthService {
     private final UserDetailsService userDetailsService;
 
     @Transactional
-    public AuthResponse registerDoctor(RegisterDoctorRequest request) {
+    public AuthResult registerDoctor(RegisterDoctorRequest request) {
         if (userRepository.existsByUsername(request.username())) {
             throw new IllegalArgumentException("Username already taken");
         }
@@ -62,11 +63,11 @@ public class AuthService {
         doctor = doctorRepository.save(doctor);
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
-        return new AuthResponse(jwtUtil.generateToken(userDetails), user.getRole().name(), doctor.getId());
+        return new AuthResult(jwtUtil.generateToken(userDetails), user.getRole().name(), doctor.getId());
     }
 
     @Transactional
-    public AuthResponse registerParent(RegisterParentRequest request) {
+    public AuthResult registerParent(RegisterParentRequest request) {
         if (userRepository.existsByUsername(request.username())) {
             throw new IllegalArgumentException("Username already taken");
         }
@@ -89,24 +90,32 @@ public class AuthService {
         parent = parentRepository.save(parent);
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
-        return new AuthResponse(jwtUtil.generateToken(userDetails), user.getRole().name(), parent.getId());
+        return new AuthResult(jwtUtil.generateToken(userDetails), user.getRole().name(), parent.getId());
     }
 
-    public AuthResponse login(LoginRequest request) {
+    public AuthResult login(LoginRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.username(), request.password()));
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.username());
         User user = userRepository.findByUsername(request.username()).orElseThrow();
 
-        Long profileId = switch (user.getRole()) {
+        return new AuthResult(jwtUtil.generateToken(userDetails), user.getRole().name(), findProfileId(user));
+    }
+
+    public CurrentUserResponse getCurrentUser(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        return new CurrentUserResponse(user.getUsername(), user.getRole().name(), findProfileId(user));
+    }
+
+    private Long findProfileId(User user) {
+        return switch (user.getRole()) {
             case ROLE_DOCTOR -> doctorRepository.findByUserId(user.getId())
                     .map(Doctor::getId).orElse(null);
             case ROLE_PARENT -> parentRepository.findByUserId(user.getId())
                     .map(Parent::getId).orElse(null);
         };
-
-        return new AuthResponse(jwtUtil.generateToken(userDetails), user.getRole().name(), profileId);
     }
 
     @Transactional
