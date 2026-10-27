@@ -159,11 +159,12 @@ public class DoctorChildRequestIntegrationTest extends BaseIntegrationTest {
   }
 
   @Test
-  public void testSendRequest_AfterRejection_IsRejected() throws Exception {
-    long requestId = sendRequest();
+  public void testSendRequest_AfterRejection_ReusesRequestAsPending() throws Exception {
+    long firstRequestId = sendRequest();
     mockMvc
         .perform(
-            post("/api/doctor-child-requests/" + requestId + "/reject")
+            post("/api/doctor-child-requests/" + firstRequestId + "/reject")
+                .param("reason", "no")
                 .header("Authorization", getAuthorizationHeader(parentToken)))
         .andExpect(status().isOk());
 
@@ -172,8 +173,17 @@ public class DoctorChildRequestIntegrationTest extends BaseIntegrationTest {
             post("/api/doctor-child-requests")
                 .contentType("application/json")
                 .header("Authorization", getAuthorizationHeader(doctorToken))
-                .content("{\"childId\": " + childId + "}"))
-        .andExpect(status().isBadRequest());
+                .content("{\"childId\": " + childId + ", \"notes\": \"second try\"}"))
+        .andExpect(status().isCreated())
+        .andExpect(jsonPath("$.id").value(firstRequestId))
+        .andExpect(jsonPath("$.status").value("PENDING"))
+        .andExpect(jsonPath("$.notes").value("second try"))
+        .andExpect(jsonPath("$.resolvedAt").doesNotExist());
+
+    mockMvc
+        .perform(get("/api/doctor-child-requests/pending").header("Authorization", getAuthorizationHeader(parentToken)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", hasSize(1)));
   }
 
   private String registerOtherParentAndLogin() throws Exception {

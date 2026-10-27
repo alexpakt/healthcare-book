@@ -36,10 +36,7 @@ public class DoctorChildRequestService {
         DoctorChildRequest doctorChildRequest = requestRepository
                 .findByDoctorIdAndChildId(doctor.getId(), child.getId())
                 .map(existing -> {
-                    // A request whose connection was removed by the parent may be requested again.
-                    // APPROVED is included for rows revoked before the REVOKED status existed.
-                    if (existing.getStatus() != DoctorChildRequest.RequestStatus.REVOKED
-                            && existing.getStatus() != DoctorChildRequest.RequestStatus.APPROVED) {
+                    if (existing.getStatus() == DoctorChildRequest.RequestStatus.PENDING) {
                         throw new IllegalArgumentException("Υπάρχει ήδη αίτημα σύνδεσης για αυτό το παιδί");
                     }
                     existing.setStatus(DoctorChildRequest.RequestStatus.PENDING);
