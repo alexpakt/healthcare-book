@@ -37,12 +37,12 @@ public class AppointmentService {
         if (role == Role.ROLE_DOCTOR) {
             Doctor callingDoctor = doctorService.findByUsername(username);
             if (!callingDoctor.getId().equals(doctor.getId())) {
-                throw new AccessDeniedException("Doctors can only create appointments for themselves");
+                throw new AccessDeniedException("Ο ιατρός μπορεί να δημιουργεί ραντεβού μόνο για τον εαυτό του");
             }
             status = AppointmentStatus.SCHEDULED;
         } else {
             if (child.getDoctors().stream().noneMatch(d -> d.getId().equals(doctor.getId()))) {
-                throw new AccessDeniedException("Doctor is not connected to this child");
+                throw new AccessDeniedException("Ο ιατρός δεν είναι συνδεδεμένος με αυτό το παιδί");
             }
             status = AppointmentStatus.REQUESTED;
         }
@@ -86,14 +86,14 @@ public class AppointmentService {
         if (role == Role.ROLE_DOCTOR) {
             Doctor doctor = doctorService.findByUsername(username);
             if (!appointment.getDoctor().getId().equals(doctor.getId())) {
-                throw new AccessDeniedException("Doctor is not assigned to this appointment");
+                throw new AccessDeniedException("Ο ιατρός δεν είναι συνδεδεμένος με αυτό το ραντεβού");
             }
             boolean valid = (currentStatus == AppointmentStatus.REQUESTED
                         && (newStatus == AppointmentStatus.SCHEDULED || newStatus == AppointmentStatus.DECLINED))
                     || (currentStatus == AppointmentStatus.SCHEDULED
                         && (newStatus == AppointmentStatus.COMPLETED || newStatus == AppointmentStatus.CANCELLED));
             if (!valid) {
-                throw new AccessDeniedException("Invalid status transition: " + currentStatus + " -> " + newStatus);
+                throw new AccessDeniedException("Μη έγκυρη μετάβαση κατάστασης: " + currentStatus + " -> " + newStatus);
             }
             if (currentStatus == AppointmentStatus.REQUESTED && newStatus == AppointmentStatus.SCHEDULED) {
                 childService.ensureDoctorAssigned(appointment.getChild(), doctor);
@@ -101,12 +101,12 @@ public class AppointmentService {
         } else {
             Parent parent = parentService.findByUsername(username);
             if (!appointment.getChild().getParent().getId().equals(parent.getId())) {
-                throw new AccessDeniedException("Access denied to this appointment");
+                throw new AccessDeniedException("Δεν έχετε πρόσβαση σε αυτό το ραντεβού");
             }
             boolean valid = (currentStatus == AppointmentStatus.REQUESTED || currentStatus == AppointmentStatus.SCHEDULED)
                     && newStatus == AppointmentStatus.CANCELLED;
             if (!valid) {
-                throw new AccessDeniedException("Invalid status transition: " + currentStatus + " -> " + newStatus);
+                throw new AccessDeniedException("Μη έγκυρη μετάβαση κατάστασης: " + currentStatus + " -> " + newStatus);
             }
         }
 
@@ -116,7 +116,7 @@ public class AppointmentService {
 
     public Appointment findById(Long id) {
         return appointmentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Appointment not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Το ραντεβού δεν βρέθηκε: " + id));
     }
 
     private AppointmentResponse toResponse(Appointment a) {

@@ -28,13 +28,13 @@ public class GrowthMeasurementService {
     @Transactional
     public GrowthMeasurementResponse create(String username, GrowthMeasurementRequest request) {
         if (request.heightCm() == null && request.weightKg() == null && request.headCircumferenceCm() == null) {
-            throw new IllegalArgumentException("At least one measurement (height, weight, or head circumference) must be provided");
+            throw new IllegalArgumentException("Πρέπει να συμπληρωθεί τουλάχιστον μία μέτρηση (ύψος, βάρος ή περίμετρος κεφαλής)");
         }
 
         Child child = childService.findById(request.childId());
         childAccessGuard.verifyAccess(username, child);
         if (request.measurementDate().isBefore(LocalDate.parse(child.getDateOfBirth()))) {
-            throw new IllegalArgumentException("Measurement date cannot be before the child's date of birth");
+            throw new IllegalArgumentException("Η ημερομηνία μέτρησης δεν μπορεί να είναι πριν από την ημερομηνία γέννησης του παιδιού");
         }
         Doctor doctor = doctorService.findByUsername(username);
 
@@ -68,7 +68,7 @@ public class GrowthMeasurementService {
     @Transactional
     public GrowthMeasurementResponse update(String username, Long id, GrowthMeasurementRequest request) {
         if (request.heightCm() == null && request.weightKg() == null && request.headCircumferenceCm() == null) {
-            throw new IllegalArgumentException("At least one measurement must be provided");
+            throw new IllegalArgumentException("Πρέπει να συμπληρωθεί τουλάχιστον μία μέτρηση");
         }
 
         GrowthMeasurement measurement = findById(id);
@@ -93,7 +93,7 @@ public class GrowthMeasurementService {
 
     private GrowthMeasurement findById(Long id) {
         return growthMeasurementRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Growth measurement not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Η μέτρηση ανάπτυξης δεν βρέθηκε: " + id));
     }
 
     private int calculateAgeInMonths(String dateOfBirthStr, LocalDate measurementDate) {

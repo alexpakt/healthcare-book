@@ -27,7 +27,7 @@ public class BirthRecordService {
         childAccessGuard.verifyAccess(username, child);
 
         if (birthRecordRepository.existsByChildId(child.getId())) {
-            throw new IllegalArgumentException("Birth record already exists for this child. Use PUT to update it.");
+            throw new IllegalArgumentException("Υπάρχει ήδη εγγραφή γέννησης για αυτό το παιδί. Χρησιμοποιήστε PUT για ενημέρωση.");
         }
 
         BirthRecord record = BirthRecord.builder()
@@ -61,7 +61,7 @@ public class BirthRecordService {
         childAccessGuard.verifyAccess(username, child);
 
         BirthRecord record = birthRecordRepository.findByChildId(childId)
-                .orElseThrow(() -> new ResourceNotFoundException("Birth record not found for child: " + childId));
+                .orElseThrow(() -> new ResourceNotFoundException("Δεν βρέθηκε εγγραφή γέννησης για το παιδί: " + childId));
 
         record.setBirthWeightGrams(request.birthWeightGrams());
         record.setBirthLengthCm(request.birthLengthCm());

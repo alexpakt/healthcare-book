@@ -5,8 +5,8 @@ import jakarta.validation.constraints.Pattern;
 
 /** Partial update: a field that is null is left unchanged. */
 public record UpdateParentProfileRequest(
-        @Pattern(regexp = ".*\\S.*", message = "First name must not be blank") String firstName,
-        @Pattern(regexp = ".*\\S.*", message = "Last name must not be blank") String lastName,
+        @Pattern(regexp = ".*\\S.*", message = "Το όνομα δεν μπορεί να είναι κενό") String firstName,
+        @Pattern(regexp = ".*\\S.*", message = "Το επώνυμο δεν μπορεί να είναι κενό") String lastName,
         @Email String email,
         String phoneNumber,
         String address

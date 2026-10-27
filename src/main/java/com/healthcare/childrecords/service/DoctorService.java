@@ -45,21 +45,21 @@ public class DoctorService {
 
     public Doctor findById(Long id) {
         return doctorRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Doctor not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Ο ιατρός δεν βρέθηκε: " + id));
     }
 
     public Doctor findByUsername(String username) {
         Long userId = userRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found: " + username))
+                .orElseThrow(() -> new ResourceNotFoundException("Ο χρήστης δεν βρέθηκε: " + username))
                 .getId();
         return doctorRepository.findByUserId(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Doctor profile not found for user: " + username));
+                .orElseThrow(() -> new ResourceNotFoundException("Δεν βρέθηκε προφίλ ιατρού για τον χρήστη: " + username));
     }
 
     public DoctorResponse searchByAmka(String amka) {
         String amkaHash = AmkaHashUtil.hashAmka(amka);
         return toResponse(doctorRepository.findByAmkaHash(amkaHash)
-                .orElseThrow(() -> new ResourceNotFoundException("Doctor with AMKA: " + amka + " not found.")));
+                .orElseThrow(() -> new ResourceNotFoundException("Δεν βρέθηκε ιατρός με ΑΜΚΑ: " + amka + ".")));
     }
 
     public List<DoctorResponse> searchByName(String name) {

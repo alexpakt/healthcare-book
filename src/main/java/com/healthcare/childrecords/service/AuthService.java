@@ -34,11 +34,11 @@ public class AuthService {
     @Transactional
     public AuthResult registerDoctor(RegisterDoctorRequest request) {
         if (userRepository.existsByUsername(request.username())) {
-            throw new IllegalArgumentException("Username already taken");
+            throw new IllegalArgumentException("Το όνομα χρήστη χρησιμοποιείται ήδη");
         }
         String amkaHash = AmkaHashUtil.hashAmka(request.amka());
         if (doctorRepository.existsByAmkaHash(amkaHash)) {
-            throw new IllegalArgumentException("A doctor with this AMKA already exists");
+            throw new IllegalArgumentException("Υπάρχει ήδη ιατρός με αυτόν τον ΑΜΚΑ");
         }
 
         User user = User.builder()
@@ -69,7 +69,7 @@ public class AuthService {
     @Transactional
     public AuthResult registerParent(RegisterParentRequest request) {
         if (userRepository.existsByUsername(request.username())) {
-            throw new IllegalArgumentException("Username already taken");
+            throw new IllegalArgumentException("Το όνομα χρήστη χρησιμοποιείται ήδη");
         }
 
         User user = User.builder()
@@ -105,7 +105,7 @@ public class AuthService {
 
     public CurrentUserResponse getCurrentUser(String username) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Ο χρήστης δεν βρέθηκε"));
         return new CurrentUserResponse(user.getUsername(), user.getRole().name(), findProfileId(user));
     }
 
@@ -121,10 +121,10 @@ public class AuthService {
     @Transactional
     public void changePassword(String username, ChangePasswordRequest request) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Ο χρήστης δεν βρέθηκε"));
 
         if (!passwordEncoder.matches(request.currentPassword(), user.getPassword())) {
-            throw new IllegalArgumentException("Current password is incorrect");
+            throw new IllegalArgumentException("Ο τρέχων κωδικός πρόσβασης είναι λανθασμένος");
         }
 
         user.setPassword(passwordEncoder.encode(request.newPassword()));

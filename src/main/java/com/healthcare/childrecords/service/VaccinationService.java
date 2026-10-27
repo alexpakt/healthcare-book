@@ -197,7 +197,7 @@ public class VaccinationService {
 
     private Vaccination findById(Long id) {
         return vaccinationRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Vaccination not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Ο εμβολιασμός δεν βρέθηκε: " + id));
     }
 
     private VaccinationResponse toResponse(Vaccination v) {

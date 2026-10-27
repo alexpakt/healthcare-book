@@ -4,9 +4,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record VaccinationScheduleRequest(
-        @NotBlank(message = "Vaccine name is required") String vaccineName,
+        @NotBlank(message = "Το όνομα εμβολίου είναι υποχρεωτικό") String vaccineName,
         String vaccineNameGr,
-        @NotNull(message = "Recommended age in months is required") Integer recommendedAgeMonths,
+        @NotNull(message = "Η προτεινόμενη ηλικία σε μήνες είναι υποχρεωτική") Integer recommendedAgeMonths,
         Integer doseNumber,
         String notes
 ) {}

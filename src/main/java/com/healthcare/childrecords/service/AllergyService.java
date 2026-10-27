@@ -70,7 +70,7 @@ public class AllergyService {
 
     private Allergy findById(Long id) {
         return allergyRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Allergy not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Η αλλεργία δεν βρέθηκε: " + id));
     }
 
     private AllergyResponse toResponse(Allergy a) {

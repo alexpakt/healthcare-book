@@ -83,7 +83,7 @@ public class AuthControllerIntegrationTest extends BaseIntegrationTest {
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(request)))
         .andExpect(status().isBadRequest())
-        .andExpect(jsonPath("$.message").value("Username already taken"));
+        .andExpect(jsonPath("$.message").value("Το όνομα χρήστη χρησιμοποιείται ήδη"));
   }
 
   @Test
@@ -216,7 +216,7 @@ public class AuthControllerIntegrationTest extends BaseIntegrationTest {
                 .header("Authorization", getAuthorizationHeader(token))
                 .content(objectMapper.writeValueAsString(changeRequest)))
         .andExpect(status().isBadRequest())
-        .andExpect(jsonPath("$.message").value("Current password is incorrect"));
+        .andExpect(jsonPath("$.message").value("Ο τρέχων κωδικός πρόσβασης είναι λανθασμένος"));
   }
 
   @Test

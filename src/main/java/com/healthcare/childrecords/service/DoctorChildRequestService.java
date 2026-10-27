@@ -32,7 +32,7 @@ public class DoctorChildRequestService {
         // Check if request already exists
         requestRepository.findByDoctorIdAndChildId(doctor.getId(), child.getId())
                 .ifPresent(existing -> {
-                    throw new IllegalArgumentException("A connection request for this child has already been made");
+                    throw new IllegalArgumentException("Υπάρχει ήδη αίτημα σύνδεσης για αυτό το παιδί");
                 });
 
         DoctorChildRequest doctorChildRequest = DoctorChildRequest.builder()
@@ -64,12 +64,12 @@ public class DoctorChildRequestService {
     @Transactional
     public DoctorChildRequestResponse approveRequest(String parentUsername, Long requestId) {
         DoctorChildRequest doctorChildRequest = requestRepository.findById(requestId)
-                .orElseThrow(() -> new ResourceNotFoundException("Request not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Το αίτημα δεν βρέθηκε"));
 
         // Verify that the parent owns the child
         Child child = doctorChildRequest.getChild();
         if (!child.getParent().getUser().getUsername().equals(parentUsername)) {
-            throw new AccessDeniedException("You do not have access to this request");
+            throw new AccessDeniedException("Δεν έχετε πρόσβαση σε αυτό το αίτημα");
         }
 
         // Add doctor to child's doctors list
@@ -89,12 +89,12 @@ public class DoctorChildRequestService {
     @Transactional
     public DoctorChildRequestResponse rejectRequest(String parentUsername, Long requestId, String reason) {
         DoctorChildRequest doctorChildRequest = requestRepository.findById(requestId)
-                .orElseThrow(() -> new ResourceNotFoundException("Request not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Το αίτημα δεν βρέθηκε"));
 
         // Verify that the parent owns the child
         Child child = doctorChildRequest.getChild();
         if (!child.getParent().getUser().getUsername().equals(parentUsername)) {
-            throw new AccessDeniedException("You do not have access to this request");
+            throw new AccessDeniedException("Δεν έχετε πρόσβαση σε αυτό το αίτημα");
         }
 
         doctorChildRequest.setStatus(DoctorChildRequest.RequestStatus.REJECTED);

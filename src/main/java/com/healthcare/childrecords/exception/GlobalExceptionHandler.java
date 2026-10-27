@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ErrorResponse> handleBadCredentials(BadCredentialsException ex) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), "Invalid username or password"));
+                .body(new ErrorResponse(HttpStatus.UNAUTHORIZED.value(), "Λανθασμένο όνομα χρήστη ή κωδικός πρόσβασης"));
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorResponse> handleDataIntegrity(DataIntegrityViolationException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body(new ErrorResponse(HttpStatus.CONFLICT.value(), "Duplicate or conflicting record"));
+                .body(new ErrorResponse(HttpStatus.CONFLICT.value(), "Η εγγραφή υπάρχει ήδη ή έρχεται σε σύγκρουση με υπάρχουσα εγγραφή"));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

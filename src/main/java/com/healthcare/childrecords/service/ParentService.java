@@ -32,15 +32,15 @@ public class ParentService {
 
     public Parent findByUsername(String username) {
         Long userId = userRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found: " + username))
+                .orElseThrow(() -> new ResourceNotFoundException("Ο χρήστης δεν βρέθηκε: " + username))
                 .getId();
         return parentRepository.findByUserId(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("Parent profile not found for user: " + username));
+                .orElseThrow(() -> new ResourceNotFoundException("Δεν βρέθηκε προφίλ γονέα για τον χρήστη: " + username));
     }
 
     public Parent findById(Long id) {
         return parentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Parent not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Ο γονέας δεν βρέθηκε: " + id));
     }
 
     private ParentResponse toResponse(Parent p) {

@@ -527,6 +527,6 @@ public class AppointmentControllerIntegrationTest extends BaseIntegrationTest {
                 .header("Authorization", getAuthorizationHeader(parentToken))
                 .content(objectMapper.writeValueAsString(appointmentRequest)))
         .andExpect(status().isForbidden())
-        .andExpect(jsonPath("$.message").value("Doctor is not connected to this child"));
+        .andExpect(jsonPath("$.message").value("Ο ιατρός δεν είναι συνδεδεμένος με αυτό το παιδί"));
   }
 }

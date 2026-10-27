@@ -33,7 +33,7 @@ public class ChildService {
         Parent parent = parentService.findByUsername(username);
         String amkaHash = AmkaHashUtil.hashAmka(request.amka());
         if (childRepository.existsByAmkaHash(amkaHash)) {
-            throw new IllegalArgumentException("A child with this AMKA already exists");
+            throw new IllegalArgumentException("Υπάρχει ήδη παιδί με αυτόν τον ΑΜΚΑ");
         }
         Child child = Child.builder()
                 .firstName(request.firstName())
@@ -121,13 +121,13 @@ public class ChildService {
     public ChildResponse searchByAmka(String amka) {
         String amkaHash = AmkaHashUtil.hashAmka(amka);
         Child child = childRepository.findByAmkaHash(amkaHash)
-                .orElseThrow(() -> new ResourceNotFoundException("Child not found with AMKA: " + amka));
+                .orElseThrow(() -> new ResourceNotFoundException("Δεν βρέθηκε παιδί με ΑΜΚΑ: " + amka));
         return toResponse(child);
     }
 
     public Child findById(Long id) {
         return childRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Child not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Το παιδί δεν βρέθηκε: " + id));
     }
 
     private ChildResponse toResponse(Child c) {

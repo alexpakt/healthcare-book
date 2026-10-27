@@ -45,7 +45,7 @@ public class VaccinationScheduleService {
     public VaccinationScheduleResponse getScheduleById(Long id) {
         return vaccinationScheduleRepository.findById(id)
                 .map(this::toResponse)
-                .orElseThrow(() -> new ResourceNotFoundException("Vaccination schedule not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Το πρόγραμμα εμβολιασμού δεν βρέθηκε: " + id));
     }
 
     @Transactional
@@ -72,7 +72,7 @@ public class VaccinationScheduleService {
     @Transactional
     public VaccinationScheduleResponse updateSchedule(Long id, VaccinationScheduleRequest request) {
         VaccinationSchedule schedule = vaccinationScheduleRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Vaccination schedule not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Το πρόγραμμα εμβολιασμού δεν βρέθηκε: " + id));
 
         Vaccine vaccine = vaccineRepository.findByVaccineName(request.vaccineName())
                 .orElseGet(() -> {

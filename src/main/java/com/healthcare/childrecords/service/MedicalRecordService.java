@@ -68,7 +68,7 @@ public class MedicalRecordService {
         // Only the creating doctor can update
         Doctor doctor = doctorService.findByUsername(username);
         if (!record.getDoctor().getId().equals(doctor.getId())) {
-            throw new com.healthcare.childrecords.exception.AccessDeniedException("Only the creating doctor can update this record");
+            throw new com.healthcare.childrecords.exception.AccessDeniedException("Μόνο ο ιατρός που δημιούργησε την εγγραφή μπορεί να την ενημερώσει");
         }
 
         record.setDiagnosis(request.diagnosis());
@@ -80,7 +80,7 @@ public class MedicalRecordService {
 
     private MedicalRecord findById(Long id) {
         return medicalRecordRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Medical record not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Το ιατρικό αρχείο δεν βρέθηκε: " + id));
     }
 
     private MedicalRecordResponse toResponse(MedicalRecord r) {

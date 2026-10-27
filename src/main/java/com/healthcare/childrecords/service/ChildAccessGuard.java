@@ -27,13 +27,13 @@ public class ChildAccessGuard {
         if (role == Role.ROLE_PARENT) {
             Parent parent = parentService.findByUsername(username);
             if (!child.getParent().getId().equals(parent.getId())) {
-                throw new AccessDeniedException("Access denied to this child's data");
+                throw new AccessDeniedException("Δεν έχετε πρόσβαση στα δεδομένα αυτού του παιδιού");
             }
         } else {
             Doctor doctor = doctorService.findByUsername(username);
             boolean assigned = child.getDoctors().stream().anyMatch(d -> d.getId().equals(doctor.getId()));
             if (!assigned) {
-                throw new AccessDeniedException("Doctor is not assigned to this child");
+                throw new AccessDeniedException("Ο ιατρός δεν είναι συνδεδεμένος με αυτό το παιδί");
             }
         }
     }
@@ -42,7 +42,7 @@ public class ChildAccessGuard {
     public void verifyParentOwnership(String username, Child child) {
         Parent parent = parentService.findByUsername(username);
         if (!child.getParent().getId().equals(parent.getId())) {
-            throw new AccessDeniedException("Parent does not own this child");
+            throw new AccessDeniedException("Ο γονέας δεν είναι κάτοχος αυτού του παιδιού");
         }
     }
 }

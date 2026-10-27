@@ -63,7 +63,7 @@ public class GrowthTrajectoryService {
         GrowthAlertResponse alert = evaluate(child).stream()
                 .filter(a -> a.alertKey().equals(alertKey))
                 .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("Growth alert not found: " + alertKey));
+                .orElseThrow(() -> new ResourceNotFoundException("Η ειδοποίηση ανάπτυξης δεν βρέθηκε: " + alertKey));
 
         GrowthAlertAcknowledgement acknowledgement = acknowledgementRepository
                 .findByChildIdAndAlertKey(childId, alertKey)
