@@ -40,6 +40,7 @@ public class DoctorChildRequest {
     public enum RequestStatus {
         PENDING,
         APPROVED,
-        REJECTED
+        REJECTED,
+        REVOKED
     }
 }

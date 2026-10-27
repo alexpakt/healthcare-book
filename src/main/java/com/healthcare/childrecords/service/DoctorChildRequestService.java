@@ -29,19 +29,32 @@ public class DoctorChildRequestService {
         Doctor doctor = doctorService.findByUsername(doctorUsername);
         Child child = childService.findById(request.childId());
 
-        // Check if request already exists
-        requestRepository.findByDoctorIdAndChildId(doctor.getId(), child.getId())
-                .ifPresent(existing -> {
-                    throw new IllegalArgumentException("Υπάρχει ήδη αίτημα σύνδεσης για αυτό το παιδί");
-                });
+        if (child.getDoctors().contains(doctor)) {
+            throw new IllegalArgumentException("Ο ιατρός είναι ήδη συνδεδεμένος με το παιδί");
+        }
 
-        DoctorChildRequest doctorChildRequest = DoctorChildRequest.builder()
-                .doctor(doctor)
-                .child(child)
-                .status(DoctorChildRequest.RequestStatus.PENDING)
-                .requestedAt(LocalDateTime.now())
-                .notes(request.notes())
-                .build();
+        DoctorChildRequest doctorChildRequest = requestRepository
+                .findByDoctorIdAndChildId(doctor.getId(), child.getId())
+                .map(existing -> {
+                    // A request whose connection was removed by the parent may be requested again.
+                    // APPROVED is included for rows revoked before the REVOKED status existed.
+                    if (existing.getStatus() != DoctorChildRequest.RequestStatus.REVOKED
+                            && existing.getStatus() != DoctorChildRequest.RequestStatus.APPROVED) {
+                        throw new IllegalArgumentException("Υπάρχει ήδη αίτημα σύνδεσης για αυτό το παιδί");
+                    }
+                    existing.setStatus(DoctorChildRequest.RequestStatus.PENDING);
+                    existing.setRequestedAt(LocalDateTime.now());
+                    existing.setResolvedAt(null);
+                    existing.setNotes(request.notes());
+                    return existing;
+                })
+                .orElseGet(() -> DoctorChildRequest.builder()
+                        .doctor(doctor)
+                        .child(child)
+                        .status(DoctorChildRequest.RequestStatus.PENDING)
+                        .requestedAt(LocalDateTime.now())
+                        .notes(request.notes())
+                        .build());
 
         DoctorChildRequest saved = requestRepository.save(doctorChildRequest);
         return toResponse(saved);

@@ -5,16 +5,19 @@ import com.healthcare.childrecords.dto.response.ChildResponse;
 import com.healthcare.childrecords.dto.response.DoctorResponse;
 import com.healthcare.childrecords.entity.Child;
 import com.healthcare.childrecords.entity.Doctor;
+import com.healthcare.childrecords.entity.DoctorChildRequest;
 import com.healthcare.childrecords.entity.Parent;
 import com.healthcare.childrecords.entity.Role;
 import com.healthcare.childrecords.exception.ResourceNotFoundException;
 import com.healthcare.childrecords.repository.ChildRepository;
+import com.healthcare.childrecords.repository.DoctorChildRequestRepository;
 import com.healthcare.childrecords.repository.UserRepository;
 import com.healthcare.childrecords.util.AmkaHashUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -23,6 +26,7 @@ import java.util.List;
 public class ChildService {
 
     private final ChildRepository childRepository;
+    private final DoctorChildRequestRepository requestRepository;
     private final ParentService parentService;
     private final DoctorService doctorService;
     private final UserRepository userRepository;
@@ -107,6 +111,12 @@ public class ChildService {
         Child child = findById(childId);
         childAccessGuard.verifyParentOwnership(username, child);
         child.getDoctors().removeIf(d -> d.getId().equals(doctorId));
+        requestRepository.findByDoctorIdAndChildId(doctorId, childId)
+                .filter(request -> request.getStatus() == DoctorChildRequest.RequestStatus.APPROVED)
+                .ifPresent(request -> {
+                    request.setStatus(DoctorChildRequest.RequestStatus.REVOKED);
+                    request.setResolvedAt(LocalDateTime.now());
+                });
         return toResponse(childRepository.save(child));
     }
 
