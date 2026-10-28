@@ -1,0 +1,15 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: set-growth-alert-percentile-lines-stored-data
+      author: alexandra
+      comment: >
+        Use only the percentile lines that exist in growth_references for height, weight and head
+        circumference (3, 15, 25, 50, 75, 85, 97).
+      changes:
+        - update:
+            tableName: growth_alert_rules
+            columns:
+              - column: { name: percentile_lines, value: "3,15,25,50,75,85,97" }
+              - column: { name: updated_at, valueComputed: CURRENT_TIMESTAMP }
+            where: rule_type = 'PERCENTILE_CROSSING'
