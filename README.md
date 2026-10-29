@@ -240,7 +240,7 @@ Personally identifiable and medically sensitive fields are encrypted in the data
 
 Encryption is transparent to the application via the JPA `AttributeConverter` (`EncryptionConverter`), which wraps `EncryptionUtil`.
 
-Because encrypted values cannot be searched directly, AMKA lookups use a keyed HMAC-SHA256 hash (`AmkaHashUtil`, key `APP_AMKA_HASH_KEY`, separate from the AES key) stored alongside the encrypted value. On startup `AmkaHashMigrationRunner` rehashes any rows still holding a legacy plain SHA-256 hash (idempotent). Losing or changing the key invalidates all hashes until that runner recomputes them.
+Because encrypted values cannot be searched directly, AMKA lookups use a keyed HMAC-SHA256 hash (`AmkaHashUtil`, key `APP_AMKA_HASH_KEY`, separate from the AES key) stored alongside the encrypted value. Losing or changing the key invalidates all stored hashes; they can only be recomputed from the decrypted AMKA values.
 
 ### Encrypted fields
 
