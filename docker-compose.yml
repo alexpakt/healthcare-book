@@ -38,6 +38,7 @@ services:
       APP_JWT_SECRET: ${JWT_SECRET}
       APP_JWT_EXPIRATION_MS: 86400000
       APP_ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      APP_AMKA_HASH_KEY: ${AMKA_HASH_KEY}
     ports:
       - "8080:8080"
     networks:

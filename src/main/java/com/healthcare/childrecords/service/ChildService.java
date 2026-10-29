@@ -31,11 +31,12 @@ public class ChildService {
     private final DoctorService doctorService;
     private final UserRepository userRepository;
     private final ChildAccessGuard childAccessGuard;
+    private final AmkaHashUtil amkaHashUtil;
 
     @Transactional
     public ChildResponse create(String username, ChildRequest request) {
         Parent parent = parentService.findByUsername(username);
-        String amkaHash = AmkaHashUtil.hashAmka(request.amka());
+        String amkaHash = amkaHashUtil.hashAmka(request.amka());
         if (childRepository.existsByAmkaHash(amkaHash)) {
             throw new IllegalArgumentException("Υπάρχει ήδη παιδί με αυτόν τον ΑΜΚΑ");
         }
@@ -129,7 +130,7 @@ public class ChildService {
     }
 
     public ChildResponse searchByAmka(String amka) {
-        String amkaHash = AmkaHashUtil.hashAmka(amka);
+        String amkaHash = amkaHashUtil.hashAmka(amka);
         Child child = childRepository.findByAmkaHash(amkaHash)
                 .orElseThrow(() -> new ResourceNotFoundException("Δεν βρέθηκε παιδί με ΑΜΚΑ: " + amka));
         return toResponse(child);

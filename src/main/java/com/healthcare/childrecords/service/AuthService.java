@@ -30,13 +30,14 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
     private final UserDetailsService userDetailsService;
+    private final AmkaHashUtil amkaHashUtil;
 
     @Transactional
     public AuthResult registerDoctor(RegisterDoctorRequest request) {
         if (userRepository.existsByUsername(request.username())) {
             throw new IllegalArgumentException("Το όνομα χρήστη χρησιμοποιείται ήδη");
         }
-        String amkaHash = AmkaHashUtil.hashAmka(request.amka());
+        String amkaHash = amkaHashUtil.hashAmka(request.amka());
         if (doctorRepository.existsByAmkaHash(amkaHash)) {
             throw new IllegalArgumentException("Υπάρχει ήδη ιατρός με αυτόν τον ΑΜΚΑ");
         }

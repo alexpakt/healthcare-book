@@ -18,6 +18,7 @@ public class DoctorService {
 
     private final DoctorRepository doctorRepository;
     private final UserRepository userRepository;
+    private final AmkaHashUtil amkaHashUtil;
 
     public DoctorResponse getById(Long id) {
         return toResponse(findById(id));
@@ -57,7 +58,7 @@ public class DoctorService {
     }
 
     public DoctorResponse searchByAmka(String amka) {
-        String amkaHash = AmkaHashUtil.hashAmka(amka);
+        String amkaHash = amkaHashUtil.hashAmka(amka);
         return toResponse(doctorRepository.findByAmkaHash(amkaHash)
                 .orElseThrow(() -> new ResourceNotFoundException("Δεν βρέθηκε ιατρός με ΑΜΚΑ: " + amka + ".")));
     }

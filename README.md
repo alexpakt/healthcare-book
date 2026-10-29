@@ -53,7 +53,7 @@ src/main/java/com/healthcare/childrecords/
 └── util/
     ├── EncryptionUtil.java       # AES-256-GCM encrypt/decrypt
     ├── EncryptionConverter.java  # JPA AttributeConverter
-    └── AmkaHashUtil.java         # SHA-256 hash of AMKA, used for lookups
+    └── AmkaHashUtil.java         # HMAC-SHA256 hash of AMKA, used for lookups
 ```
 
 Database migrations live in `src/main/resources/db/changelog/` (Liquibase, `001` – `033`).
@@ -240,7 +240,7 @@ Personally identifiable and medically sensitive fields are encrypted in the data
 
 Encryption is transparent to the application via the JPA `AttributeConverter` (`EncryptionConverter`), which wraps `EncryptionUtil`.
 
-Because encrypted values cannot be searched directly, AMKA lookups use a SHA-256 hash (`AmkaHashUtil`) stored alongside the encrypted value.
+Because encrypted values cannot be searched directly, AMKA lookups use a keyed HMAC-SHA256 hash (`AmkaHashUtil`, key `APP_AMKA_HASH_KEY`, separate from the AES key) stored alongside the encrypted value. On startup `AmkaHashMigrationRunner` rehashes any rows still holding a legacy plain SHA-256 hash (idempotent). Losing or changing the key invalidates all hashes until that runner recomputes them.
 
 ### Encrypted fields
 
@@ -273,6 +273,9 @@ app.jwt.expiration-ms=86400000
 
 # Base64-encoded 256-bit AES key. Generate with: openssl rand -base64 32
 app.encryption.key=${APP_ENCRYPTION_KEY:}
+
+# Base64-encoded 256-bit HMAC key for the AMKA hash. Generate with: openssl rand -base64 32
+app.amka-hash.key=${APP_AMKA_HASH_KEY:}
 ```
 
 Other notable settings:
@@ -291,6 +294,7 @@ DB_USER=
 DB_PASSWORD=
 JWT_SECRET=
 ENCRYPTION_KEY=
+AMKA_HASH_KEY=
 ```
 
 `.env` contains local credentials and must not be committed.
