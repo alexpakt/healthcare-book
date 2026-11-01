@@ -8,9 +8,11 @@ import com.healthcare.childrecords.repository.ParentRepository;
 import com.healthcare.childrecords.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ParentService {
 
     private final ParentRepository parentRepository;
@@ -20,6 +22,7 @@ public class ParentService {
         return toResponse(findByUsername(username));
     }
 
+    @Transactional
     public ParentResponse updateMyProfile(String username, UpdateParentProfileRequest request) {
         Parent parent = findByUsername(username);
         if (request.firstName() != null) parent.setFirstName(request.firstName());

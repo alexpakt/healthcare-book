@@ -9,11 +9,13 @@ import com.healthcare.childrecords.repository.UserRepository;
 import com.healthcare.childrecords.util.AmkaHashUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class DoctorService {
 
     private final DoctorRepository doctorRepository;
@@ -32,6 +34,7 @@ public class DoctorService {
         return doctorRepository.findAll().stream().map(this::toResponse).toList();
     }
 
+    @Transactional
     public DoctorResponse updateMyProfile(String username, UpdateDoctorProfileRequest request) {
         Doctor doctor = findByUsername(username);
         if (request.firstName() != null) doctor.setFirstName(request.firstName());
