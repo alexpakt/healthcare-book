@@ -57,13 +57,6 @@ public class DoctorChildRequestService {
         return toResponse(saved);
     }
 
-    public List<DoctorChildRequestResponse> getPendingRequestsForParent(String parentUsername) {
-        // Get parent's ID from username
-        // This would need ParentService to get parent by username
-        // For now, we'll rely on the controller to handle this
-        throw new UnsupportedOperationException("Use repository method with parentId");
-    }
-
     public List<DoctorChildRequestResponse> getPendingRequestsForParent(Long parentId) {
         return requestRepository.findByParentIdAndStatus(parentId, DoctorChildRequest.RequestStatus.PENDING)
                 .stream()
