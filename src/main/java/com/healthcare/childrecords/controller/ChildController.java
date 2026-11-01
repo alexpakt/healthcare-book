@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +40,7 @@ public class ChildController {
         @ApiResponse(responseCode = "400", description = "Invalid input"),
         @ApiResponse(responseCode = "401", description = "Unauthorized")
     })
+    @PreAuthorize("hasRole('PARENT')")
     public ChildResponse create(@AuthenticationPrincipal UserDetails userDetails,
                                 @Valid @RequestBody ChildRequest request) {
         return childService.create(userDetails.getUsername(), request);
@@ -51,6 +53,7 @@ public class ChildController {
             content = @Content(schema = @Schema(implementation = ChildResponse.class))),
         @ApiResponse(responseCode = "401", description = "Unauthorized")
     })
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public List<ChildResponse> getMyChildren(@AuthenticationPrincipal UserDetails userDetails) {
         return childService.getMyChildren(userDetails.getUsername());
     }
@@ -62,6 +65,7 @@ public class ChildController {
             content = @Content(schema = @Schema(implementation = ChildResponse.class))),
         @ApiResponse(responseCode = "404", description = "Child not found")
     })
+    @PreAuthorize("hasRole('DOCTOR')")
     public ChildResponse searchByAmka(@Parameter(description = "AMKA (11 digits)") @RequestParam String amka) {
         return childService.searchByAmka(amka);
     }
@@ -75,6 +79,7 @@ public class ChildController {
         @ApiResponse(responseCode = "403", description = "Access denied"),
         @ApiResponse(responseCode = "404", description = "Child not found")
     })
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public ChildResponse getById(@AuthenticationPrincipal UserDetails userDetails,
                                  @Parameter(description = "Child ID") @PathVariable Long id) {
         return childService.getById(userDetails.getUsername(), id);
@@ -90,6 +95,7 @@ public class ChildController {
         @ApiResponse(responseCode = "403", description = "Access denied"),
         @ApiResponse(responseCode = "404", description = "Child not found")
     })
+    @PreAuthorize("hasRole('PARENT')")
     public ChildResponse update(@AuthenticationPrincipal UserDetails userDetails,
                                 @Parameter(description = "Child ID") @PathVariable Long id,
                                 @Valid @RequestBody ChildRequest request) {
@@ -105,6 +111,7 @@ public class ChildController {
         @ApiResponse(responseCode = "403", description = "Access denied"),
         @ApiResponse(responseCode = "404", description = "Child not found")
     })
+    @PreAuthorize("hasRole('PARENT')")
     public void delete(@AuthenticationPrincipal UserDetails userDetails,
                        @Parameter(description = "Child ID") @PathVariable Long id) {
         childService.delete(userDetails.getUsername(), id);
@@ -119,6 +126,7 @@ public class ChildController {
         @ApiResponse(responseCode = "403", description = "Access denied"),
         @ApiResponse(responseCode = "404", description = "Child not found")
     })
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public List<DoctorResponse> getDoctors(@AuthenticationPrincipal UserDetails userDetails,
                                            @Parameter(description = "Child ID") @PathVariable Long id) {
         return childService.getDoctors(userDetails.getUsername(), id);
@@ -132,6 +140,7 @@ public class ChildController {
         @ApiResponse(responseCode = "401", description = "Unauthorized"),
         @ApiResponse(responseCode = "404", description = "Child or doctor not found")
     })
+    @PreAuthorize("hasRole('PARENT')")
     public ChildResponse assignDoctor(@AuthenticationPrincipal UserDetails userDetails,
                                       @Parameter(description = "Child ID") @PathVariable Long childId,
                                       @Parameter(description = "Doctor ID") @PathVariable Long doctorId) {
@@ -146,6 +155,7 @@ public class ChildController {
         @ApiResponse(responseCode = "401", description = "Unauthorized"),
         @ApiResponse(responseCode = "404", description = "Child or doctor not found")
     })
+    @PreAuthorize("hasRole('PARENT')")
     public ChildResponse removeDoctor(@AuthenticationPrincipal UserDetails userDetails,
                                       @Parameter(description = "Child ID") @PathVariable Long childId,
                                       @Parameter(description = "Doctor ID") @PathVariable Long doctorId) {

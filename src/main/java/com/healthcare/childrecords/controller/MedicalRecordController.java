@@ -31,12 +31,14 @@ public class MedicalRecordController {
     }
 
     @GetMapping("/child/{childId}")
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public List<MedicalRecordResponse> getForChild(@AuthenticationPrincipal UserDetails userDetails,
                                                    @PathVariable Long childId) {
         return medicalRecordService.getForChild(userDetails.getUsername(), childId);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public MedicalRecordResponse getById(@AuthenticationPrincipal UserDetails userDetails,
                                          @PathVariable Long id) {
         return medicalRecordService.getById(userDetails.getUsername(), id);

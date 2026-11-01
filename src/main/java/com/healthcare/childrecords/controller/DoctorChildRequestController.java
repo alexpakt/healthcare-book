@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,7 @@ public class DoctorChildRequestController {
             @ApiResponse(responseCode = "401", description = "Unauthorized"),
             @ApiResponse(responseCode = "404", description = "Child not found")
     })
+    @PreAuthorize("hasRole('DOCTOR')")
     public DoctorChildRequestResponse sendRequest(
             @AuthenticationPrincipal UserDetails userDetails,
             @Valid @RequestBody DoctorChildConnectionRequest request) {
@@ -54,6 +56,7 @@ public class DoctorChildRequestController {
                     content = @Content(schema = @Schema(implementation = DoctorChildRequestResponse.class))),
             @ApiResponse(responseCode = "401", description = "Unauthorized")
     })
+    @PreAuthorize("hasRole('PARENT')")
     public List<DoctorChildRequestResponse> getPendingRequests(@AuthenticationPrincipal UserDetails userDetails) {
         Long parentId = parentService.findByUsername(userDetails.getUsername()).getId();
         return requestService.getPendingRequestsForParent(parentId);
@@ -66,6 +69,7 @@ public class DoctorChildRequestController {
                     content = @Content(schema = @Schema(implementation = DoctorChildRequestResponse.class))),
             @ApiResponse(responseCode = "401", description = "Unauthorized")
     })
+    @PreAuthorize("hasRole('DOCTOR')")
     public List<DoctorChildRequestResponse> getSentPendingRequests(@AuthenticationPrincipal UserDetails userDetails) {
         return requestService.getSentPendingRequests(userDetails.getUsername());
     }
@@ -79,6 +83,7 @@ public class DoctorChildRequestController {
             @ApiResponse(responseCode = "403", description = "Access denied"),
             @ApiResponse(responseCode = "404", description = "Request not found")
     })
+    @PreAuthorize("hasRole('PARENT')")
     public DoctorChildRequestResponse approveRequest(
             @AuthenticationPrincipal UserDetails userDetails,
             @Parameter(description = "Request ID") @PathVariable Long requestId) {
@@ -94,6 +99,7 @@ public class DoctorChildRequestController {
             @ApiResponse(responseCode = "403", description = "Access denied"),
             @ApiResponse(responseCode = "404", description = "Request not found")
     })
+    @PreAuthorize("hasRole('PARENT')")
     public DoctorChildRequestResponse rejectRequest(
             @AuthenticationPrincipal UserDetails userDetails,
             @Parameter(description = "Request ID") @PathVariable Long requestId,

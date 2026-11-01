@@ -31,12 +31,14 @@ public class AllergyController {
     }
 
     @GetMapping("/child/{childId}")
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public List<AllergyResponse> getForChild(@AuthenticationPrincipal UserDetails userDetails,
                                              @PathVariable Long childId) {
         return allergyService.getForChild(userDetails.getUsername(), childId);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public AllergyResponse getById(@AuthenticationPrincipal UserDetails userDetails,
                                    @PathVariable Long id) {
         return allergyService.getById(userDetails.getUsername(), id);

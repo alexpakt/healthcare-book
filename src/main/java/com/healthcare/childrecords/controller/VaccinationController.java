@@ -31,12 +31,14 @@ public class VaccinationController {
     }
 
     @GetMapping("/child/{childId}")
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public List<VaccinationResponse> getForChild(@AuthenticationPrincipal UserDetails userDetails,
                                                  @PathVariable Long childId) {
         return vaccinationService.getForChild(userDetails.getUsername(), childId);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public VaccinationResponse getById(@AuthenticationPrincipal UserDetails userDetails,
                                        @PathVariable Long id) {
         return vaccinationService.getById(userDetails.getUsername(), id);

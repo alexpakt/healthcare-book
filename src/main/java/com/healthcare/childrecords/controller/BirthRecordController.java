@@ -30,6 +30,7 @@ public class BirthRecordController {
     }
 
     @GetMapping("/child/{childId}")
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public ResponseEntity<BirthRecordResponse> getByChildId(@AuthenticationPrincipal UserDetails userDetails,
                                                             @PathVariable Long childId) {
         return birthRecordService.getByChildId(userDetails.getUsername(), childId)

@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -25,23 +26,27 @@ public class AppointmentController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public AppointmentResponse create(@AuthenticationPrincipal UserDetails userDetails,
                                       @Valid @RequestBody AppointmentRequest request) {
         return appointmentService.create(userDetails.getUsername(), request);
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public List<AppointmentResponse> getMyAppointments(@AuthenticationPrincipal UserDetails userDetails) {
         return appointmentService.getMyAppointments(userDetails.getUsername());
     }
 
     @GetMapping("/child/{childId}")
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public List<AppointmentResponse> getForChild(@AuthenticationPrincipal UserDetails userDetails,
                                                  @PathVariable Long childId) {
         return appointmentService.getForChild(userDetails.getUsername(), childId);
     }
 
     @PatchMapping("/{id}/status")
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public AppointmentResponse updateStatus(@AuthenticationPrincipal UserDetails userDetails,
                                             @PathVariable Long id,
                                             @RequestBody Map<String, String> body) {

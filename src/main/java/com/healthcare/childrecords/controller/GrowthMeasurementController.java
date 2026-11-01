@@ -38,12 +38,14 @@ public class GrowthMeasurementController {
     }
 
     @GetMapping("/child/{childId}")
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public List<GrowthMeasurementResponse> getForChild(@AuthenticationPrincipal UserDetails userDetails,
                                                        @PathVariable Long childId) {
         return growthMeasurementService.getForChild(userDetails.getUsername(), childId);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public GrowthMeasurementResponse getById(@AuthenticationPrincipal UserDetails userDetails,
                                              @PathVariable Long id) {
         return growthMeasurementService.getById(userDetails.getUsername(), id);
@@ -85,6 +87,7 @@ public class GrowthMeasurementController {
     }
 
     @GetMapping("/references/child/{childId}/type/{measurementType}")
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public List<GrowthReference> getReferenceCurves(@PathVariable Long childId,
                                                     @PathVariable String measurementType) {
         return growthMeasurementService.getReferenceCurves(childId, MeasurementType.valueOf(measurementType));

@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -29,12 +30,14 @@ public class DoctorController {
 
     @GetMapping
     @Operation(summary = "List all doctors", description = "Retrieve all registered doctors")
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public List<DoctorResponse> getAll() {
         return doctorService.getAll();
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get doctor by ID", description = "Retrieve a specific doctor's profile")
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public DoctorResponse getById(@Parameter(description = "Doctor ID") @PathVariable Long id) {
         return doctorService.getById(id);
     }
@@ -42,6 +45,7 @@ public class DoctorController {
     @GetMapping("/me")
     @Operation(summary = "Get current doctor profile", description = "Retrieve the authenticated doctor's profile")
     @SecurityRequirement(name = "bearer")
+    @PreAuthorize("hasRole('DOCTOR')")
     public DoctorResponse getMyProfile(@AuthenticationPrincipal UserDetails userDetails) {
         return doctorService.getMyProfile(userDetails.getUsername());
     }
@@ -49,6 +53,7 @@ public class DoctorController {
     @PatchMapping("/me")
     @Operation(summary = "Update current doctor profile", description = "Update the authenticated doctor's profile. Fields that are omitted are left unchanged")
     @SecurityRequirement(name = "bearer")
+    @PreAuthorize("hasRole('DOCTOR')")
     public DoctorResponse updateMyProfile(@AuthenticationPrincipal UserDetails userDetails,
                                           @Valid @RequestBody UpdateDoctorProfileRequest request) {
         return doctorService.updateMyProfile(userDetails.getUsername(), request);
@@ -61,6 +66,7 @@ public class DoctorController {
             content = @Content(schema = @Schema(implementation = DoctorResponse.class))),
         @ApiResponse(responseCode = "404", description = "Doctor not found")
     })
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public DoctorResponse searchByAmka(@Parameter(description = "AMKA (10 digits)") @RequestParam String amka) {
         return doctorService.searchByAmka(amka);
     }
@@ -72,6 +78,7 @@ public class DoctorController {
             content = @Content(schema = @Schema(implementation = DoctorResponse.class))),
         @ApiResponse(responseCode = "404", description = "No doctors found")
     })
+    @PreAuthorize("hasAnyRole('DOCTOR', 'PARENT')")
     public List<DoctorResponse> searchByName(@Parameter(description = "First or last name (partial match allowed)") @RequestParam String name) {
         return doctorService.searchByName(name);
     }

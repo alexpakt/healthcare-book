@@ -5,7 +5,6 @@ import com.healthcare.childrecords.dto.response.MedicalRecordResponse;
 import com.healthcare.childrecords.entity.*;
 import com.healthcare.childrecords.exception.ResourceNotFoundException;
 import com.healthcare.childrecords.repository.MedicalRecordRepository;
-import com.healthcare.childrecords.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +21,6 @@ public class MedicalRecordService {
     private final ChildAccessGuard childAccessGuard;
     private final DoctorService doctorService;
     private final AppointmentService appointmentService;
-    private final UserRepository userRepository;
 
     @Transactional
     public MedicalRecordResponse create(String username, MedicalRecordRequest request) {
