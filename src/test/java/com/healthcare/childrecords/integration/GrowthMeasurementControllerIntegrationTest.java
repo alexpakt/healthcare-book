@@ -8,6 +8,7 @@ import com.healthcare.childrecords.entity.Gender;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -738,6 +739,93 @@ public class GrowthMeasurementControllerIntegrationTest extends BaseIntegrationT
                 .contentType("application/json")
                 .header("Authorization", getAuthorizationHeader(doctorToken))
                 .content(objectMapper.writeValueAsString(onBirthday)))
+        .andExpect(status().isCreated());
+  }
+
+  @Test
+  public void testCreateGrowthMeasurement_PercentileFromWhoLmsParameters() throws Exception {
+    String parentUsername = "lmsparent" + System.nanoTime();
+    mockMvc
+        .perform(
+            post("/api/auth/register/parent")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(
+                    new RegisterParentRequest(parentUsername, "TestPass123!", "Test", "Parent", "lms@example.com", null, null))))
+        .andExpect(status().isCreated());
+    String parentToken = loginAndGetToken(parentUsername, "TestPass123!");
+
+    String doctorUsername = "lmsdoc" + System.nanoTime();
+    long childId = setUpAssignedChild(parentToken, doctorUsername);
+    String doctorToken = loginAndGetToken(doctorUsername, "TestPass123!");
+
+    // Child is female and born 2020-01-15, so 2021-01-15 is exactly 12 months old.
+    // Values are close to the WHO LMS (docs/who) girls' 12-month curves at z = +1 and z = -1, with two decimals:
+    // weight L = -0.2024, M = 8.9481, S = 0.12268; height L = 1, M = 74.015, S = 0.03479.
+    // Percentiles are about 84.1 and 15.9, reported as integers 84 and 16.
+    mockMvc
+        .perform(
+            post("/api/growth-measurements")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(doctorToken))
+                .content(objectMapper.writeValueAsString(new GrowthMeasurementRequest(
+                    childId, LocalDate.of(2021, 1, 15), 76.59, 10.13, null, null))))
+        .andExpect(status().isCreated())
+        .andExpect(jsonPath("$.percentileHeight").value(84))
+        .andExpect(jsonPath("$.percentileWeight").value(84));
+
+    mockMvc
+        .perform(
+            post("/api/growth-measurements")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(doctorToken))
+                .content(objectMapper.writeValueAsString(new GrowthMeasurementRequest(
+                    childId, LocalDate.of(2021, 1, 16), 71.44, 7.93, null, null))))
+        .andExpect(status().isCreated())
+        .andExpect(jsonPath("$.percentileHeight").value(16))
+        .andExpect(jsonPath("$.percentileWeight").value(16));
+  }
+
+  @Test
+  public void testCreateGrowthMeasurement_MoreThanTwoDecimals_ReturnsBadRequest() throws Exception {
+    String parentUsername = "digitsparent" + System.nanoTime();
+    mockMvc
+        .perform(
+            post("/api/auth/register/parent")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(
+                    new RegisterParentRequest(parentUsername, "TestPass123!", "Test", "Parent", "digits@example.com", null, null))))
+        .andExpect(status().isCreated());
+    String parentToken = loginAndGetToken(parentUsername, "TestPass123!");
+
+    String doctorUsername = "digitsdoc" + System.nanoTime();
+    long childId = setUpAssignedChild(parentToken, doctorUsername);
+    String doctorToken = loginAndGetToken(doctorUsername, "TestPass123!");
+
+    GrowthMeasurementRequest threeDecimalHeight =
+        new GrowthMeasurementRequest(childId, LocalDate.of(2021, 1, 15), 76.123, null, null, null);
+    GrowthMeasurementRequest threeDecimalWeight =
+        new GrowthMeasurementRequest(childId, LocalDate.of(2021, 1, 15), null, 10.555, null, null);
+    GrowthMeasurementRequest threeDecimalHeadCirc =
+        new GrowthMeasurementRequest(childId, LocalDate.of(2021, 1, 15), null, null, 45.125, null);
+
+    for (GrowthMeasurementRequest request : List.of(threeDecimalHeight, threeDecimalWeight, threeDecimalHeadCirc)) {
+      mockMvc
+          .perform(
+              post("/api/growth-measurements")
+                  .contentType("application/json")
+                  .header("Authorization", getAuthorizationHeader(doctorToken))
+                  .content(objectMapper.writeValueAsString(request)))
+          .andExpect(status().isBadRequest());
+    }
+
+    // Two decimals are accepted for all three measurements.
+    mockMvc
+        .perform(
+            post("/api/growth-measurements")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(doctorToken))
+                .content(objectMapper.writeValueAsString(
+                    new GrowthMeasurementRequest(childId, LocalDate.of(2021, 1, 15), 76.12, 10.55, 45.12, null))))
         .andExpect(status().isCreated());
   }
 }

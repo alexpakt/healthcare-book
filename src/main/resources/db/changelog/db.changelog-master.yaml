@@ -107,3 +107,6 @@ databaseChangeLog:
   - include:
       file: db/changelog/migrations/036-growth-alert-percentile-lines.yaml
       relativeToChangelogFile: false
+  - include:
+      file: db/changelog/migrations/037-growth-lms-parameters.yaml
+      relativeToChangelogFile: false

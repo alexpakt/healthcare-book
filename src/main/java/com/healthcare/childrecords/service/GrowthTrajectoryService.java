@@ -5,8 +5,9 @@ import com.healthcare.childrecords.entity.*;
 import com.healthcare.childrecords.exception.ResourceNotFoundException;
 import com.healthcare.childrecords.repository.GrowthAlertAcknowledgementRepository;
 import com.healthcare.childrecords.repository.GrowthAlertRuleRepository;
+import com.healthcare.childrecords.repository.GrowthLmsRepository;
 import com.healthcare.childrecords.repository.GrowthMeasurementRepository;
-import com.healthcare.childrecords.repository.GrowthReferenceRepository;
+import com.healthcare.childrecords.util.GrowthPercentiles;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +36,7 @@ import java.util.stream.Collectors;
 public class GrowthTrajectoryService {
 
     private final GrowthMeasurementRepository growthMeasurementRepository;
-    private final GrowthReferenceRepository growthReferenceRepository;
+    private final GrowthLmsRepository growthLmsRepository;
     private final GrowthAlertRuleRepository growthAlertRuleRepository;
     private final GrowthAlertAcknowledgementRepository acknowledgementRepository;
     private final ChildService childService;
@@ -98,13 +99,17 @@ public class GrowthTrajectoryService {
         List<Integer> lines = parseLines(rule.getPercentileLines());
         List<GrowthAlertResponse> alerts = new ArrayList<>();
 
-        for (int i = 1; i < measurements.size(); i++) {
-            GrowthMeasurement from = measurements.get(i - 1);
-            GrowthMeasurement to = measurements.get(i);
+        List<GrowthMeasurement> withValue = measurements.stream()
+                .filter(m -> valueOf(m, rule.getMeasurementType()) != null)
+                .toList();
+
+        for (int i = 1; i < withValue.size(); i++) {
+            GrowthMeasurement from = withValue.get(i - 1);
+            GrowthMeasurement to = withValue.get(i);
 
             Double fromValue = valueOf(from, rule.getMeasurementType());
             Double toValue = valueOf(to, rule.getMeasurementType());
-            if (fromValue == null || toValue == null || !ageInRange(rule, to.getAgeInMonths())) {
+            if (!ageInRange(rule, to.getAgeInMonths())) {
                 continue;
             }
 
@@ -123,24 +128,15 @@ public class GrowthTrajectoryService {
     }
 
     /**
-     * Index of the highest configured line at or below the value, counted from 0.
-     * Returns -1 when the value is below the lowest line and null when the reference data
-     * does not contain every configured line for that age.
+     * Index of the highest configured line at or below the value's rounded percentile (WHO LMS, see
+     * {@link GrowthPercentiles}), counted from 0. Returns -1 when the percentile is below the lowest line
+     * and null when there are no LMS parameters for that age.
      */
     private Integer band(Child child, Integer ageInMonths, MeasurementType type, Double value, List<Integer> lines) {
-        Map<Integer, Double> valueByPercentile = growthReferenceRepository
-                .findByAgeInMonthsAndMeasurementTypeAndGenderOrderByPercentileAsc(ageInMonths, type, child.getGender())
-                .stream()
-                .collect(Collectors.toMap(GrowthReference::getPercentile, GrowthReference::getValue, (a, b) -> a));
-
-        if (!valueByPercentile.keySet().containsAll(lines)) {
-            return null;
-        }
-
-        long linesAtOrBelow = lines.stream()
-                .filter(line -> valueByPercentile.get(line) <= value)
-                .count();
-        return (int) linesAtOrBelow - 1;
+        return growthLmsRepository.findByAgeInMonthsAndMeasurementTypeAndGender(ageInMonths, type, child.getGender())
+                .map(lms -> GrowthPercentiles.roundedPercentile(value, lms.getL(), lms.getM(), lms.getS()))
+                .map(percentile -> (int) lines.stream().filter(line -> line <= percentile).count() - 1)
+                .orElse(null);
     }
 
     private GrowthAlertResponse crossingAlert(GrowthAlertRule rule, GrowthMeasurement from, GrowthMeasurement to,

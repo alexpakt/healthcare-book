@@ -4,8 +4,10 @@ import com.healthcare.childrecords.dto.request.GrowthMeasurementRequest;
 import com.healthcare.childrecords.dto.response.GrowthMeasurementResponse;
 import com.healthcare.childrecords.entity.*;
 import com.healthcare.childrecords.exception.ResourceNotFoundException;
+import com.healthcare.childrecords.repository.GrowthLmsRepository;
 import com.healthcare.childrecords.repository.GrowthMeasurementRepository;
 import com.healthcare.childrecords.repository.GrowthReferenceRepository;
+import com.healthcare.childrecords.util.GrowthPercentiles;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,7 @@ public class GrowthMeasurementService {
 
     private final GrowthMeasurementRepository growthMeasurementRepository;
     private final GrowthReferenceRepository growthReferenceRepository;
+    private final GrowthLmsRepository growthLmsRepository;
     private final ChildService childService;
     private final ChildAccessGuard childAccessGuard;
     private final DoctorService doctorService;
@@ -131,22 +134,9 @@ public class GrowthMeasurementService {
 
     private Integer calculatePercentile(Gender gender, Integer ageInMonths,
                                         MeasurementType measurementType, Double measuredValue) {
-        List<GrowthReference> references = growthReferenceRepository
-                .findByAgeInMonthsAndMeasurementTypeAndGenderOrderByPercentileAsc(
-                        ageInMonths, measurementType, gender);
-
-        if (references.isEmpty()) {
-            return null;
-        }
-
-        Integer result = null;
-        for (GrowthReference ref : references) {
-            if (ref.getValue() <= measuredValue) {
-                result = ref.getPercentile();
-            }
-        }
-
-        return result;
+        return growthLmsRepository.findByAgeInMonthsAndMeasurementTypeAndGender(ageInMonths, measurementType, gender)
+                .map(lms -> GrowthPercentiles.roundedPercentile(measuredValue, lms.getL(), lms.getM(), lms.getS()))
+                .orElse(null);
     }
 
     public List<GrowthReference> getReferenceCurves(Long childId, MeasurementType measurementType) {

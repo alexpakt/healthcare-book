@@ -1,0 +1,72 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: create-growth-lms-parameters
+      author: alexandra
+      comment: >
+        WHO LMS parameters (Box-Cox power L, median M, coefficient of variation S) per month, measurement type
+        and gender, used to convert a measurement into a z-score and percentile: z = ((X/M)^L - 1) / (L*S),
+        or ln(X/M)/S when L = 0; percentile = 100 * Phi(z). Source: WHO child growth standards tables.
+      changes:
+        - createTable:
+            tableName: growth_lms
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: age_in_months
+                  type: INTEGER
+                  constraints:
+                    nullable: false
+              - column:
+                  name: measurement_type
+                  type: VARCHAR(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: gender
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: l
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: m
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: s
+                  type: DOUBLE
+                  constraints:
+                    nullable: false
+        - addUniqueConstraint:
+            tableName: growth_lms
+            columnNames: age_in_months, measurement_type, gender
+            constraintName: uk_growth_lms_age_type_gender
+
+  - changeSet:
+      id: load-growth-lms-parameters
+      author: alexandra
+      comment: WHO LMS parameters for height, weight and head circumference, boys and girls, 0-60 months.
+      changes:
+        - loadData:
+            file: db/changelog/data/who-lms-parameters.csv
+            relativeToChangelogFile: false
+            tableName: growth_lms
+            separator: ","
+            columns:
+              - column: { name: age_in_months, type: NUMERIC }
+              - column: { name: measurement_type, type: STRING }
+              - column: { name: gender, type: STRING }
+              - column: { name: l, type: NUMERIC }
+              - column: { name: m, type: NUMERIC }
+              - column: { name: s, type: NUMERIC }
