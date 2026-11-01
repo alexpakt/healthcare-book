@@ -35,7 +35,9 @@ public class CookieOriginFilter extends OncePerRequestFilter {
                 && cookieService.read(request).isPresent();
 
         if (unsafe && cookieAuth && !allowedOrigins.contains(request.getHeader("Origin"))) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Origin not allowed");
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setContentType("text/plain");
+            response.getWriter().write("Origin not allowed");
             return;
         }
         filterChain.doFilter(request, response);

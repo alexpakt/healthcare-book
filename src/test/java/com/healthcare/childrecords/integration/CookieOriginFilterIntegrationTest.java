@@ -80,7 +80,7 @@ public class CookieOriginFilterIntegrationTest extends BaseIntegrationTest {
         .andExpect(status().isForbidden())
         .andReturn();
 
-    assertEquals("Origin not allowed", result.getResponse().getErrorMessage());
+    assertEquals("Origin not allowed", result.getResponse().getContentAsString());
   }
 
   @Test

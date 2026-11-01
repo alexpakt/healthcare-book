@@ -4,8 +4,11 @@ import com.healthcare.childrecords.dto.request.ChangePasswordRequest;
 import com.healthcare.childrecords.dto.request.LoginRequest;
 import com.healthcare.childrecords.dto.request.RegisterDoctorRequest;
 import com.healthcare.childrecords.dto.request.RegisterParentRequest;
+import com.healthcare.childrecords.security.JwtUtil;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -13,6 +16,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class AuthControllerIntegrationTest extends BaseIntegrationTest {
+
+  @Autowired private JwtUtil jwtUtil;
 
   @Test
   public void testRegisterParent_Success() throws Exception {
@@ -417,5 +422,27 @@ public class AuthControllerIntegrationTest extends BaseIntegrationTest {
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(new ChangePasswordRequest("TestPass123!", "NewPass123!"))))
         .andExpect(status().isOk());
+  }
+
+  @Test
+  public void testRegisterDoctor_WithTokenForRemovedUser_IsNotRejected() throws Exception {
+    UserDetails removedUser =
+        org.springframework.security.core.userdetails.User.withUsername("removed" + System.nanoTime())
+            .password("unused")
+            .roles("PARENT")
+            .build();
+    String staleToken = jwtUtil.generateToken(removedUser);
+    RegisterDoctorRequest request =
+        new RegisterDoctorRequest(
+            "staledoc" + System.nanoTime(), "TestPass123!", "Test", "Doctor", uniqueAmka(),
+            "stale@example.com", null, "Pediatrics", "LIC-STALE", null);
+
+    mockMvc
+        .perform(
+            post("/api/auth/register/doctor")
+                .header("Authorization", getAuthorizationHeader(staleToken))
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(request)))
+        .andExpect(status().isCreated());
   }
 }
