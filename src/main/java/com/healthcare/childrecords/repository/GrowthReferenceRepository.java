@@ -17,15 +17,6 @@ public interface GrowthReferenceRepository extends JpaRepository<GrowthReference
             Gender gender
     );
 
-    GrowthReference findByAgeInMonthsAndMeasurementTypeAndGenderAndPercentile(
-            Integer ageInMonths,
-            MeasurementType measurementType,
-            Gender gender,
-            Integer percentile
-    );
-
-    boolean existsByMeasurementType(MeasurementType measurementType);
-
     List<GrowthReference> findByMeasurementTypeAndGenderOrderByAgeInMonthsAscPercentileAsc(
             MeasurementType measurementType,
             Gender gender
