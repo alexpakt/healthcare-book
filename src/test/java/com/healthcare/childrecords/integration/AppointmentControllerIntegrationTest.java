@@ -461,6 +461,72 @@ public class AppointmentControllerIntegrationTest extends BaseIntegrationTest {
         .andExpect(jsonPath("$.status").value("COMPLETED"));
   }
 
+  @Test
+  public void testUpdateAppointmentStatus_InvalidTransition_ReturnsBadRequest() throws Exception {
+    String parentUsername = "parent" + System.nanoTime();
+    mockMvc
+        .perform(
+            post("/api/auth/register/parent")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(
+                    new RegisterParentRequest(parentUsername, "TestPass123!", "Test", "Parent", "parent-tr@example.com", null, null))))
+        .andExpect(status().isCreated());
+    String parentToken = loginAndGetToken(parentUsername, "TestPass123!");
+
+    String doctorUsername = "doctor" + System.nanoTime();
+    String doctorRegisterResponse = mockMvc
+        .perform(
+            post("/api/auth/register/doctor")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(new RegisterDoctorRequest(
+                    doctorUsername, "TestPass123!", "Test", "Doctor", uniqueAmka(), "doctor-tr@example.com", null,
+                    "Pediatrics", "LIC" + doctorUsername, null))))
+        .andExpect(status().isCreated())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+    Long doctorId = objectMapper.readTree(doctorRegisterResponse).get("profileId").asLong();
+
+    String childResponse = mockMvc
+        .perform(
+            post("/api/children")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(parentToken))
+                .content(objectMapper.writeValueAsString(new ChildRequest(
+                    "Transition", "Child", uniqueAmka(), "2020-01-15", Gender.MALE, "AB-"))))
+        .andExpect(status().isCreated())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+    Long childId = objectMapper.readTree(childResponse).get("id").asLong();
+
+    connectDoctor(parentToken, childId, doctorId);
+    String doctorToken = loginAndGetToken(doctorUsername, "TestPass123!");
+
+    String appointmentResponse = mockMvc
+        .perform(
+            post("/api/appointments")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(parentToken))
+                .content(objectMapper.writeValueAsString(new AppointmentRequest(
+                    childId, doctorId, LocalDateTime.now().plusDays(5), "Checkup", null))))
+        .andExpect(status().isCreated())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+    long appointmentId = objectMapper.readTree(appointmentResponse).get("id").asLong();
+
+    // A requested appointment cannot jump straight to COMPLETED
+    mockMvc
+        .perform(
+            patch("/api/appointments/" + appointmentId + "/status")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(doctorToken))
+                .content("{\"status\": \"COMPLETED\"}"))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$.status").value(400));
+  }
+
   private void connectDoctor(String parentToken, Long childId, Long doctorId) throws Exception {
     mockMvc
         .perform(

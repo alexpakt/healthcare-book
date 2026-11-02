@@ -93,7 +93,7 @@ public class AppointmentService {
                     || (currentStatus == AppointmentStatus.SCHEDULED
                         && (newStatus == AppointmentStatus.COMPLETED || newStatus == AppointmentStatus.CANCELLED));
             if (!valid) {
-                throw new AccessDeniedException("Μη έγκυρη μετάβαση κατάστασης: " + currentStatus + " -> " + newStatus);
+                throw new IllegalArgumentException("Μη έγκυρη μετάβαση κατάστασης: " + currentStatus + " -> " + newStatus);
             }
             if (currentStatus == AppointmentStatus.REQUESTED && newStatus == AppointmentStatus.SCHEDULED) {
                 childService.ensureDoctorAssigned(appointment.getChild(), doctor);
@@ -106,7 +106,7 @@ public class AppointmentService {
             boolean valid = (currentStatus == AppointmentStatus.REQUESTED || currentStatus == AppointmentStatus.SCHEDULED)
                     && newStatus == AppointmentStatus.CANCELLED;
             if (!valid) {
-                throw new AccessDeniedException("Μη έγκυρη μετάβαση κατάστασης: " + currentStatus + " -> " + newStatus);
+                throw new IllegalArgumentException("Μη έγκυρη μετάβαση κατάστασης: " + currentStatus + " -> " + newStatus);
             }
         }
 
