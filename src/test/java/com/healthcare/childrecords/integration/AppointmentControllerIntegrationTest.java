@@ -527,6 +527,166 @@ public class AppointmentControllerIntegrationTest extends BaseIntegrationTest {
         .andExpect(jsonPath("$.status").value(400));
   }
 
+  @Test
+  public void testAcceptRequestAfterDoctorDisconnected_ForbiddenAndNotReconnected() throws Exception {
+    String parentUsername = "parent" + System.nanoTime();
+    mockMvc
+        .perform(
+            post("/api/auth/register/parent")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(
+                    new RegisterParentRequest(parentUsername, "TestPass123!", "Test", "Parent", "parent-rv@example.com", null, null))))
+        .andExpect(status().isCreated());
+    String parentToken = loginAndGetToken(parentUsername, "TestPass123!");
+
+    String doctorUsername = "doctor" + System.nanoTime();
+    String doctorRegisterResponse = mockMvc
+        .perform(
+            post("/api/auth/register/doctor")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(new RegisterDoctorRequest(
+                    doctorUsername, "TestPass123!", "Test", "Doctor", uniqueAmka(), "doctor-rv@example.com", null,
+                    "Pediatrics", "LIC" + doctorUsername, null))))
+        .andExpect(status().isCreated())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+    Long doctorId = objectMapper.readTree(doctorRegisterResponse).get("profileId").asLong();
+
+    String childResponse = mockMvc
+        .perform(
+            post("/api/children")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(parentToken))
+                .content(objectMapper.writeValueAsString(new ChildRequest(
+                    "Revoked", "Child", uniqueAmka(), "2020-01-15", Gender.MALE, "AB-"))))
+        .andExpect(status().isCreated())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+    Long childId = objectMapper.readTree(childResponse).get("id").asLong();
+
+    connectDoctor(parentToken, childId, doctorId);
+    String doctorToken = loginAndGetToken(doctorUsername, "TestPass123!");
+
+    // Pending request created while the doctor was still connected
+    String appointmentResponse = mockMvc
+        .perform(
+            post("/api/appointments")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(parentToken))
+                .content(objectMapper.writeValueAsString(new AppointmentRequest(
+                    childId, doctorId, LocalDateTime.now().plusDays(5), "Checkup", null))))
+        .andExpect(status().isCreated())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+    long appointmentId = objectMapper.readTree(appointmentResponse).get("id").asLong();
+
+    // Parent revokes the doctor
+    mockMvc
+        .perform(
+            delete("/api/children/{childId}/doctors/{doctorId}", childId, doctorId)
+                .header("Authorization", getAuthorizationHeader(parentToken)))
+        .andExpect(status().isOk());
+
+    // Doctor tries to accept the old request: must be refused
+    mockMvc
+        .perform(
+            patch("/api/appointments/" + appointmentId + "/status")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(doctorToken))
+                .content("{\"status\": \"SCHEDULED\"}"))
+        .andExpect(status().isForbidden());
+
+    // The revoked link must not have been restored
+    mockMvc
+        .perform(
+            get("/api/children/{id}/doctors", childId)
+                .header("Authorization", getAuthorizationHeader(parentToken)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$[*].id").value(not(hasItem(doctorId.intValue()))));
+  }
+
+  @Test
+  public void testDisconnectDoctor_CancelsPendingAndScheduledAppointments() throws Exception {
+    String parentUsername = "parent" + System.nanoTime();
+    mockMvc
+        .perform(
+            post("/api/auth/register/parent")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(
+                    new RegisterParentRequest(parentUsername, "TestPass123!", "Test", "Parent", "parent-dc@example.com", null, null))))
+        .andExpect(status().isCreated());
+    String parentToken = loginAndGetToken(parentUsername, "TestPass123!");
+
+    String doctorUsername = "doctor" + System.nanoTime();
+    String doctorRegisterResponse = mockMvc
+        .perform(
+            post("/api/auth/register/doctor")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(new RegisterDoctorRequest(
+                    doctorUsername, "TestPass123!", "Test", "Doctor", uniqueAmka(), "doctor-dc@example.com", null,
+                    "Pediatrics", "LIC" + doctorUsername, null))))
+        .andExpect(status().isCreated())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+    Long doctorId = objectMapper.readTree(doctorRegisterResponse).get("profileId").asLong();
+
+    String childResponse = mockMvc
+        .perform(
+            post("/api/children")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(parentToken))
+                .content(objectMapper.writeValueAsString(new ChildRequest(
+                    "Cascade", "Child", uniqueAmka(), "2020-01-15", Gender.MALE, "AB-"))))
+        .andExpect(status().isCreated())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+    Long childId = objectMapper.readTree(childResponse).get("id").asLong();
+
+    connectDoctor(parentToken, childId, doctorId);
+    String doctorToken = loginAndGetToken(doctorUsername, "TestPass123!");
+
+    // Pending request from the parent
+    mockMvc
+        .perform(
+            post("/api/appointments")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(parentToken))
+                .content(objectMapper.writeValueAsString(new AppointmentRequest(
+                    childId, doctorId, LocalDateTime.now().plusDays(5), "Checkup", null))))
+        .andExpect(status().isCreated());
+
+    // Scheduled appointment created by the doctor
+    mockMvc
+        .perform(
+            post("/api/appointments")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(doctorToken))
+                .content(objectMapper.writeValueAsString(new AppointmentRequest(
+                    childId, doctorId, LocalDateTime.now().plusDays(7), "Follow-up", null))))
+        .andExpect(status().isCreated());
+
+    // Parent disconnects the doctor
+    mockMvc
+        .perform(
+            delete("/api/children/{childId}/doctors/{doctorId}", childId, doctorId)
+                .header("Authorization", getAuthorizationHeader(parentToken)))
+        .andExpect(status().isOk());
+
+    // Both open appointments are cancelled
+    mockMvc
+        .perform(
+            get("/api/appointments/child/{childId}", childId)
+                .header("Authorization", getAuthorizationHeader(parentToken)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$[*].status").value(everyItem(is("CANCELLED"))))
+        .andExpect(jsonPath("$.length()").value(2));
+  }
+
   private void connectDoctor(String parentToken, Long childId, Long doctorId) throws Exception {
     mockMvc
         .perform(

@@ -88,15 +88,13 @@ public class AppointmentService {
             if (!appointment.getDoctor().getId().equals(doctor.getId())) {
                 throw new AccessDeniedException("Ο ιατρός δεν είναι συνδεδεμένος με αυτό το ραντεβού");
             }
+            childAccessGuard.verifyAccess(username, appointment.getChild());
             boolean valid = (currentStatus == AppointmentStatus.REQUESTED
                         && (newStatus == AppointmentStatus.SCHEDULED || newStatus == AppointmentStatus.DECLINED))
                     || (currentStatus == AppointmentStatus.SCHEDULED
                         && (newStatus == AppointmentStatus.COMPLETED || newStatus == AppointmentStatus.CANCELLED));
             if (!valid) {
                 throw new IllegalArgumentException("Μη έγκυρη μετάβαση κατάστασης: " + currentStatus + " -> " + newStatus);
-            }
-            if (currentStatus == AppointmentStatus.REQUESTED && newStatus == AppointmentStatus.SCHEDULED) {
-                childService.ensureDoctorAssigned(appointment.getChild(), doctor);
             }
         } else {
             Parent parent = parentService.findByUsername(username);

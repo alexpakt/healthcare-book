@@ -3,12 +3,14 @@ package com.healthcare.childrecords.service;
 import com.healthcare.childrecords.dto.request.ChildRequest;
 import com.healthcare.childrecords.dto.response.ChildResponse;
 import com.healthcare.childrecords.dto.response.DoctorResponse;
+import com.healthcare.childrecords.entity.AppointmentStatus;
 import com.healthcare.childrecords.entity.Child;
 import com.healthcare.childrecords.entity.Doctor;
 import com.healthcare.childrecords.entity.DoctorChildRequest;
 import com.healthcare.childrecords.entity.Parent;
 import com.healthcare.childrecords.entity.Role;
 import com.healthcare.childrecords.exception.ResourceNotFoundException;
+import com.healthcare.childrecords.repository.AppointmentRepository;
 import com.healthcare.childrecords.repository.ChildRepository;
 import com.healthcare.childrecords.repository.DoctorChildRequestRepository;
 import com.healthcare.childrecords.repository.UserRepository;
@@ -27,6 +29,7 @@ public class ChildService {
 
     private final ChildRepository childRepository;
     private final DoctorChildRequestRepository requestRepository;
+    private final AppointmentRepository appointmentRepository;
     private final ParentService parentService;
     private final DoctorService doctorService;
     private final UserRepository userRepository;
@@ -118,15 +121,10 @@ public class ChildService {
                     request.setStatus(DoctorChildRequest.RequestStatus.REVOKED);
                     request.setResolvedAt(LocalDateTime.now());
                 });
+        appointmentRepository.findByChildIdAndDoctorIdAndStatusIn(
+                        childId, doctorId, List.of(AppointmentStatus.REQUESTED, AppointmentStatus.SCHEDULED))
+                .forEach(appointment -> appointment.setStatus(AppointmentStatus.CANCELLED));
         return toResponse(childRepository.save(child));
-    }
-
-    @Transactional
-    public void ensureDoctorAssigned(Child child, Doctor doctor) {
-        if (!child.getDoctors().contains(doctor)) {
-            child.getDoctors().add(doctor);
-            childRepository.save(child);
-        }
     }
 
     public ChildResponse searchByAmka(String amka) {
