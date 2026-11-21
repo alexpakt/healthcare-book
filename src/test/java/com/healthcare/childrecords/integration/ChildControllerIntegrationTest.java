@@ -588,4 +588,60 @@ public class ChildControllerIntegrationTest extends BaseIntegrationTest {
                 .content(objectMapper.writeValueAsString(childRequest)))
         .andExpect(status().isBadRequest());
   }
+
+  @Test
+  public void testSearchByAmka_ReturnsIdentificationOnly() throws Exception {
+    String parentUsername = "parent" + System.nanoTime();
+    mockMvc
+        .perform(
+            post("/api/auth/register/parent")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(
+                    new RegisterParentRequest(parentUsername, "TestPass123!", "Test", "Parent", "parent-srch@example.com", null, null))))
+        .andExpect(status().isCreated());
+    String parentToken = loginAndGetToken(parentUsername, "TestPass123!");
+
+    String doctorUsername = "doctor" + System.nanoTime();
+    mockMvc
+        .perform(
+            post("/api/auth/register/doctor")
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(new RegisterDoctorRequest(
+                    doctorUsername, "TestPass123!", "Test", "Doctor", uniqueAmka(), "doctor-srch@example.com", null,
+                    "Pediatrics", "LIC" + doctorUsername, null))))
+        .andExpect(status().isCreated());
+    String doctorToken = loginAndGetToken(doctorUsername, "TestPass123!");
+
+    String amka = uniqueAmka();
+    String childResponse = mockMvc
+        .perform(
+            post("/api/children")
+                .contentType("application/json")
+                .header("Authorization", getAuthorizationHeader(parentToken))
+                .content(objectMapper.writeValueAsString(new ChildRequest(
+                    "Searchable", "Child", amka, "2020-01-15", Gender.MALE, "AB-"))))
+        .andExpect(status().isCreated())
+        .andReturn()
+        .getResponse()
+        .getContentAsString();
+    long childId = objectMapper.readTree(childResponse).get("id").asLong();
+
+    // Doctor is not connected yet: the search must expose identification fields only
+    mockMvc
+        .perform(
+            get("/api/children/search")
+                .param("amka", amka)
+                .header("Authorization", getAuthorizationHeader(doctorToken)))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.id").value(childId))
+        .andExpect(jsonPath("$.firstName").value("Searchable"))
+        .andExpect(jsonPath("$.lastName").value("Child"))
+        .andExpect(jsonPath("$.amka").value(amka))
+        .andExpect(jsonPath("$.dateOfBirth").doesNotExist())
+        .andExpect(jsonPath("$.bloodType").doesNotExist())
+        .andExpect(jsonPath("$.gender").doesNotExist())
+        .andExpect(jsonPath("$.parentId").doesNotExist())
+        .andExpect(jsonPath("$.parentFirstName").doesNotExist())
+        .andExpect(jsonPath("$.parentLastName").doesNotExist());
+  }
 }

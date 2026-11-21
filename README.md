@@ -144,7 +144,7 @@ All other endpoints require `Authorization: Bearer <token>`.
 |---|---|---|---|
 | POST | `/api/children` | Parent | Add a child |
 | GET | `/api/children` | Parent, Doctor | List own children (parent) or assigned children (doctor) |
-| GET | `/api/children/search?amka=` | Auth | Find a child by AMKA |
+| GET | `/api/children/search?amka=` | Doctor | Find a child by AMKA (returns id, name and AMKA only) |
 | GET | `/api/children/{id}` | Parent (owner), Doctor (assigned) | Get child by ID |
 | PUT | `/api/children/{id}` | Parent (owner) | Update child details |
 | DELETE | `/api/children/{id}` | Parent (owner) | Remove a child |

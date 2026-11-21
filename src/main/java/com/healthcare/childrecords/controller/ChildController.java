@@ -2,6 +2,7 @@ package com.healthcare.childrecords.controller;
 
 import com.healthcare.childrecords.dto.request.ChildRequest;
 import com.healthcare.childrecords.dto.response.ChildResponse;
+import com.healthcare.childrecords.dto.response.ChildSearchResponse;
 import com.healthcare.childrecords.dto.response.DoctorResponse;
 import com.healthcare.childrecords.service.ChildService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -62,11 +63,11 @@ public class ChildController {
     @Operation(summary = "Search child by AMKA", description = "Search for a child using their AMKA (Greek Social Security Number)")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Child found",
-            content = @Content(schema = @Schema(implementation = ChildResponse.class))),
+            content = @Content(schema = @Schema(implementation = ChildSearchResponse.class))),
         @ApiResponse(responseCode = "404", description = "Child not found")
     })
     @PreAuthorize("hasRole('DOCTOR')")
-    public ChildResponse searchByAmka(@Parameter(description = "AMKA (11 digits)") @RequestParam String amka) {
+    public ChildSearchResponse searchByAmka(@Parameter(description = "AMKA (11 digits)") @RequestParam String amka) {
         return childService.searchByAmka(amka);
     }
 

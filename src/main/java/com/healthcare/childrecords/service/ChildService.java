@@ -2,6 +2,7 @@ package com.healthcare.childrecords.service;
 
 import com.healthcare.childrecords.dto.request.ChildRequest;
 import com.healthcare.childrecords.dto.response.ChildResponse;
+import com.healthcare.childrecords.dto.response.ChildSearchResponse;
 import com.healthcare.childrecords.dto.response.DoctorResponse;
 import com.healthcare.childrecords.entity.AppointmentStatus;
 import com.healthcare.childrecords.entity.Child;
@@ -127,11 +128,11 @@ public class ChildService {
         return toResponse(childRepository.save(child));
     }
 
-    public ChildResponse searchByAmka(String amka) {
+    public ChildSearchResponse searchByAmka(String amka) {
         String amkaHash = amkaHashUtil.hashAmka(amka);
         Child child = childRepository.findByAmkaHash(amkaHash)
                 .orElseThrow(() -> new ResourceNotFoundException("Δεν βρέθηκε παιδί με ΑΜΚΑ: " + amka));
-        return toResponse(child);
+        return new ChildSearchResponse(child.getId(), child.getFirstName(), child.getLastName(), child.getAmka());
     }
 
     public Child findById(Long id) {
